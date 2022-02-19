@@ -57,7 +57,7 @@
 		drawShips: true,
 		drawCenters: false,
 		drawHexes: true,
-		drawVerticies: false,
+		drawVertices: false,
 		buildVertices: true,
 		drawStarNumber: true
 	};
@@ -607,7 +607,7 @@
 			<button
 				label="Start"
 				class="p-3 m-2 bg-sky-600 hover:bg-sky-500 rounded"
-				on:click={toggleAnimate}>Animate</button
+				on:click={toggleAnimate}>{`${animating ? "Pause" : "Animate"}`}</button
 			>
 			<button
 				label="Start"

@@ -35,6 +35,7 @@
 		"@iconify/collections": "^1.0.49",
 		"@iconify/svelte": "^2.1.1",
 		"@iconify/utils": "^1.0.21",
+		"@supabase/supabase-js": "^1.30.3",
 		"@sveltejs/adapter-node": "^1.0.0-next.0",
 		"@sveltejs/adapter-static": "^1.0.0-next.0",
 		"@tailwindcss/forms": "^0.4.0",
