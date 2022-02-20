@@ -1,6 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Create a single supabase client for interacting with your database
-const supabase = createClient('https://nnlhldhudoyhcxzzmoxu.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ubGhsZGh1ZG95aGN4enptb3h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUyODAyNjEsImV4cCI6MTk2MDg1NjI2MX0.7l9_jqyx-aP3xctjSSxkdvyjugMi5XjmAiOuz27IxiY')
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+console.log(`🚀 ~ file: supabaseClient.js ~ line 4 ~ supabaseUrl`, supabaseUrl)
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+console.log(`🚀 ~ file: supabaseClient.js ~ line 6 ~ supabaseAnonKey`, supabaseAnonKey)
 
-export default supabase
+// Create a single supabase client for interacting with your database
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)

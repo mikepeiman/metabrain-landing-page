@@ -67,10 +67,10 @@
 	let evenX,
 		evenY = 50;
 	$: evenX = Math.floor(w / data.minDist);
-	$: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ data.minDist`, data.minDist);
-	$: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ data - `, data);
+	// $: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ data.minDist`, data.minDist);
+	// $: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ data - `, data);
 	// $: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ w`, w)
-	$: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ evenX`, evenX);
+	// $: console.log(`🚀 ~ file: sketch05.svelte ~ line 73 ~ evenX`, evenX);
 	$: evenY = Math.floor(h / data.minDist);
 	$: evenSpacingArrayX = Array.from(Array(evenX), (x, i) => i * data.minDist);
 	$: evenSpacingArrayY = Array.from(Array(evenY), (x, i) => i * data.minDist);
@@ -84,7 +84,7 @@
 		let canvasContainerWidth = canvasContainer.offsetWidth;
 		let canvasContainerHeight = canvasContainer.offsetHeight;
 		w = c.width = canvasContainerWidth;
-		console.log(`🚀 ~ file: sketch05.svelte ~ line 92 ~ onMount ~ w`, w);
+		// console.log(`🚀 ~ file: sketch05.svelte ~ line 92 ~ onMount ~ w`, w);
 		h = c.height = canvasContainerHeight;
 		setResponsiveParams();
 

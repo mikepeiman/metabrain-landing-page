@@ -1,5 +1,6 @@
 <script context="module">
-    import supabase from '$lib/supabaseClient';
+    import {supabase} from '$lib/supabaseClient.js';
+    console.log(`🚀 ~ file: login.svelte ~ line 3 ~ supabase`, supabase)
     let email = ""
     let password = ""
 	const signUp = async () => {
