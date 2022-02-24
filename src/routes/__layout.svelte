@@ -1,8 +1,13 @@
 <script>
 	import '../app.scss';
 	import Footer from '$components/Footer.svelte';
+	import {onMount} from 'svelte';
+	let mounted = false
+	onMount(() => {
+		mounted = true
+	});
 </script>
-
+{#if mounted}
 <div id="app-layout" class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition">
 	<div class="layout-main  flex flex-col  items-center jutify-center bg-black/40">
 		<slot />
@@ -11,6 +16,7 @@
 		<Footer />
 	<!-- </div> -->
 </div>
+{/if}
 
 <style global lang="scss">
 	:global(#svelte) {

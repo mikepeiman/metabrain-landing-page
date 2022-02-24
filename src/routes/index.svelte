@@ -30,7 +30,7 @@ import McMailingList from '$components/MCMailingList.svelte';
 
 </script>
 
-<!-- {#if mounted} -->
+{#if mounted}
 <!-- <svelte:window bind:innerWidth={windowInnerWidth} /> -->
 
 <!-- <main
@@ -62,7 +62,7 @@ import McMailingList from '$components/MCMailingList.svelte';
 </div>
 <!-- </main> -->
 
-<!-- {/if} -->
+{/if}
 <style lang="scss">
 	.statement {
 		line-height: 1.25em;

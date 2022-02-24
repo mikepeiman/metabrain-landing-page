@@ -11,12 +11,15 @@
 	import { storedQuotesFile, storedFileContent, storedQuotesArray } from '../../stores/quotes.js';
 	import { onMount } from 'svelte';
 	import { parse } from './parseQuotes.js';
+
+	import AddQuote from './AddQuote.svelte'
 	// import { saveFile} from '$lib/save-file'
 
 	let fsFileContent;
 	$: if (fsFileContent) {
 		parseFile(fsFileContent);
 	}
+	let addQuoteForm = false
 	let input_file = [];
 	let contents = '';
 	let quotes = [];
@@ -63,8 +66,12 @@
 		const htmlDoc = parser.parseFromString(doc, 'text/html');
 		let divs = htmlDoc.getElementsByTagName('div');
 		quotesArrays = isolateQuotationBlocks(divs);
-        console.log(`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ parseFile ~ quotesArrays`, quotesArrays.length, quotesArrays)
-		for (let i = 0; i < quotesArrays.length; i++) { 
+		console.log(
+			`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ parseFile ~ quotesArrays`,
+			quotesArrays.length,
+			quotesArrays
+		);
+		for (let i = 0; i < quotesArrays.length; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
@@ -72,7 +79,11 @@
 			}
 			let workingQuoteObject = {};
 			workingQuoteObject['originalText'] = workingQuoteObject['remainingText'] = item;
-			workingQuoteObject['details'] =	workingQuoteObject['authorTitle'] =	workingQuoteObject['tags'] = workingQuoteObject['sources'] = []
+			workingQuoteObject['details'] =
+				workingQuoteObject['authorTitle'] =
+				workingQuoteObject['tags'] =
+				workingQuoteObject['sources'] =
+					[];
 			// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 77 ~ parseFile ~ workingQuoteObject`, workingQuoteObject)
 			workingQuoteObject = parse(workingQuoteObject);
 			// workingQuoteObject['details'] = [];
@@ -113,6 +124,10 @@
 			return item[0];
 		}
 	}
+
+	function showAddQuoteForm() {
+		addQuoteForm = true;
+	}
 </script>
 
 <div class=" quotes-wrapper flex flex-col w-full bg-black">
@@ -136,11 +151,20 @@
 			/>
 		</div>
 	</div>
+	<div class="flex w-full">
+		
+
+		{#if addQuoteForm}<AddQuote />
+		{:else}		<button class="p-4 rounded bg-indigo-600 m-3" on:click={showAddQuoteForm}>Add New Quote</button>
+		{/if}
+	</div>
 
 	<div class="quotes">
 		{#if quotes.length}
 			{#each filteredQuotes as quote, i}
-				<div class="card quote p-3 m-12 shadow-lg border border-2 border-gray-800 rounded-sm bg-gradient-to-br from-transparent via-gray-900  rounded-xl">
+				<div
+					class="card quote p-3 m-12 shadow-lg border border-2 border-gray-800 rounded-sm bg-gradient-to-br from-transparent via-gray-900  rounded-xl"
+				>
 					<div class="badge bg-gray-700">{i + 1}</div>
 					<h1 class="quote-body p-8 text-2xl">
 						<span class="quote-mark text-sky-300">&ldquo;</span>{@html quote.quoteBody}<span
@@ -160,8 +184,7 @@
 							<label class="input-group input-group-xs">
 								<span class="bg-slate-900">Title</span>
 								{#each quote.authorTitle as title}
-									<span
-										class="badge badge-success bg-slate-900 text-sky-400 input-xs"
+									<span class="badge badge-success bg-slate-900 text-sky-400 input-xs"
 										>{quote.authorTitle}</span
 									>
 								{/each}
@@ -242,9 +265,9 @@ font-family: 'Outfit', sans-serif;
 font-family: 'Overlock', cursive;
 font-family: 'Staatliches', cursive; */
 
-.quotes-wrapper {
-	background: #122334;
-}
+	.quotes-wrapper {
+		background: #122334;
+	}
 
 	input#fileInput {
 		/* display: inline-block; */
@@ -260,8 +283,8 @@ font-family: 'Staatliches', cursive; */
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 		background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-256.png')
-			center center no-repeat ;
-		border-radius: .5rem;
+			center center no-repeat;
+		border-radius: 0.5rem;
 		background-size: 3rem;
 		cursor: pointer;
 		:before {
@@ -276,7 +299,7 @@ font-family: 'Staatliches', cursive; */
 			transform: translate(-50%, -25px);
 		}
 	}
-	
+
 	.quotes {
 		/* font-family: 'Karla', sans-serif; */
 		/* font-family: 'Lemonada', cursive; */
@@ -349,7 +372,7 @@ font-family: 'Staatliches', cursive; */
 		border-radius: 5px 5px 5px 0;
 	}
 
-	.input-group>span {
+	.input-group > span {
 		border-radius: 0;
 	}
 </style>

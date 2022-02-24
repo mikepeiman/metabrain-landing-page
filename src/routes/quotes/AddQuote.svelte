@@ -1,8 +1,8 @@
 
 
-<div class="p-10 card bg-base-200 w-1/4">
+<div class="p-10 card bg-base-200 w-full">
     <div class="form-control flex">
-      <label class="label max-w-xs">
+      <label class="label w-full">
         <span>Quote</span>
       </label> 
       <input type="text" placeholder="Quote" class="input input-group max-w-xs">
