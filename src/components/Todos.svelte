@@ -1,4 +1,4 @@
-<!-- <script context="module">
+<script context="module">
 	export const load = async ({ fetch }) => {
 		const res = await fetch('/todos.json');
 		if (res.ok) {
@@ -6,7 +6,7 @@
 			return { props: { todos } };
 		}
 	};
-</script> -->
+</script>
 
 <script>
 	export let todos;
@@ -16,7 +16,7 @@
 <svelte:head>
 	<title>Mike's Blog</title>
 </svelte:head>
-
+{#if todos}
 {#each todos as {author, tags, quoteBody}}
 <main class="container max-w-xl mx-auto px-4">
     <div class="card text-center shadow-2xl mb-20">
@@ -38,3 +38,4 @@
     </div>
 </main>
 {/each}
+{/if}

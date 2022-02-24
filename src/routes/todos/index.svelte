@@ -15,6 +15,7 @@
     // console.log(`🚀 ~ file: TODOS index.svelte ~ line 15 ~ todos`, todos)
 </script>
 
+<h1>Tasks</h1>
 <div class="todos">
 	<Todos {todos}/>
 </div>
