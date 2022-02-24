@@ -1,7 +1,7 @@
 import { client } from '$lib/dgraph-client'
 import { gql, request } from 'graphql-request'
 
-
+console.log(`calling index.dgraph.json.js`)
 const getAllTodos = gql`query MyQuery {
   queryQuote {
     author {
@@ -18,11 +18,11 @@ export const get = async () => {
   try {
     const query = getAllTodos
     await client.request(query).then((data) => {
-      todos = data.queryQuote
+      dgraph_todos = data.queryQuote
     })
     return {
       status: 200,
-      body: { todos }
+      body: { dgraph_todos }
     }
   } catch (error) {
     return {
