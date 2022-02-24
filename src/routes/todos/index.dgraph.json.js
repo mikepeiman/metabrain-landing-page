@@ -3,22 +3,21 @@ import { gql, request } from 'graphql-request'
 
 console.log(`calling index.dgraph.json.js`)
 const getAllTodos = gql`query MyQuery {
-  queryQuote {
-    author {
-      name
+    queryTodo {
+      body
+      completed
+      created
+      id
     }
-    tags {
-      tag
-    }
-    quoteBody
   }
-}
 `
 export const get = async () => {
   try {
     const query = getAllTodos
     await client.request(query).then((data) => {
-      dgraph_todos = data.queryQuote
+      console.log(`🚀 ~ file: index.dgraph.json.js ~ line 18 ~ awaitclient.request ~ data`, data)
+      dgraph_todos = data.queryTodo
+      console.log(`🚀 ~ file: index.dgraph.json.js ~ line 19 ~ awaitclient.request ~ dgraph_todos`, dgraph_todos)
     })
     return {
       status: 200,

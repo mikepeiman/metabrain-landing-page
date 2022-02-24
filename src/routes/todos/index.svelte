@@ -20,7 +20,7 @@
 		}
 		// if (res1.ok || res2.ok) {
 		// 	const { todos } = await res1.json();
-		// 	const { todos } = await res2.json();
+		// 	const { todos } = await res2.json(); 
 		// 	return { props: { dgraph_todos } };
 		// }
 
@@ -29,6 +29,8 @@
 
 <script>
 	import {page} from '$app/stores'
+import SingleInput from '$components/SingleInput.svelte';
+import TodoInput from '$components/TodoInput.svelte';
 
     console.log(`🚀 ~ file: index.svelte ~ line 25 ~ page`, $page)
 	import Todos from "$components/Todos.svelte";
@@ -41,10 +43,14 @@
 <div class="flex">
 	<div class="flex flex-col">
 		<h1 class="text-4xl font-bold text-cyan-400">DGRAPH</h1>
+		<SingleInput />
+		<TodoInput />
 		<Todos todos={dgraph_todos}  />
 	</div>
 	<div class="flex flex-col">
 		<h1 class="text-4xl font-bold text-cyan-400">SUPABASE</h1>
+		<SingleInput />
+		<TodoInput />
 		<Todos todos={supabase_todos}  />
 	</div>
 </div>

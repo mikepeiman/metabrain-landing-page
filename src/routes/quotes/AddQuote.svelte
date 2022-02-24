@@ -1,4 +1,7 @@
+<script>
+  import {addQuote} from '$stores/stores.js'
 
+</script>
 
 <div class="p-10 card bg-base-200 w-full">
     <div class="form-control flex">
@@ -22,5 +25,6 @@
         <span class="label-text">Source</span>
       </label> 
       <input type="text" placeholder="Source" class="input">
+      <button on:click={addQuote}></button>
     </div>
   </div>

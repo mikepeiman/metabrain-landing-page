@@ -33,6 +33,65 @@ const deleteAllQuotes = gql`
   }
   `
 
+{
+  "data" [
+
+  ]
+}
+
+
+// a data format that work in the dgraph ql explorer to add quotes
+// {
+//   "data": [
+//     {
+//       "quoteBody": "Test 111",
+//       "author": {
+//         "name": "A",
+//         "titleLong": ""
+//       },
+//       "context": "power",
+//       "tags": {
+//         "tag": "power"
+//       }
+//     },
+//     {
+//       "quoteBody": "Test 333",
+//       "author": {
+//         "name": "B",
+//         "titleLong": ""
+//       },
+//       "context": "politics",
+//       "tags": {
+//         "tag": "politics"
+//       }
+//     }
+//   ]
+// }
+
+
+// {
+//   "data": [
+//     {
+//       "body": "Add some dummy data tasks to TODOs via dgraphql API explorer",
+//       "author": {
+//         "name": "Mike",
+//         "id": "1"
+//       },
+//       "created": "2022-02-24 5:03pm",
+// 			"completed": false
+//     },
+//         {
+//       "body": "Close the door, even though her piano playing is sweet",
+//       "author": {
+//         "name": "Mike",
+//         "id": "1"
+//       },
+//       "created": "2022-02-24 5:04pm",
+// 			"completed": false
+//     },
+//   ]
+// }
+
 // const deleteAllQuotesByAuthor = operationStore(`
 //   mutation deleteAuthor {
 //     deleteAuthor(filter: {name: {anyoftext: ""}})
