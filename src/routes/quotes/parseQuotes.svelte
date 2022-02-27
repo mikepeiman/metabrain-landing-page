@@ -210,15 +210,15 @@
 							</label>
 						{/if}
 						{#if quote.tags.length}
+						<label class="input-group input-group-xs rounded-none">
+							<span class="bg-slate-900 rounded-none">Tags</span>
 							{#each quote.tags as tag}
-								<label class="input-group input-group-xs rounded-none">
-									<span class="bg-slate-900 rounded-none">Tags</span>
 									<span
-										class="rounded-none badge badge-warning input-xs bg-slate-900 text-sky-500 input-xs"
+										class="rounded-none badge badge-warning input-xs bg-slate-600 mx-1 text-sky-500 input-xs"
 										>{tag}</span
 									>
+									{/each}
 								</label>
-							{/each}
 						{/if}
 						{#if quote.context}
 							<label class="input-group input-group-xs rounded-none">

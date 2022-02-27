@@ -10,6 +10,8 @@
 			tags,
 			source
 		);
+    tags = tags.split(',').map(tag => tag.trim());
+    console.log(`🚀 ~ file: AddQuote.svelte ~ line 14 ~ handleSubmit ~ tags`, tags)
     let quote = {
       quoteBody,
       author,
