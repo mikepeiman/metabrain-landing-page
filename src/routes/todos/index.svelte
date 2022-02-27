@@ -10,7 +10,6 @@
 	export const load = async ({ fetch }) => {
 		const res1 = await fetch(`/todos.dgraph.json`);
 		const res2 = await fetch(`/todos.supabase.json`);
-        // console.log(`🚀 ~ file: todos index.svelte ~ line 4 ~ load ~ res`, res)
 		if (res1.ok || res2.ok) {
 			const { dgraph_todos } = await res1.json();
             console.log(`🚀 ~ file: index.svelte ~ line 16 ~ load ~ dgraph_todos`, dgraph_todos)
@@ -18,12 +17,6 @@
             console.log(`🚀 ~ file: index.svelte ~ line 18 ~ load ~ supabase_todos`, supabase_todos)
 			return { props: { dgraph_todos, supabase_todos } };
 		}
-		// if (res1.ok || res2.ok) {
-		// 	const { todos } = await res1.json();
-		// 	const { todos } = await res2.json(); 
-		// 	return { props: { dgraph_todos } };
-		// }
-
 	};
 </script>
 
@@ -39,18 +32,19 @@ import TodoInput from '$components/TodoInput.svelte';
     // console.log(`🚀 ~ file: TODOS index.svelte ~ line 15 ~ todos`, todos)
 </script>
 
-<h1 class="text-4xl font-bold text-cyan-400">Tasks</h1>
-<div class="flex">
+<div class="flex mt-10">
 	<div class="flex flex-col">
-		<h1 class="text-4xl font-bold text-cyan-400">DGRAPH</h1>
+		<h1 class="ml-4 text-4xl font-bold text-cyan-400">DGRAPH</h1>
+		<span class="mb-5"></span>
 		<SingleInput />
-		<TodoInput />
+		<span class="mb-5"></span>
 		<Todos todos={dgraph_todos}  />
 	</div>
 	<div class="flex flex-col">
-		<h1 class="text-4xl font-bold text-cyan-400">SUPABASE</h1>
+		<h1 class="ml-4 text-4xl font-bold text-cyan-400">SUPABASE</h1>
+		<span class="mb-5"></span>
 		<SingleInput />
-		<TodoInput />
+		<span class="mb-5"></span>
 		<Todos todos={supabase_todos}  />
 	</div>
 </div>

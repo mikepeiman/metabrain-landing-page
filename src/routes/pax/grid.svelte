@@ -3,11 +3,11 @@
 	// const app = new PIXI.Application({ transparent: true });
 	// const graphics = new PIXI.Graphics();
 
-	import { defineGrid, extendHex } from 'honeycomb-grid';
-
+    
 	// document.body.appendChild(app.view);
 	// set a line style of 1px wide and color #999
 	// graphics.lineStyle(1, 0x999999);
+	import { defineGrid, extendHex } from 'honeycomb-grid';
 	const hex = extendHex({ size: 50 });
 	const Grid = defineGrid(hex);
 	Grid.rectangle({ width: 12, height: 12 }).forEach((hex) => {

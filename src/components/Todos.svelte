@@ -7,12 +7,12 @@
 </svelte:head>
 {#if todos}
 	{#each todos as todo}
-		<main class="container max-w-xl mx-auto px-4">
-			<div class="card text-center shadow-2xl mb-20">
-				<figure class="px-10 pt-10">
-					<!-- <img class="rounded-xl" src="{coverImage.url}" alt="{`Cover image for ${title}`}"> -->
-				</figure>
-				<div class="card-body">
+		<main class="w-full mx-auto px-4 my-2">
+			<div class="text-center shadow-2xl">
+				<!-- <figure class="px-10 pt-10">
+				<img class="rounded-xl" src="{coverImage.url}" alt="{`Cover image for ${title}`}"> 
+				</figure> -->
+				<div class="bg-gray-900 m-0 p-2 rounded">
 					{#if todo.body}<h1 class="title">{todo.body}</h1>{/if}
 					{#if todo.quoteBody}<h1 class="title">{todo.quoteBody}</h1>{/if}
 					{#if todo.author}<p>{todo.author.name}</p>{/if}

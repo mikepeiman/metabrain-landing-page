@@ -21,10 +21,10 @@ export const loadQuotes = async () => {
 }
 
 export const addQuote = async (quote) => {
-    const { data, error } = await supabase.from('quotes').insert(quote).run()
+    const { data, error } = await supabase.from('quotes').insert(quote)
     // quotes.set([...quotes.get(), quote])
     quotes.update((cur) => [...cur, data[0]])
-})
+}
  
 export const deleteQuote = (id) => {
     supabase.from('quotes').where('id', id).delete().run()
