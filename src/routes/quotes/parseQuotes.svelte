@@ -8,7 +8,7 @@
 	};
 </script> -->
 <script>
-	import { storedQuotesFile, storedFileContent, storedQuotesArray } from '../../stores/quotes.js';
+	import { storedQuotesFile, addedQuotes, storedFileContent, storedQuotesArray } from '../../stores/quotes.js';
 	import { onMount } from 'svelte';
 	import { parse } from './parseQuotes.js';
 
@@ -31,12 +31,14 @@
 	let quotesObjects = [];
 	let filteredQuotesObjects = [];
 	$: {
+        console.log(`🚀 ~ file: parseQuotes.svelte ~ line 35 ~ addedQuotes`, $addedQuotes)
+		filteredQuotes = [...$addedQuotes, ...quotes];
 		if (searchTerm) {
 			filteredQuotes = quotes.filter((quote) =>
 				quote.originalText.toLowerCase().includes(searchTerm.toLowerCase())
 			);
 		} else {
-			filteredQuotes = [...quotes];
+			filteredQuotes = [...$addedQuotes, ...quotes];
 		}
 	}
 	onMount(() => {

@@ -1,17 +1,25 @@
 <script>
-	import { addQuote } from '$stores/stores.js';
-	let quote, author, context, tags, source;
+	import { addQuote } from '$stores/quotes.js';
+	let quoteBody, author, context, tags, source;
 	const handleSubmit = () => {
 		console.log(
 			`🚀 ~ file: AddQuote.svelte ~ line 4 ~ quote, author, context, tags, source`,
-			quote,
+			quoteBody,
 			author,
 			context,
 			tags,
 			source
 		);
-		// addQuote(quote, author, context, tags, source);
-	};
+    let quote = {
+      quoteBody,
+      author,
+      context,
+      tags,
+      source
+    };
+		addQuote(quote);
+    }
+	
 </script>
 
 <div class="p-10 card bg-base-200 w-full">
@@ -19,7 +27,7 @@
 		<label class="label w-full">
 			<span>Quote</span>
 		</label>
-		<input type="text" placeholder="Quote" class="input input-group max-w-xs" bind:value={quote} />
+		<input type="text" placeholder="Quote" class="input input-group max-w-xs" bind:value={quoteBody} />
 		<label class="label">
 			<span class="label-text">Author</span>
 		</label>
