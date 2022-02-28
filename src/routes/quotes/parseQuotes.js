@@ -52,55 +52,6 @@ function getQuoteBody(workingQuoteObject) {
     workingQuoteObject['quoteBody'] = quote;
     return workingQuoteObject;
 }
-function authorContainsDash(author) {
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 50 ~ authorContainsDash ~ author`, author)
-    if (author.includes("-")) {
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 53 ~ authorContainsDash ~ author.includes("-")`, true)
-        // let res = author.split("-")[1].trim()
-        let res = author.split("-")
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 55 ~ authorContainsDash ~ res`, res)
-        res.shift()
-        res.join('')
-        res.toString()
-        // res.trim()
-        workingQuoteObject['author'] = res
-        // let res = author.split("-").trim()
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 53 ~ authorContainsDash ~ res`, res)
-        return res
-    }
-    return author.trim()
-}
-function getQuoteAuthor(workingQuoteObject) {
-    let { author, remainingText } = workingQuoteObject
-    workingQuoteObject['author'] = remainingText
-    // console.log(remainingText)
-    let textEnd = remainingText.length;
-    let separatorValue = findNextSeparatingCharacter(remainingText);
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 60 ~ getQuoteAuthor ~ author`, author)
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ remainingText`, remainingText)
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ separatorValue`, separatorValue)
-    if (separatorValue > -1 && separatorValue && author) {
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 65 ~ getQuoteAuthor ~ separatorValue > -1 && separatorValue`, (separatorValue > -1 && separatorValue))
-        // author = authorContainsDash(author)
-        // author = Array.from(remainingText).splice(0, separatorValue).join(String());
-
-        remainingText = Array.from(remainingText).splice(separatorValue, textEnd).join(String()).trim();
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
-        workingQuoteObject['remainingText'] = remainingText
-    } else {
-        console.log('parse.js line:45 separatorValue', separatorValue);
-        // author = authorContainsDash(workingQuoteObject['remainingText'])
-        // author = authorContainsDash(remainingText)
-        workingQuoteObject['author'] = author
-        // workingQuoteObject['remainingText'] = false
-        // workingQuoteObject['parsingComplete'] = true
-    }
-    workingQuoteObject['author'] = author;
-    // console.log(`🚀 ~ file: parseQuotes.svelte ~ line 53 ~ parseQuoteAuthorName ~ author`, author)
-    // console.log(`🚀 ~ file: parse.js ~ line 54 ~ getQuoteAuthor ~ remainingText`, remainingText)
-    // console.log(`🚀 ~ file: parse.js ~ line 54 ~ getQuoteAuthor ~ workingQuoteObject`, workingQuoteObject)
-    return workingQuoteObject
-}
 
 function parseNextDetail(workingQuoteObject) {
     console.log(`🚀 ~ file: parseQuotes.js ~ line 106 ~ parseNextDetail ~ workingQuoteObject`, workingQuoteObject)
@@ -134,20 +85,27 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
         title = splitText[1].trim()
         workingQuoteObject['title'] = title
     }
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 86 ~ parseQuoteAuthorTitle ~ title`, title)
     console.log(`🚀 ~ file: parseQuotes.js ~ line 129 ~ parseQuoteAuthorTitle ~ splitText`, splitText)
     let textEnd = text.length;
     text = Array.from(text).splice(separatorValue + 1, textEnd).join(String())
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 140 ~ parseQuoteAuthorTitle ~ text`, text)
     separatorValue = findNextSeparatingCharacter(text);
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 93 ~ parseQuoteAuthorTitle ~ separatorValue`, separatorValue)
     nextPart = nameNextPartOfQuote(text, separatorValue)
     workingQuoteObject['nextPart'] = nextPart
-    if (nextPart) {
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 95 ~ parseQuoteAuthorTitle ~ nextPart`, nextPart)
+    nextPart === "axiom" && splitText !== "axiom" ? workingQuoteObject['parsingComplete'] = true : workingQuoteObject['parsingComplete'] = false
+    if (nextPart && !workingQuoteObject['parsingComplete'] ) {
         title = Array.from(text).splice(1, separatorValue - 1).join(String()).trim();
         workingQuoteObject['remainingText'] = text = Array.from(text).splice(separatorValue, textEnd).join(String());
     } else {
         title = text
         text = false
     }
-    workingQuoteObject.authorTitle?.push(title.trim())
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 100 ~ parseQuoteAuthorTitle ~ title`, title)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 103 ~ parseQuoteAuthorTitle ~ workingQuoteObject.authorTitle`, workingQuoteObject.authorTitle)
+    workingQuoteObject.authorTitle = [...workingQuoteObject.authorTitle , title]
     // workingQuoteObject['authorTitle'].push(title.trim())
     // workingQuoteObject.details?.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;
@@ -161,6 +119,7 @@ function parseQuoteAxiom(workingQuoteObject, separatorValue) {
     text = workingQuoteObject['remainingText'].trim();
     let textEnd = text.length;
     text = Array.from(text).splice(separatorValue + 1, textEnd).join(String())
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 165 ~ parseQuoteAxiom ~ text`, text)
     separatorValue = findNextSeparatingCharacter(text);
     nextPart = nameNextPartOfQuote(text, separatorValue)
     workingQuoteObject['nextPart'] = nextPart
@@ -192,6 +151,7 @@ function parseQuoteDate(workingQuoteObject, separatorValue) {
 function parseQuoteSource(workingQuoteObject, separatorValue) {
     let { remainingText } = workingQuoteObject
     let text = workingQuoteObject['remainingText'].trim();
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 197 ~ parseQuoteSource ~ text`, text)
     let len = text.length;
     separatorValue = findNextSeparatingCharacter(text);
     let start = separatorValue + 1
@@ -216,6 +176,7 @@ function parseQuoteContext(workingQuoteObject, separatorValue) {
     // console.log(`🚀 ~ file: parse.js ~ line 250 ~ parseQuoteContext ~ workingQuoteObject`, workingQuoteObject)
     let { remainingText } = workingQuoteObject
     let text = remainingText.trim();
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 222 ~ parseQuoteContext ~ text`, text)
     separatorValue = findNextSeparatingCharacter(text);
     // console.log(`🚀 ~ file: parse.js ~ line 255 ~ parseQuoteContext ~ separatorValue`, separatorValue)
     let start = separatorValue + 2
@@ -239,7 +200,7 @@ function parseQuoteTags(workingQuoteObject, separatorValue) {
     // console.log(`🚀 ~ file: parse.js ~ line 257 ~ parseQuoteTags ~ workingQuoteObject`, workingQuoteObject)
     let { remainingText } = workingQuoteObject
     let text = remainingText.trim();
-    console.log(`🚀 ~ file: parse.js ~ line 281 ~ parseQuoteTags ~ text`, text)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 246 ~ parseQuoteTags ~ text`, text)
     separatorValue = findNextSeparatingCharacter(text);
     console.log(`🚀 ~ file: parse.js ~ line 255 ~ parseQuoteTags ~ separatorValue`, separatorValue)
     let start = separatorValue + 1

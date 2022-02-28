@@ -40,10 +40,13 @@
 		filteredQuotes = [...$addedQuotes, ...quotes];
 		if (searchTerm) {
 			filteredQuotes = quotes.filter((quote) =>
-				quote.originalText.toLowerCase().includes(searchTerm.toLowerCase())
+				quote.originalText.toLowerCase().includes(searchTerm.toLowerCase()) &&
+				quote.authorTitle !== null && quote.authorTitle !== undefined && quote.authorTitle.length > 0
 			);
 		} else {
-			filteredQuotes = [...$addedQuotes, ...quotes];
+			let titledQuotes = quotes.filter(quote =>  quote.authorTitle.length > 0)
+			filteredQuotes = [...$addedQuotes, ...titledQuotes];
+
 		}
 	}
 	onMount(() => {
@@ -78,9 +81,9 @@
 			quotesArrays.length,
 			quotesArrays
 		);
-		// for (let i = 0; i < quotesArrays.length; i++) {
+		for (let i = 0; i < quotesArrays.length; i++) {
 		// for (let i = 43; i < 57; i++) {
-		for (let i = 55; i < 92; i++) {
+		// for (let i = 0; i < 61; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
@@ -198,14 +201,28 @@
 								>
 							</label>
 						{/if}
-						{#if quote.authorTitle}
+						{#if quote.authorTitle && quote.authorTitle.length}
 							<label class="input-group input-group-xs">
 								<span class="bg-slate-900">AuthorTitle</span>
-								{#each quote.authorTitle as title}
-									<span class="badge badge-success bg-slate-900 text-fuchsia-400 input-xs"
-										>{quote.authorTitle}</span
-									>
-								{/each}
+									<!-- {#each quote.authorTitle as title} -->
+										<span
+											class="font-sans text-sm bg-black rounded-sm mx-1 text-fuchsia-400 input-xs"
+											>{quote.authorTitle}</span
+										>
+									<!-- {/each} -->
+
+							</label>
+						{/if}
+						{#if quote.authorTitleType && quote.authorTitle.length}
+							<label class="input-group input-group-xs">
+								<span class="bg-slate-900">AuthorTitle</span>
+									<!-- {#each quote.authorTitle as title} -->
+										<span
+											class="font-sans text-sm bg-black rounded-sm mx-1 text-fuchsia-400 input-xs"
+											>{quote.authorTitleType}</span
+										>
+									<!-- {/each} -->
+
 							</label>
 						{/if}
 						{#if quote.date}

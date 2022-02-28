@@ -1,7 +1,7 @@
 import getMinNotFalse from "./getMinNotFalse"
 
 const findNextSeparatingCharacter = (text) => {
-// console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 4 ~ findNextSeparatingCharacter ~ text`, text)
+console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 4 ~ findNextSeparatingCharacter ~ text`, text)
     let separators = [
         { "name": "title", "openingChar": ",", "closingChar": ",", "value": false },
         { "name": "source", "openingChar": "[", "closingChar": "]", "value": false },
@@ -10,7 +10,7 @@ const findNextSeparatingCharacter = (text) => {
         { "name": "context", "openingChar": "@", "closingChar": ")", "value": false },
         { "name": "tags", "openingChar": "#", "closingChar": "", "value": false },
     ]
-    text = text.trim()
+    // text = text.trim()
     // console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 13 ~ findNextSeparatingCharacter ~ text`, text)
     separators.forEach(separator => {
         separator.value = text.indexOf(separator.openingChar)

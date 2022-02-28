@@ -5,12 +5,15 @@ const getAuthor = (workingQuoteObject) => {
     workingQuoteObject['author'] = author = remainingText
     // console.log(remainingText)
     let textEnd = remainingText.length;
-    // console.log(`🚀 ~ file: parseQuotes.js ~ line 60 ~ getQuoteAuthor ~ author`, author)
-    // console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ remainingText`, remainingText)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 60 ~ getQuoteAuthor ~ author`, author)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ remainingText`, remainingText)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ separator`, separator)
-    if (remainingText.includes("-")) {
+    if (remainingText && remainingText.includes("-")) {
         author = remainingText = remainingText.split(/-(.+)/)[1].trim()
         // console.log(`🚀 ~ file: getAuthor.js ~ line 22 ~ getAuthor. separator.value: ${separator.value} ~ remainingText`, remainingText)
+    }
+    if (!author && !remainingText) {
+        author = remainingText = workingQuoteObject.details[0].value
     }
     let separator = findNextSeparatingCharacter(remainingText);
     if (separator.value > -1 && author) {
