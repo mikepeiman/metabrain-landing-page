@@ -1,6 +1,7 @@
 import getMinNotFalse from "./getMinNotFalse"
 
 const findNextSeparatingCharacter = (text) => {
+console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 4 ~ findNextSeparatingCharacter ~ text`, text)
     let separators = [
         { "name": "title", "openingChar": ",", "closingChar": ",", "value": false },
         { "name": "source", "openingChar": "[", "closingChar": "]", "value": false },

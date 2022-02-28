@@ -5,14 +5,14 @@ const getAuthor = (workingQuoteObject) => {
     workingQuoteObject['author'] = author = remainingText
     // console.log(remainingText)
     let textEnd = remainingText.length;
-    let separator = findNextSeparatingCharacter(remainingText);
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 60 ~ getQuoteAuthor ~ author`, author)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ remainingText`, remainingText)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ separator`, separator)
     if (remainingText.includes("-")) {
         author = remainingText = remainingText.split(/-(.+)/)[1].trim()
-        console.log(`🚀 ~ file: getAuthor.js ~ line 22 ~ getAuthor. separator.value: ${separator.value} ~ remainingText`, remainingText)
+        // console.log(`🚀 ~ file: getAuthor.js ~ line 22 ~ getAuthor. separator.value: ${separator.value} ~ remainingText`, remainingText)
     }
+    let separator = findNextSeparatingCharacter(remainingText);
     if (separator.value > -1 && author) {
         console.log(`🚀 ~ file: getAuthor.js ~ line 15 ~ getAuthor ~ remainingText`, remainingText)
         console.log(`🚀 ~ file: getAuthor.js ~ line 17 ~ getAuthor ~ author`, author)
@@ -21,9 +21,9 @@ const getAuthor = (workingQuoteObject) => {
         remainingText = remainingText.trim()
         let i1 = remainingText[0]
         let i2 = remainingText[separator.value]
-        console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ i1, i2`, i1, i2)
+        console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ i1, i2, separator`, i1, i2, separator)
 
-        author = Array.from(remainingText).splice(0, separator.value - 2).join(String()).trim();
+        author = Array.from(remainingText).splice(0, separator.value).join(String()).trim();
         console.log(`🚀 ~ file: getAuthor.js ~ line 16 ~ getAuthor ~ author`, author)
 
         // author = Array.from(remainingText).splice(separator.value + 2, textEnd).join(String()).trim();

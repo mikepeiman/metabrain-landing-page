@@ -74,7 +74,7 @@
 			quotesArrays
 		);
 		// for (let i = 0; i < quotesArrays.length; i++) {
-		for (let i = 42; i < 155; i++) {
+		for (let i = 42; i < 65; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
