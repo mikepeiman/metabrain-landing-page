@@ -1,34 +1,51 @@
-import  findNextSeparatingCharacter  from "./findNextSeparatingCharacter";
+import findNextSeparatingCharacter from "./findNextSeparatingCharacter";
 
 const getAuthor = (workingQuoteObject) => {
     let { author, remainingText } = workingQuoteObject
     workingQuoteObject['author'] = author = remainingText
     // console.log(remainingText)
     let textEnd = remainingText.length;
-    let separatorValue = findNextSeparatingCharacter(remainingText);
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 60 ~ getQuoteAuthor ~ author`, author)
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ remainingText`, remainingText)
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ separatorValue`, separatorValue)
-    if (separatorValue.value > -1  && author) {
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 65 ~ getQuoteAuthor ~ separatorValue > -1 && separatorValue`, (separatorValue > -1), separatorValue, author)
+    let separator = findNextSeparatingCharacter(remainingText);
+    // console.log(`🚀 ~ file: parseQuotes.js ~ line 60 ~ getQuoteAuthor ~ author`, author)
+    // console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ remainingText`, remainingText)
+    // console.log(`🚀 ~ file: parseQuotes.js ~ line 62 ~ getQuoteAuthor ~ separator`, separator)
+    if (remainingText.includes("-")) {
+        author = remainingText = remainingText.split(/-(.+)/)[1].trim()
+        console.log(`🚀 ~ file: getAuthor.js ~ line 22 ~ getAuthor. separator.value: ${separator.value} ~ remainingText`, remainingText)
+    }
+    if (separator.value > -1 && author) {
+        console.log(`🚀 ~ file: getAuthor.js ~ line 15 ~ getAuthor ~ remainingText`, remainingText)
+        console.log(`🚀 ~ file: getAuthor.js ~ line 17 ~ getAuthor ~ author`, author)
+        // console.log(`🚀 ~ file: parseQuotes.js ~ line 65 ~ getQuoteAuthor ~ separator > -1 && separator`, (separator > -1), separator, author)
         // author = authorContainsDash(workingQuoteObject, author)
         remainingText = remainingText.trim()
-        author = Array.from(remainingText).splice(2, separatorValue.value).join(String()).trim();
+        let i1 = remainingText[0]
+        let i2 = remainingText[separator.value]
+        console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ i1, i2`, i1, i2)
+
+        author = Array.from(remainingText).splice(0, separator.value - 2).join(String()).trim();
         console.log(`🚀 ~ file: getAuthor.js ~ line 16 ~ getAuthor ~ author`, author)
 
-        // author = Array.from(remainingText).splice(separatorValue.value + 2, textEnd).join(String()).trim();
-        remainingText = Array.from(remainingText).splice(separatorValue.value, textEnd).join(String()).trim();
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
+        // author = Array.from(remainingText).splice(separator.value + 2, textEnd).join(String()).trim();
+        remainingText = Array.from(remainingText).splice(separator.value, textEnd).join(String()).trim();
+        // console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
         workingQuoteObject['remainingText'] = remainingText
+        // workingQuoteObject['author'] = remainingText
         workingQuoteObject['parsingComplete'] = true
-    } else  {
-        console.log( 'parse.js line:45 separatorValue', separatorValue);
+    } else {
+        console.log('parse.js line:45 separator', separator);
         // author = authorContainsDash(workingQuoteObject['remainingText'])
         // author = authorContainsDash(remainingText)
         workingQuoteObject['author'] = author
         workingQuoteObject['remainingText'] = false
         workingQuoteObject['parsingComplete'] = true
     }
+    let checkAuthor = findNextSeparatingCharacter(author)
+    if(checkAuthor){
+        author = author.split(checkAuthor.openingChar)[0].trim()
+        console.log(`🚀 ~ file: getAuthor.js ~ line 46 ~ getAuthor ~ author`, author)
+    }
+    console.log(`🚀 ~ file: getAuthor.js ~ line 44 ~ getAuthor ~ findNextSeparatingCharacter(author)`, findNextSeparatingCharacter(author))
     workingQuoteObject['author'] = author;
     // console.log(`🚀 ~ file: parseQuotes.svelte ~ line 53 ~ parseQuoteAuthorName ~ author`, author)
     // console.log(`🚀 ~ file: parse.js ~ line 54 ~ getQuoteAuthor ~ remainingText`, remainingText)

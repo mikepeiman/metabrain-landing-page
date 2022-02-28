@@ -1,5 +1,5 @@
 const getMinNotFalse = (separators) => {
-    console.log(`🚀 ~ file: getMinNotFalse.js ~ line 2 ~ getMinNotFalse ~ separators`, separators)
+    // console.log(`🚀 ~ file: getMinNotFalse.js ~ line 2 ~ getMinNotFalse ~ separators`, separators)
     const charsFound = separators.filter(sep => sep.value > -1)
     console.log(`🚀 ~ file: getMinNotFalse.js ~ line 4 ~ getMinNotFalse ~ charsFound`, charsFound)
     if (!charsFound.length) {

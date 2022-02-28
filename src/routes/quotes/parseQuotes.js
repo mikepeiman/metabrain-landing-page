@@ -15,7 +15,7 @@ export const parse = (workingQuoteObject) => {
     }
 
     if (!workingQuoteObject['parsingComplete']) {  /*? nextPart */
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 13 ~ parse ~ !workingQuoteObject['parsingComplete']`, workingQuoteObject['parsingComplete'])
+        // console.log(`🚀 ~ file: parseQuotes.js ~ line 13 ~ parse ~ !workingQuoteObject['parsingComplete']`, workingQuoteObject['parsingComplete'])
         workingQuoteObject = parseNextDetail(workingQuoteObject)
         parse(workingQuoteObject)
     }

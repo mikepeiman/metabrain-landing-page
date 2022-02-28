@@ -9,10 +9,11 @@ const findNextSeparatingCharacter = (text) => {
         { "name": "context", "openingChar": "@", "closingChar": ")", "value": false },
         { "name": "tags", "openingChar": "#", "closingChar": "", "value": false },
     ]
+    text = text.trim()
+    console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 13 ~ findNextSeparatingCharacter ~ text`, text)
     separators.forEach(separator => {
         separator.value = text.indexOf(separator.openingChar)
     })
-    console.log(separators)
     return getMinNotFalse(separators);
 }
 
