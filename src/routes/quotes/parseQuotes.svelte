@@ -8,18 +8,23 @@
 	};
 </script> -->
 <script>
-	import { storedQuotesFile, addedQuotes, storedFileContent, storedQuotesArray } from '../../stores/quotes.js';
+	import {
+		storedQuotesFile,
+		addedQuotes,
+		storedFileContent,
+		storedQuotesArray
+	} from '../../stores/quotes.js';
 	import { onMount } from 'svelte';
 	import { parse } from './parseQuotes.js';
 
-	import AddQuote from './AddQuote.svelte'
+	import AddQuote from './AddQuote.svelte';
 	// import { saveFile} from '$lib/save-file'
 
 	let fsFileContent;
 	$: if (fsFileContent) {
 		parseFile(fsFileContent);
 	}
-	let addQuoteForm = false
+	let addQuoteForm = false;
 	let input_file = [];
 	let contents = '';
 	let quotes = [];
@@ -31,7 +36,7 @@
 	let quotesObjects = [];
 	let filteredQuotesObjects = [];
 	$: {
-        console.log(`🚀 ~ file: parseQuotes.svelte ~ line 35 ~ addedQuotes`, $addedQuotes)
+		console.log(`🚀 ~ file: parseQuotes.svelte ~ line 35 ~ addedQuotes`, $addedQuotes);
 		filteredQuotes = [...$addedQuotes, ...quotes];
 		if (searchTerm) {
 			filteredQuotes = quotes.filter((quote) =>
@@ -74,7 +79,8 @@
 			quotesArrays
 		);
 		// for (let i = 0; i < quotesArrays.length; i++) {
-		for (let i = 42; i < 65; i++) {
+		// for (let i = 43; i < 57; i++) {
+		for (let i = 55; i < 92; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
@@ -82,11 +88,11 @@
 			}
 			let workingQuoteObject = {};
 			workingQuoteObject['originalText'] = workingQuoteObject['remainingText'] = item;
-			workingQuoteObject['details'] =
-				workingQuoteObject['authorTitle'] =
-				workingQuoteObject['tags'] =
-				workingQuoteObject['sources'] =
-					[];
+			workingQuoteObject['details'] = [];
+			workingQuoteObject['authorTitle'] = [];
+			workingQuoteObject['title'] = '';
+			workingQuoteObject['tags'] = [];
+			workingQuoteObject['sources'] = [];
 			// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 77 ~ parseFile ~ workingQuoteObject`, workingQuoteObject)
 			workingQuoteObject = parse(workingQuoteObject);
 			// workingQuoteObject['details'] = [];
@@ -155,10 +161,11 @@
 		</div>
 	</div>
 	<div class="flex w-full">
-		
-
 		{#if addQuoteForm}<AddQuote />
-		{:else}		<button class="p-4 rounded bg-indigo-600 m-3" on:click={showAddQuoteForm}>Add New Quote</button>
+		{:else}
+			<button class="p-4 rounded bg-indigo-600 m-3" on:click={showAddQuoteForm}
+				>Add New Quote</button
+			>
 		{/if}
 	</div>
 
@@ -183,11 +190,19 @@
 								>{@html quote.author}</span
 							>
 						</label>
-						{#if quote.authorTitle}
+						{#if quote.title}
 							<label class="input-group input-group-xs">
 								<span class="bg-slate-900">Title</span>
+								<span class="badge badge-success bg-slate-900 text-sky-400 input-xs"
+									>{quote.title}</span
+								>
+							</label>
+						{/if}
+						{#if quote.authorTitle}
+							<label class="input-group input-group-xs">
+								<span class="bg-slate-900">AuthorTitle</span>
 								{#each quote.authorTitle as title}
-									<span class="badge badge-success bg-slate-900 text-sky-400 input-xs"
+									<span class="badge badge-success bg-slate-900 text-fuchsia-400 input-xs"
 										>{quote.authorTitle}</span
 									>
 								{/each}
@@ -211,15 +226,15 @@
 							</label>
 						{/if}
 						{#if quote.tags.length}
-						<label class="input-group input-group-xs rounded-none">
-							<span class="bg-slate-900 rounded-none">Tags</span>
-							{#each quote.tags as tag}
+							<label class="input-group input-group-xs rounded-none">
+								<span class="bg-slate-900 rounded-none">Tags</span>
+								{#each quote.tags as tag}
 									<span
 										class="rounded-none badge badge-warning input-xs bg-slate-600 mx-1 text-sky-500 input-xs"
 										>{tag}</span
 									>
-									{/each}
-								</label>
+								{/each}
+							</label>
 						{/if}
 						{#if quote.context}
 							<label class="input-group input-group-xs rounded-none">
@@ -231,13 +246,21 @@
 							</label>
 						{/if}
 						{#if quote.details?.length}
+							DETAILS
 							{#each quote.details as detail}
-								DETAILS
-								<label class="input-group input-group-xs rounded-none">
-									<span class="bg-slate-900 rounded-none">{detail.type}</span>
-									<span class="rounded-none badge badge-info input-xs">{detail.value}</span>
-								</label>
+								{#if detail.type !== 'undefined'}
+									<label class="input-group input-group-xs rounded-none">
+										<span class="bg-slate-900 rounded-none">{detail.type}</span>
+										<span class="rounded-none badge badge-info input-xs">{detail.value}</span>
+									</label>
+								{/if}
 							{/each}
+						{/if}
+						{#if quote.remainingText?.length}
+							<label class="input-group input-group-xs rounded-none">
+								<span class="bg-slate-900 rounded-none">remainingText: </span>
+								<span class="rounded-none badge badge-info input-xs">{quote.remainingText}</span>
+							</label>
 						{/if}
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 import getAuthor from './getAuthor.js'
-
+let callCount = 0
 export const parse = (workingQuoteObject) => {
     console.log(`🚀 ~ file: parseQuotes.js ~ line 4 ~ parse ~ workingQuoteObject`, workingQuoteObject)
     // let { originalText, nextPart } = workingQuoteObject
@@ -103,9 +103,11 @@ function getQuoteAuthor(workingQuoteObject) {
 }
 
 function parseNextDetail(workingQuoteObject) {
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 106 ~ parseNextDetail ~ workingQuoteObject`, workingQuoteObject)
     let { remainingText, nextPart } = workingQuoteObject
     if (!remainingText) {
         workingQuoteObject['parsingComplete'] = true
+        console.log(`🚀 ~ file: parseQuotes.js ~ line 110 ~ parseNextDetail ~ workingQuoteObject['parsingComplete'] = true`, true)
         return workingQuoteObject
     }
     // console.log(`🚀 ~ file: parse.js ~ line 61 ~ parseNextDetail ~ remainingText`, remainingText)
@@ -121,10 +123,18 @@ function parseNextDetail(workingQuoteObject) {
 }
 
 function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
+    callCount++
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 127 ~ parseQuoteAuthorTitle ~ callCount`, callCount)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 126 ~ parseQuoteAuthorTitle ~ parseQuoteAuthorTitle`, )
     let title, text, nextPart
     text = workingQuoteObject['remainingText'].trim();
-    let splitText = text.split(",")
-    splitText
+    // let splitText = text.split(",")
+    let splitText = text.split(/,(.+)/)
+    if (splitText.length > 1) {
+        title = splitText[1].trim()
+        workingQuoteObject['title'] = title
+    }
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 129 ~ parseQuoteAuthorTitle ~ splitText`, splitText)
     let textEnd = text.length;
     text = Array.from(text).splice(separatorValue + 1, textEnd).join(String())
     separatorValue = findNextSeparatingCharacter(text);
@@ -138,10 +148,12 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
         text = false
     }
     workingQuoteObject.authorTitle?.push(title.trim())
-    workingQuoteObject.details?.push({ 'type': 'Author title', 'value': title })
+    // workingQuoteObject['authorTitle'].push(title.trim())
+    // workingQuoteObject.details?.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;
     // workingQuoteObject['parsingComplete'] = true
     // console.log(`🚀 ~ file: parseQuotes.svelte ~ line 281 ~ parseQuoteAuthorTitle ~ workingQuoteObject\n\n`, workingQuoteObject, `\n\n`)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 130 ~ parseQuoteAuthorTitle ~ title split `, title)
     return workingQuoteObject;
 }
 function parseQuoteAxiom(workingQuoteObject, separatorValue) {
@@ -188,8 +200,10 @@ function parseQuoteSource(workingQuoteObject, separatorValue) {
         .splice(start, end)
         .join(String())
         .trim();
-    start = source.length
+    start = source.length + 2
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 204 ~ parseQuoteSource ~ start`, start)
     end = text.length - 1
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 206 ~ parseQuoteSource ~ end`, end)
     remainingText = Array.from(text).splice(start, end).join(String()).trim()
     console.log(`🚀 ~ file: parse.js ~ line 284 ~ parseQuoteSource ~ remainingText`, remainingText)
     workingQuoteObject['remainingText'] = remainingText
@@ -283,17 +297,19 @@ function nextInstanceOfChar(text, charIndex) {
 }
 
 function nameNextPartOfQuote(remainingText, separatorValue) {
+    // console.log(`🚀 ~ file: parseQuotes.js ~ line 286 ~ nameNextPartOfQuote ~ separatorValue`, separatorValue)
+    // console.log(`🚀 ~ file: parseQuotes.js ~ line 286 ~ nameNextPartOfQuote ~ remainingText`, remainingText)
     let char = remainingText.charAt(separatorValue);
-    if (char == '(') {
-        let nextChar = nextInstanceOfChar(remainingText, separatorValue)
-        if (isLetter(nextChar)) {
-            return 'authorTitle'
-        }
-    }
+    // if (char == '(') {
+    //     let nextChar = nextInstanceOfChar(remainingText, separatorValue)
+    //     if (isLetter(nextChar)) {
+    //         return 'authorTitle'
+    //     }
+    // }
     switch (char) {
-        case '-':
-            return 'authorName';
-            break;
+        // case '-':
+        //     return 'authorName';
+        //     break;
         case ',':
             return 'authorTitle';
             break;

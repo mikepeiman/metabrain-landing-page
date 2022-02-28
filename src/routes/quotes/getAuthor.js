@@ -23,15 +23,17 @@ const getAuthor = (workingQuoteObject) => {
         let i2 = remainingText[separator.value]
         console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ i1, i2, separator`, i1, i2, separator)
 
-        author = Array.from(remainingText).splice(0, separator.value).join(String()).trim();
+         author = Array.from(remainingText).splice(0, separator.value).join(String()).trim();
         console.log(`🚀 ~ file: getAuthor.js ~ line 16 ~ getAuthor ~ author`, author)
 
         // author = Array.from(remainingText).splice(separator.value + 2, textEnd).join(String()).trim();
         remainingText = Array.from(remainingText).splice(separator.value, textEnd).join(String()).trim();
+        console.log(`🚀 ~ file: getAuthor.js ~ line 31 ~ getAuthor ~ remainingText`, remainingText)
         // console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
         workingQuoteObject['remainingText'] = remainingText
+        workingQuoteObject['author'] = author;
         // workingQuoteObject['author'] = remainingText
-        workingQuoteObject['parsingComplete'] = true
+        // workingQuoteObject['parsingComplete'] = true
     } else {
         console.log('parse.js line:45 separator', separator);
         // author = authorContainsDash(workingQuoteObject['remainingText'])
@@ -46,7 +48,7 @@ const getAuthor = (workingQuoteObject) => {
         console.log(`🚀 ~ file: getAuthor.js ~ line 46 ~ getAuthor ~ author`, author)
     }
     console.log(`🚀 ~ file: getAuthor.js ~ line 44 ~ getAuthor ~ findNextSeparatingCharacter(author)`, findNextSeparatingCharacter(author))
-    workingQuoteObject['author'] = author;
+    // workingQuoteObject['author'] = author;
     // console.log(`🚀 ~ file: parseQuotes.svelte ~ line 53 ~ parseQuoteAuthorName ~ author`, author)
     // console.log(`🚀 ~ file: parse.js ~ line 54 ~ getQuoteAuthor ~ remainingText`, remainingText)
     // console.log(`🚀 ~ file: parse.js ~ line 54 ~ getQuoteAuthor ~ workingQuoteObject`, workingQuoteObject)
