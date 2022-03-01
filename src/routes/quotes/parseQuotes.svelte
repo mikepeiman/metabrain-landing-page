@@ -26,7 +26,7 @@
 	$: if (fsFileContent) {
 		if (fsQuotesArray) {
 			filteredQuotes = quotes = JSON.parse(fsQuotesArray);
-			console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
+			// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
 			storedQuotesArray.set(quotes);
 			filteredQuotes = [...$addedQuotes, ...$quotesArray];
 		} else {
@@ -38,14 +38,14 @@
 	let contents = '';
 	let quotes = [];
 	let searchTerm = '';
-	let filteredQuotes = [];
+	export let filteredQuotes = [];
 	let multiLineQuote = 0;
 	let quotesArrays = [];
 	let filteredQuotesArrays = [];
 	let quotesObjects = [];
 	let filteredQuotesObjects = [];
 	$: {
-		console.log(`🚀 ~ file: parseQuotes.svelte ~ line 35 ~ addedQuotes`, $addedQuotes);
+		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 35 ~ addedQuotes`, $addedQuotes);
 		filteredQuotes = [...$addedQuotes, ...$quotesArray];
 		if (searchTerm) {
 			filteredQuotes = quotes.filter((quote) =>
