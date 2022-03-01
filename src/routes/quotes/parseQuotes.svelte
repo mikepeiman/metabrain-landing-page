@@ -125,7 +125,7 @@
 		// );
 		for (let i = 0; i < quotesArrays.length; i++) {
 			// if (i === 414 || i === 415 || i === 416 || i === 417 || i === 421 || i === 422) {
-			// if (i === 16 || i === 19 || i === 20 ) {
+			if (i === 145  || i === 146 ) {
 			// if (i === 26  ) {
 			// for (let i = 43; i < 57; i++) {
 			// for (let i = 16; i < 22; i++) {
@@ -149,7 +149,7 @@
 			// workingQuoteObject = parseQuoteText(workingQuoteObject);
 			// workingQuoteObject = parseQuoteRemainder(workingQuoteObject);
 			quotes = [...quotes, workingQuoteObject];
-		// }
+		}
 		}
 
 		storedQuotesArray.set(quotes);
@@ -262,12 +262,12 @@
 						{#if quote.authorTitle && quote.authorTitle.length}
 							<label class="input-group input-group-xs">
 								<span class="bg-slate-900">AuthorTitle</span>
-									 {#each quote.authorTitle as title} 
+									 <!-- {#each quote.authorTitle as title}  -->
 										<span
 											class="font-sans text-sm bg-black rounded-sm mx-1 text-fuchsia-400 input-xs"
 											>{quote.authorTitle}</span
 										>
-									 {/each} 
+									 <!-- {/each}  -->
 
 							</label>
 						{/if}

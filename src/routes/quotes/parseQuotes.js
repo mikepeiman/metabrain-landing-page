@@ -105,9 +105,16 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
     }
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 100 ~ parseQuoteAuthorTitle ~ title`, title)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 103 ~ parseQuoteAuthorTitle ~ workingQuoteObject.authorTitle`, workingQuoteObject.authorTitle)
-    workingQuoteObject.authorTitle = workingQuoteObject['title'] = [...workingQuoteObject.authorTitle , title]
-    workingQuoteObject.authorTitle[0].length < 1 ? workingQuoteObject.authorTitle = false : true
-    workingQuoteObject.title[0].length < 1 ? workingQuoteObject.title = false : true
+    workingQuoteObject['authorTitle'] = [...workingQuoteObject.authorTitle , title]
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 109 ~ parseQuoteAuthorTitle ~ workingQuoteObject['authorTitle'].length`, workingQuoteObject['authorTitle'].length)
+    workingQuoteObject['title'] = title
+    if(workingQuoteObject['authorTitle'].length > 1 ) {
+        let str = workingQuoteObject['authorTitle'].join(',').trim()
+        console.log(`🚀 ~ file: parseQuotes.js ~ line 113 ~ parseQuoteAuthorTitle ~ str`, str)
+        workingQuoteObject['title'] = str
+    }
+    // workingQuoteObject.authorTitle[0].length < 1 ? workingQuoteObject.authorTitle = false : true
+    // workingQuoteObject.title[0].length < 1 ? workingQuoteObject.title = false : true
     // workingQuoteObject['authorTitle'].push(title.trim())
     // workingQuoteObject.details?.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;
@@ -132,7 +139,7 @@ function parseQuoteAxiom(workingQuoteObject, separatorValue) {
         title = text
         text = false
     }
-    workingQuoteObject['authorTitle'] = title.trim();
+    workingQuoteObject['authorTitle'] = workingQuoteObject['title'] = title.trim();
     workingQuoteObject.details.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;
     return workingQuoteObject;

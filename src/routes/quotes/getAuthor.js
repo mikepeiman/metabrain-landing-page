@@ -37,7 +37,8 @@ const getAuthor = (workingQuoteObject) => {
         console.log(`🚀 ~ file: getAuthor.js ~ line 16 ~ getAuthor ~ author`, author)
 
         // author = Array.from(remainingText).splice(separator.value + 2, textEnd).join(String()).trim();
-        remainingText = Array.from(remainingText).splice(separator.value - 1, textEnd).join(String()).trim();
+        remainingText = Array.from(remainingText).splice(separator.value - 2, textEnd).join(String()).trim(); 
+        // must be value - 2 to capture separating character and properly parse next part
         console.log(`🚀 ~ file: getAuthor.js ~ line 31 ~ getAuthor ~ remainingText`, remainingText)
         // console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
         workingQuoteObject['remainingText'] = remainingText
