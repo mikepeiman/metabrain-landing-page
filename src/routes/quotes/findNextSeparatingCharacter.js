@@ -14,6 +14,7 @@ console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 4 ~ findNextSepa
     // console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 13 ~ findNextSeparatingCharacter ~ text`, text)
     separators.forEach(separator => {
         separator.value = text.indexOf(separator.openingChar)
+        // console.log(`🚀 ~ file: findNextSeparatingCharacter.js ~ line 17 ~ findNextSeparatingCharacter ~ text.indexOf(separator.openingChar)`, separator)
     })
     return getMinNotFalse(separators);
 }

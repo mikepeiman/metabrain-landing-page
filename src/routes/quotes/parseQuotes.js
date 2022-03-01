@@ -260,8 +260,8 @@ function nextInstanceOfChar(text, charIndex) {
 }
 
 function nameNextPartOfQuote(remainingText, separatorValue) {
-    // console.log(`🚀 ~ file: parseQuotes.js ~ line 286 ~ nameNextPartOfQuote ~ separatorValue`, separatorValue)
-    // console.log(`🚀 ~ file: parseQuotes.js ~ line 286 ~ nameNextPartOfQuote ~ remainingText`, remainingText)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 286 ~ nameNextPartOfQuote ~ separatorValue`, separatorValue)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 286 ~ nameNextPartOfQuote ~ remainingText`, remainingText)
     let char = remainingText.charAt(separatorValue);
     // if (char == '(') {
     //     let nextChar = nextInstanceOfChar(remainingText, separatorValue)

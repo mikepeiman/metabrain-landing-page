@@ -24,14 +24,15 @@
 		fsQuotesArray,
 		file = false;
 	$: if (fsFileContent) {
-		if (fsQuotesArray) {
-			filteredQuotes = quotes = JSON.parse(fsQuotesArray);
-			// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
-			storedQuotesArray.set(quotes);
-			filteredQuotes = [...$addedQuotes, ...$quotesArray];
-		} else {
-			parseFile(fsFileContent);
-		}
+		parseFile(fsFileContent); // use this is you want the old behavior
+		// if (fsQuotesArray) {
+		// 	filteredQuotes = quotes = JSON.parse(fsQuotesArray);
+		// 	console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
+		// 	storedQuotesArray.set(quotes);
+		// 	filteredQuotes = [...$addedQuotes, ...$quotesArray];
+		// } else {
+		// 	parseFile(fsFileContent);
+		// }
 	}
 	let addQuoteForm = false;
 	let input_file = [];
@@ -65,7 +66,7 @@
 		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 64 ~ onMount ~ fsFileContent`, fsFileContent);
 		fsQuotesArray = localStorage.getItem('quotesArray');
 		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ onMount ~ fsQuotesArray`, fsQuotesArray);
-		filteredQuotes = JSON.parse(fsQuotesArray);
+		// filteredQuotes = JSON.parse(fsQuotesArray);
 	});
 
 	function readFile(input_file) {
@@ -91,6 +92,7 @@
 			`🚀 ~ file: parseQuotes.svelte ~ line 87 ~ reParseFile ~ reParseFile, input_file`,
 			input_file
 		);
+		localStorage.setItem('quotesArray', []);
 		if (input_file) {
 			console.log(
 				`🚀 ~ file: parseQuotes.svelte ~ line 14 ~ reParseFile ~ input_file`,
@@ -116,15 +118,17 @@
 		const htmlDoc = parser.parseFromString(doc, 'text/html');
 		let divs = htmlDoc.getElementsByTagName('div');
 		quotesArrays = isolateQuotationBlocks(divs);
-		console.log(
-			`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ parseFile ~ quotesArrays`,
-			quotesArrays.length,
-			quotesArrays
-		);
+		// console.log(
+		// 	`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ parseFile ~ quotesArrays`,
+		// 	quotesArrays.length,
+		// 	quotesArrays
+		// );
 		for (let i = 0; i < quotesArrays.length; i++) {
 			// if (i === 414 || i === 415 || i === 416 || i === 417 || i === 421 || i === 422) {
+			if (i === 16 || i === 19 || i === 20 ) {
 			// for (let i = 43; i < 57; i++) {
-			// for (let i = 0; i < 61; i++) {
+			// for (let i = 16; i < 22; i++) {
+			// for (let i = 58; i < 61; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
@@ -145,7 +149,7 @@
 			// workingQuoteObject = parseQuoteRemainder(workingQuoteObject);
 			quotes = [...quotes, workingQuoteObject];
 		}
-		// }
+		}
 
 		storedQuotesArray.set(quotes);
 		// saveFile(quotes, "quotes.json")
@@ -225,6 +229,13 @@
 					class="card quote p-3 m-12 shadow-lg border border-2 border-gray-800 rounded-sm bg-gradient-to-br from-transparent via-gray-900  rounded-xl"
 				>
 					<div class="badge bg-gray-700">{i + 1}</div>
+					<label class="input-group input-group-xs rounded-none">
+						<span class="bg-slate-900 rounded-none">Original</span>
+						<span
+							class="rounded-none badge badge-warning input-xs bg-slate-900 text-sky-500 input-xs"
+							>{quote.originalText}</span
+						>
+					</label>
 					<h1 class="quote-body p-8 text-2xl">
 						<span class="quote-mark text-sky-300">&ldquo;</span>{@html quote.quoteBody}<span
 							class="quote-mark text-sky-300">&rdquo;</span
@@ -247,7 +258,7 @@
 								>
 							</label>
 						{/if}
-						<!-- {#if quote.authorTitle && quote.authorTitle.length}
+						{#if quote.authorTitle && quote.authorTitle.length}
 							<label class="input-group input-group-xs">
 								<span class="bg-slate-900">AuthorTitle</span>
 									 {#each quote.authorTitle as title} 
@@ -258,7 +269,7 @@
 									 {/each} 
 
 							</label>
-						{/if} -->
+						{/if}
 						{#if quote.date}
 							<label class="input-group input-group-xs rounded-none">
 								<span class="bg-slate-900 rounded-none">Date</span>

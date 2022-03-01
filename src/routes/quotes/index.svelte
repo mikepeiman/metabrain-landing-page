@@ -15,12 +15,12 @@
 	import { quotesArray } from '$stores/quotes';
 	import { onMount } from 'svelte';
 	let fq = [];
-	$: console.log(`🚀 ~ file: index.svelte ~ line 18 ~ fq`, fq);
+	// $: console.log(`🚀 ~ file: index.svelte ~ line 18 ~ fq`, fq);
 
 	export let quotes;
 	quotesArray.subscribe((quotes) => {
 		quotes = quotes;
-		console.log(`🚀 ~ file: index.svelte ~ line 20 ~ quotes`, quotes);
+		// console.log(`🚀 ~ file: index.svelte ~ line 20 ~ quotes`, quotes);
 	});
 	// onMount(() => {
 	// 	console.log(`🚀 ~ file: index.svelte ~ line 18 ~ fq`, fq);
