@@ -41,7 +41,7 @@ const getAuthor = (workingQuoteObject) => {
         console.log(`🚀 ~ file: getAuthor.js ~ line 31 ~ getAuthor ~ remainingText`, remainingText)
         // console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
         workingQuoteObject['remainingText'] = remainingText
-        workingQuoteObject['title'] = remainingText
+        // workingQuoteObject['title'] = remainingText
         workingQuoteObject['author'] = author;
         // workingQuoteObject['author'] = remainingText
         // workingQuoteObject['parsingComplete'] = true
