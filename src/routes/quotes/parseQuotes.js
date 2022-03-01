@@ -105,8 +105,9 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
     }
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 100 ~ parseQuoteAuthorTitle ~ title`, title)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 103 ~ parseQuoteAuthorTitle ~ workingQuoteObject.authorTitle`, workingQuoteObject.authorTitle)
-    workingQuoteObject.authorTitle = [...workingQuoteObject.authorTitle , title]
+    workingQuoteObject.authorTitle = workingQuoteObject['title'] = [...workingQuoteObject.authorTitle , title]
     workingQuoteObject.authorTitle[0].length < 1 ? workingQuoteObject.authorTitle = false : true
+    workingQuoteObject.title[0].length < 1 ? workingQuoteObject.title = false : true
     // workingQuoteObject['authorTitle'].push(title.trim())
     // workingQuoteObject.details?.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;

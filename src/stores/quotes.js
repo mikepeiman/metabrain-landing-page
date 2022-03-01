@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 
 const quotesFile = writable({})
 const fileContent = writable({})
-const quotesArray = writable([])
+export const quotesArray = writable([])
 export const addedQuotes = writable([])
 
 export const addQuote = (quote) => {

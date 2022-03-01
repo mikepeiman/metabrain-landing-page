@@ -10,6 +10,7 @@
 <script>
 	import {
 		storedQuotesFile,
+		quotesArray,
 		addedQuotes,
 		storedFileContent,
 		storedQuotesArray
@@ -18,11 +19,19 @@
 	import { parse } from './parseQuotes.js';
 
 	import AddQuote from './AddQuote.svelte';
-	// import { saveFile} from '$lib/save-file'
 
-	let fsFileContent;
+	let fsFileContent,
+		fsQuotesArray,
+		file = false;
 	$: if (fsFileContent) {
-		parseFile(fsFileContent);
+		if (fsQuotesArray) {
+			filteredQuotes = quotes = JSON.parse(fsQuotesArray);
+			console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
+			storedQuotesArray.set(quotes);
+			filteredQuotes = [...$addedQuotes, ...$quotesArray];
+		} else {
+			parseFile(fsFileContent);
+		}
 	}
 	let addQuoteForm = false;
 	let input_file = [];
@@ -37,26 +46,57 @@
 	let filteredQuotesObjects = [];
 	$: {
 		console.log(`🚀 ~ file: parseQuotes.svelte ~ line 35 ~ addedQuotes`, $addedQuotes);
-		filteredQuotes = [...$addedQuotes, ...quotes];
+		filteredQuotes = [...$addedQuotes, ...$quotesArray];
 		if (searchTerm) {
 			filteredQuotes = quotes.filter((quote) =>
-				quote.originalText.toLowerCase().includes(searchTerm.toLowerCase()) &&
-				quote.authorTitle !== null && quote.authorTitle !== undefined && quote.authorTitle.length > 0
+				quote.originalText.toLowerCase().includes(searchTerm.toLowerCase())
 			);
+			// quote.authorTitle !== null &&
+			// quote.authorTitle !== undefined &&
+			// quote.authorTitle.length > 0
 		} else {
-			let titledQuotes = quotes.filter(quote =>  quote.authorTitle.length > 0)
-			filteredQuotes = [...$addedQuotes, ...titledQuotes];
-
+			// let titledQuotes = quotes.filter(quote =>  quote.title.length > 0)
+			// filteredQuotes = [...$addedQuotes, ...titledQuotes];
+			filteredQuotes = [...$addedQuotes, ...$quotesArray];
 		}
 	}
 	onMount(() => {
 		fsFileContent = localStorage.getItem('fileContent');
+		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 64 ~ onMount ~ fsFileContent`, fsFileContent);
+		fsQuotesArray = localStorage.getItem('quotesArray');
+		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ onMount ~ fsQuotesArray`, fsQuotesArray);
+		filteredQuotes = JSON.parse(fsQuotesArray);
 	});
 
 	function readFile(input_file) {
 		if (input_file) {
 			console.log(`🚀 ~ file: parseQuotes.svelte ~ line 14 ~ readFile ~ input_file`, input_file[0]);
-			let file = input_file[0];
+			file = input_file[0];
+			var reader = new FileReader();
+			reader.onload = function (event) {
+				contents = event.target.result;
+				console.log('Successfully read file');
+				storedFileContent.set(contents);
+				parseFile(contents);
+			};
+			reader.onerror = function (err) {
+				console.error('Failed to read file', err);
+			};
+			reader.readAsText(file);
+		}
+	}
+
+	function reParseFile(input_file) {
+		console.log(
+			`🚀 ~ file: parseQuotes.svelte ~ line 87 ~ reParseFile ~ reParseFile, input_file`,
+			input_file
+		);
+		if (input_file) {
+			console.log(
+				`🚀 ~ file: parseQuotes.svelte ~ line 14 ~ reParseFile ~ input_file`,
+				input_file[0]
+			);
+			file = input_file[0];
 			var reader = new FileReader();
 			reader.onload = function (event) {
 				contents = event.target.result;
@@ -82,8 +122,9 @@
 			quotesArrays
 		);
 		for (let i = 0; i < quotesArrays.length; i++) {
-		// for (let i = 43; i < 57; i++) {
-		// for (let i = 0; i < 61; i++) {
+			// if (i === 414 || i === 415 || i === 416 || i === 417 || i === 421 || i === 422) {
+			// for (let i = 43; i < 57; i++) {
+			// for (let i = 0; i < 61; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
@@ -104,6 +145,8 @@
 			// workingQuoteObject = parseQuoteRemainder(workingQuoteObject);
 			quotes = [...quotes, workingQuoteObject];
 		}
+		// }
+
 		storedQuotesArray.set(quotes);
 		// saveFile(quotes, "quotes.json")
 	}
@@ -170,6 +213,9 @@
 				>Add New Quote</button
 			>
 		{/if}
+		<button class="p-4 rounded bg-indigo-600 m-3" on:click={reParseFile(file)}
+			>Re-parse quotes file</button
+		>
 	</div>
 
 	<div class="quotes">
@@ -201,30 +247,18 @@
 								>
 							</label>
 						{/if}
-						{#if quote.authorTitle && quote.authorTitle.length}
+						<!-- {#if quote.authorTitle && quote.authorTitle.length}
 							<label class="input-group input-group-xs">
 								<span class="bg-slate-900">AuthorTitle</span>
-									<!-- {#each quote.authorTitle as title} -->
+									 {#each quote.authorTitle as title} 
 										<span
 											class="font-sans text-sm bg-black rounded-sm mx-1 text-fuchsia-400 input-xs"
 											>{quote.authorTitle}</span
 										>
-									<!-- {/each} -->
+									 {/each} 
 
 							</label>
-						{/if}
-						{#if quote.authorTitleType && quote.authorTitle.length}
-							<label class="input-group input-group-xs">
-								<span class="bg-slate-900">AuthorTitle</span>
-									<!-- {#each quote.authorTitle as title} -->
-										<span
-											class="font-sans text-sm bg-black rounded-sm mx-1 text-fuchsia-400 input-xs"
-											>{quote.authorTitleType}</span
-										>
-									<!-- {/each} -->
-
-							</label>
-						{/if}
+						{/if} -->
 						{#if quote.date}
 							<label class="input-group input-group-xs rounded-none">
 								<span class="bg-slate-900 rounded-none">Date</span>
@@ -262,7 +296,7 @@
 								>
 							</label>
 						{/if}
-						{#if quote.details?.length}
+						<!-- {#if quote.details?.length}
 							DETAILS
 							{#each quote.details as detail}
 								{#if detail.type !== 'undefined'}
@@ -278,7 +312,7 @@
 								<span class="bg-slate-900 rounded-none">remainingText: </span>
 								<span class="rounded-none badge badge-info input-xs">{quote.remainingText}</span>
 							</label>
-						{/if}
+						{/if} -->
 					</div>
 				</div>
 			{/each}
