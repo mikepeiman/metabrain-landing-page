@@ -142,7 +142,9 @@ function parseQuoteDate(workingQuoteObject, separatorValue) {
     remainingText.trim()
     let textEnd = remainingText.length;
     let date = Array.from(remainingText).splice(separatorValue + 1, textEnd - separatorValue - 2).join(String());
-    workingQuoteObject['date'] = date
+    let test = hasNumber(date)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 146 ~ parseQuoteDate ~ test`, test)
+    test ? workingQuoteObject['date'] = date : workingQuoteObject['context'] = date
     let remainderStart = textEnd - date.length
     console.log(`🚀 ~ file: parse.js ~ line 193 ~ parseQuoteDate ~ date`, date)
     remainingText = Array.from(remainingText).splice(separatorValue, textEnd).join(String());
@@ -150,6 +152,10 @@ function parseQuoteDate(workingQuoteObject, separatorValue) {
     workingQuoteObject['parsingComplete'] = true
     return workingQuoteObject;
 }
+
+function hasNumber(myString) {
+    return /\d/.test(myString);
+  }
 function parseQuoteSource(workingQuoteObject, separatorValue) {
     let { remainingText } = workingQuoteObject
     let text = workingQuoteObject['remainingText'].trim();

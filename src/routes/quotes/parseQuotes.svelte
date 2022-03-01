@@ -125,7 +125,8 @@
 		// );
 		for (let i = 0; i < quotesArrays.length; i++) {
 			// if (i === 414 || i === 415 || i === 416 || i === 417 || i === 421 || i === 422) {
-			if (i === 16 || i === 19 || i === 20 ) {
+			// if (i === 16 || i === 19 || i === 20 ) {
+			// if (i === 26  ) {
 			// for (let i = 43; i < 57; i++) {
 			// for (let i = 16; i < 22; i++) {
 			// for (let i = 58; i < 61; i++) {
@@ -148,7 +149,7 @@
 			// workingQuoteObject = parseQuoteText(workingQuoteObject);
 			// workingQuoteObject = parseQuoteRemainder(workingQuoteObject);
 			quotes = [...quotes, workingQuoteObject];
-		}
+		// }
 		}
 
 		storedQuotesArray.set(quotes);
