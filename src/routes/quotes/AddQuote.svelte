@@ -1,19 +1,19 @@
 <script context="module">
-	export const load = async ({ fetch }) => {
-		const res = await fetch('/quotes.dgraph.json');
-		// console.log(`🚀 ~ file: quotes AddQuote component ~ line 4 ~ load ~ res`, res)
-		if (res.ok) {
-			const { quotes } = await res.json();
-			console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ quotes`, quotes);
-			return { props: { quotes } };
-		}
-	};
+	// export const load = async ({ fetch }) => {
+	// 	const res = await fetch('/quotes.dgraph.json');
+	// 	// console.log(`🚀 ~ file: quotes AddQuote component ~ line 4 ~ load ~ res`, res)
+	// 	if (res.ok) {
+	// 		const { quotes } = await res.json();
+	// 		console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ quotes`, quotes);
+	// 		return { props: { quotes } };
+	// 	}
+	// };
 </script>
 
 <script>
 	import { addQuote } from '$stores/quotes.js';
 	import { onMount } from 'svelte';
-	export let quotes;
+	export let quotes, dgraph_quotes;
 	let quoteBody, author, context, tags, source;
 	const handleSubmit = () => {
 		console.log(
@@ -37,7 +37,10 @@
 	};
 
 	onMount(() => {
-		console.log(`🚀 ~ file: AddQuote.svelte ~ line 42 ~ onMount ~ quotes`, quotes);
+		// console.log(`🚀 ~ file: AddQuote.svelte ~ line 42 ~ onMount ~ quotes`, quotes);
+    // quotes.forEach(quote => {
+    //   addQuote(quote);
+    // });
 	});
 
 	function endpoint() {
@@ -47,8 +50,12 @@
 
 		if (res.ok) {
 			const { dgraph_quotes } = await res.json();
-			console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ quotes`, dgraph_quotes);
-			return { props: { quotes } };
+			console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
+      dgraph_quotes.forEach(quote => {
+      console.log(`🚀 ~ file: AddQuote.svelte ~ line 73 ~ endpoint ~ quote`, quote)
+      addQuote(quote);
+    });
+			return { props: { dgraph_quotes } };
 		}
 	};
 		// const fire = async () => {
@@ -64,6 +71,7 @@
 		// 	}
 		// };
 		fire();
+
 	}
 </script>
 
