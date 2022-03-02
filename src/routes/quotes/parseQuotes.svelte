@@ -125,9 +125,14 @@
 		// );
 		for (let i = 0; i < quotesArrays.length; i++) {
 			// if (i === 414 || i === 415 || i === 416 || i === 417 || i === 421 || i === 422) {
-			if (i === 145  || i === 146 ) {
+			// if (i === 145  || i === 146 ) {
 			// if (i === 26  ) {
 			// for (let i = 43; i < 57; i++) {
+				// look at 201, niemoller, with <br> at end
+				// look at 206 with the long context "oft quoted as"
+				// look at 262, @yeebingeebin
+				// check on 570, samurai carpenter, see if tags are corrected
+				// 620, tags knowledge management in paranethesis
 			// for (let i = 16; i < 22; i++) {
 			// for (let i = 58; i < 61; i++) {
 			// 54-64 gives the meical journal quotes
@@ -150,7 +155,7 @@
 			// workingQuoteObject = parseQuoteRemainder(workingQuoteObject);
 			quotes = [...quotes, workingQuoteObject];
 		}
-		}
+		// }
 
 		storedQuotesArray.set(quotes);
 		// saveFile(quotes, "quotes.json")

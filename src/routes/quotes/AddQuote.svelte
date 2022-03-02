@@ -1,5 +1,19 @@
+<script context="module">
+	export const load = async ({ fetch }) => {
+		const res = await fetch('/quotes.dgraph.json');
+		// console.log(`🚀 ~ file: quotes AddQuote component ~ line 4 ~ load ~ res`, res)
+		if (res.ok) {
+			const { quotes } = await res.json();
+			console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ quotes`, quotes);
+			return { props: { quotes } };
+		}
+	};
+</script>
+
 <script>
 	import { addQuote } from '$stores/quotes.js';
+	import { onMount } from 'svelte';
+	export let quotes;
 	let quoteBody, author, context, tags, source;
 	const handleSubmit = () => {
 		console.log(
@@ -10,18 +24,47 @@
 			tags,
 			source
 		);
-    tags = tags.split(',').map(tag => tag.trim());
-    console.log(`🚀 ~ file: AddQuote.svelte ~ line 14 ~ handleSubmit ~ tags`, tags)
-    let quote = {
-      quoteBody,
-      author,
-      context,
-      tags,
-      source
-    };
+		tags = tags.split(',').map((tag) => tag.trim());
+		console.log(`🚀 ~ file: AddQuote.svelte ~ line 14 ~ handleSubmit ~ tags`, tags);
+		let quote = {
+			quoteBody,
+			author,
+			context,
+			tags,
+			source
+		};
 		addQuote(quote);
-    }
-	
+	};
+
+	onMount(() => {
+		console.log(`🚀 ~ file: AddQuote.svelte ~ line 42 ~ onMount ~ quotes`, quotes);
+	});
+
+	function endpoint() {
+		const fire = async () => {
+		const res = await fetch('/quotes.dgraph.json');
+    console.log(`🚀 ~ file: AddQuote.svelte ~ line 46 ~ fire ~ res`, res)
+
+		if (res.ok) {
+			const { dgraph_quotes } = await res.json();
+			console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ quotes`, dgraph_quotes);
+			return { props: { quotes } };
+		}
+	};
+		// const fire = async () => {
+		// 	const res = await fetch(`/quotes.dgraph.json`);
+		// 	console.log(`🚀 ~ file: index.svelte ~ line 112 ~ fire ~ res`, res);
+		// 	if (res.ok) {
+		// 		console.log(`🚀 ~ file: index.svelte ~ line 112 ~ fire ~ res`, res);
+		// 		const { data } = await res.json();
+		// 		console.log(`🚀 ~ file: index.svelte ~ line 114 ~ fire ~ data`, data);
+		// 		return { props: { data } };
+		// 	} else {
+		// 		return 'there was an error';
+		// 	}
+		// };
+		fire();
+	}
 </script>
 
 <div class="p-10 card bg-base-200 w-full">
@@ -29,7 +72,12 @@
 		<label class="label w-full">
 			<span>Quote</span>
 		</label>
-		<input type="text" placeholder="Quote" class="input input-group max-w-xs" bind:value={quoteBody} />
+		<input
+			type="text"
+			placeholder="Quote"
+			class="input input-group max-w-xs"
+			bind:value={quoteBody}
+		/>
 		<label class="label">
 			<span class="label-text">Author</span>
 		</label>
@@ -50,6 +98,11 @@
 			type="submit"
 			class="p-3 rounded bg-green-800 hover:bg-green-700 mt-4"
 			on:click={handleSubmit}>Add Quote</button
+		>
+		<button
+			type="submit"
+			class="p-3 rounded bg-blue-800 hover:bg-blue-700 mt-4"
+			on:click={() => endpoint()}>Get DGraph quotes</button
 		>
 	</div>
 </div>

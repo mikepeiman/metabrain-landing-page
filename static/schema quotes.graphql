@@ -1,0 +1,25 @@
+type Quote {
+  id: ID
+  quoteBody: String! @search(by: [fulltext])
+  originalText: String! @search(by: [fulltext])
+  author: Author
+  tags: [Tag] @hasInverse(field:quotes)
+  context: String
+  date: DateTime
+  source: String
+}
+
+type Tag {
+  id: ID
+  name: String! @search(by: [fulltext])
+  quotes: [Quote] @hasInverse(field:tags)
+}
+
+type Author {
+  id: ID
+  name: String! @search(by: [fulltext])
+  quotes: [Quote] @hasInverse(field:author)
+  yearBorn: DateTime
+  yearDied: DateTime
+  title: String @search(by: [fulltext])
+}
