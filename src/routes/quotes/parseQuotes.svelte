@@ -194,6 +194,27 @@
 	function showAddQuoteForm() {
 		addQuoteForm = true;
 	}
+
+	function getDgraphQuotes() {
+		const fire = async () => {
+			try {
+				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
+				const res = await fetch(`/quotes.dgraph.getQuote?queryType="getAllQuotes"`);
+				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
+				if (res.ok) {
+					const { dgraph_quotes } = await res.json();
+					console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
+					return { props: { dgraph_quotes } };
+				}
+			} catch (error) {
+				console.log(`🚀 ~ DisplayQuotes called getQuote.json endpoint: error`, error);
+				return {
+					body: { error: 'There was a server error' }
+				};
+			}
+		};
+		fire();
+	}
 </script>
 
 <div class=" quotes-wrapper flex flex-col w-full bg-black">
@@ -226,6 +247,9 @@
 		{/if}
 		<button class="p-4 rounded bg-indigo-600 m-3" on:click={reParseFile(file)}
 			>Re-parse quotes file</button
+		>
+		<button class="p-4 rounded bg-indigo-600 m-3" on:click={getDgraphQuotes}
+			>Get dgraph quotes</button
 		>
 	</div>
 

@@ -20,21 +20,45 @@ const getAllQuotes = gql`query MyQuery {
 
 
 export const get = async ({ url }) => {
-console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 23 ~ get ~ url`, url)
-  try {
-    let id = url.searchParams.get("data")
-        let data = JSON.parse(id)
-    console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 26 ~ get ~ id`, id)
-    const getQuoteById = gql`query MyQuery {
-      queryQuote(filter: {id: "${data}"}) {
+  console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 23 ~ get ~ url`, url)
+  let queryType = JSON.parse(url.searchParams.get("queryType"))
+  console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 25 ~ get ~ queryType`, queryType)
+  let query, id
+  if (queryType === "getQuoteById") {
+    id = url.searchParams.get("data")
+    query = gql`query MyQuery {
+      queryQuote(filter: {id: "${id}"}) {
         quoteBody
     }}`
-    // let data = JSON.parse(id)
-    const graphQuery = getQuoteById
-    console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 35 ~ get ~ graphQuery`, graphQuery)
-    await client.request(graphQuery).then((res) => {
+  }
+  if (queryType === "getQuoteByAuthor") {
+    author = url.searchParams.get("data")
+    query = gql`query MyQuery {
+      queryQuote(filter: {author: {name: ${authorName}}}) {
+        quoteBody
+      }}`
+  }
+  if (queryType === "getAllQuotes") {
+    console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 42 ~ queryQuote ~ queryType === "getAllQuotes"`, queryType === "getAllQuotes")
+    query = gql`query MyQuery {
+    queryQuote {
+      id
+      quoteBody
+      author {
+        name
+      }
+      tags {
+        name
+      }
+    }
+  }
+`
+  }
+
+  try {
+    await client.request(query).then((res) => {
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res)
-       data = res.queryQuote
+      data = res.queryQuote
     })
     return {
       status: 200,

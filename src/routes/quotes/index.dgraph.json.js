@@ -4,16 +4,16 @@ import { gql, request } from 'graphql-request'
 
 console.log(`calling index.dgraph.json.js`)
 const getAllQuotes = gql`query MyQuery {
-  queryQuote {
-    id
-    quoteBody
-    author {
-      name
+    queryQuote {
+      id
+      quoteBody
+      author {
+        name
+      }
+      tags {
+        name
+      }
     }
-    tags {
-      name
-    }
-  }
   }
 `
 export const get = async () => {

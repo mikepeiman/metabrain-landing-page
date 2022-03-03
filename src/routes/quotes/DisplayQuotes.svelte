@@ -22,7 +22,7 @@
 		const fire = async () => {
 			try {
 				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
-				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(id)}`);
+				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(id)}&queryType="getQuoteById"`);
 				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
 				if (res.ok) {
 					const { dgraph_quotes } = await res.json();
