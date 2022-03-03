@@ -1,11 +1,22 @@
 <script>
     export let quote, i
+    import Icon from '@iconify/svelte';
+    let icons =       {
+            edit: 'akar-icons:edit'
+    }
+
+    const handleEdit = (i) => {
+        console.log(`edit ${i}`)
+    }
 </script>
 
 <div
 class="card quote p-3 m-12 shadow-lg border border-2 border-gray-800 rounded-sm bg-gradient-to-br from-transparent via-gray-900  rounded-xl"
 >
-<div class="badge bg-gray-700">{i + 1}</div>
+<div class="flex justify-between">
+    <div class="count badge bg-gray-700">{i + 1}</div>
+    <div class="edit-quote hover:cursor-pointer" on:click={() => handleEdit(i)}><Icon icon={icons.edit} class="w-8 h-8 ml-2 -mt-1" /></div>
+</div>
 <label class="input-group input-group-xs rounded-none">
     <span class="bg-slate-900 rounded-none">Original</span>
     <span
