@@ -61,18 +61,6 @@
 			return { props: { dgraph_quotes } };
 		}
 	};
-		// const fire = async () => {
-		// 	const res = await fetch(`/quotes.dgraph.json`);
-		// 	console.log(`🚀 ~ file: index.svelte ~ line 112 ~ fire ~ res`, res);
-		// 	if (res.ok) {
-		// 		console.log(`🚀 ~ file: index.svelte ~ line 112 ~ fire ~ res`, res);
-		// 		const { data } = await res.json();
-		// 		console.log(`🚀 ~ file: index.svelte ~ line 114 ~ fire ~ data`, data);
-		// 		return { props: { data } };
-		// 	} else {
-		// 		return 'there was an error';
-		// 	}
-		// };
 		fire();
 
 	}
