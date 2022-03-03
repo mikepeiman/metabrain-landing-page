@@ -1,4 +1,5 @@
 import { client } from '$lib/dgraph-client'
+console.log(`🚀 ~ file: index.dgraph.json.js ~ line 2 ~ client`, client)
 import { gql, request } from 'graphql-request'
 
 console.log(`calling index.dgraph.json.js`)
@@ -9,10 +10,14 @@ const getAllQuotes = gql`query MyQuery {
     author {
       name
     }
+    tags {
+      name
+    }
   }
   }
 `
 export const get = async () => {
+  console.log(`🚀 ~ file: index.dgraph.json.js ~ line 7 ~ getAllQuotes`, getAllQuotes)
   try {
     const query = getAllQuotes
     await client.request(query).then((data) => {

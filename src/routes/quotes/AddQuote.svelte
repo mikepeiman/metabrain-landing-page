@@ -11,30 +11,33 @@
 </script>
 
 <script>
-	import { addQuote } from '$stores/quotes.js';
+	import { addQuote, uploadQuote } from '$stores/quotes.js';
 	import { onMount } from 'svelte';
+  import { gql, request } from 'graphql-request'
+  import { client } from '$lib/dgraph-client'
 	export let quotes, dgraph_quotes;
-	let quoteBody, author, context, tags, source;
+	let quoteBody, authorName, authorTitle, context, tags, source, originalText
 	const handleSubmit = () => {
-		console.log(
-			`🚀 ~ file: AddQuote.svelte ~ line 4 ~ quote, author, context, tags, source`,
-			quoteBody,
-			author,
-			context,
-			tags,
-			source
-		);
-		tags = tags.split(',').map((tag) => tag.trim());
+    originalText = `${quoteBody} - ${authorName}, ${authorTitle} @(${context}), #(${tags}), [${source}]`
+
+		tags ? tags = tags.split(',').map((tag) => tag.trim()) : null
 		console.log(`🚀 ~ file: AddQuote.svelte ~ line 14 ~ handleSubmit ~ tags`, tags);
 		let quote = {
-			quoteBody,
-			author,
+      originalText,
+      quoteBody,
+			authorName,
+      authorTitle,
 			context,
 			tags,
 			source
 		};
 		addQuote(quote);
+		uploadQuote(quote);
 	};
+
+  let addQuoteMutation = gql`mutation MyMutation {
+  addQuote(input: {quoteBody: "", originalText: "", author: {}})
+}`
 
 	onMount(() => {
 		// console.log(`🚀 ~ file: AddQuote.svelte ~ line 42 ~ onMount ~ quotes`, quotes);
@@ -52,7 +55,7 @@
 			const { dgraph_quotes } = await res.json();
 			console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
       dgraph_quotes.forEach(quote => {
-      console.log(`🚀 ~ file: AddQuote.svelte ~ line 73 ~ endpoint ~ quote`, quote)
+      // console.log(`🚀 ~ file: AddQuote.svelte ~ line 73 ~ endpoint ~ quote`, quote)
       addQuote(quote);
     });
 			return { props: { dgraph_quotes } };
@@ -87,9 +90,13 @@
 			bind:value={quoteBody}
 		/>
 		<label class="label">
-			<span class="label-text">Author</span>
+			<span class="label-text">Author Name</span>
 		</label>
-		<input type="text" placeholder="Author" class="input" bind:value={author} />
+		<input type="text" placeholder="Author" class="input" bind:value={authorName} />
+		<label class="label">
+			<span class="label-text">Author Title</span>
+		</label>
+		<input type="text" placeholder="Author" class="input" bind:value={authorTitle} />
 		<label class="label">
 			<span class="label-text">Context</span>
 		</label>

@@ -1,14 +1,40 @@
 import { writable } from "svelte/store";
-
+import { client } from '$lib/dgraph-client'
+import { gql, request } from 'graphql-request'
 const quotesFile = writable({})
 const fileContent = writable({})
 export const quotesArray = writable([])
 export const addedQuotes = writable([])
 
 export const addQuote = (quote) => {
-console.log(`🚀 ~ file: quotes.js ~ line 9 ~ addQuote ~ quote`, quote)
+    console.log(`🚀 ~ file: quotes.js ~ line 9 ~ addQuote ~ quote`, quote)
     addedQuotes.update((cur) => [...cur, quote])
     console.log(`🚀 ~ file: quotes.js ~ line 11 ~ addQuote ~ addedQuotes`, addedQuotes)
+}
+
+export const uploadQuote = async (quote) => {
+    let dgraph_quotes
+    console.log(`🚀 ~ file: quotes.js ~ line 16 ~ uploadQuote ~ quote`, quote)
+    const query = gql`mutation MyMutation {
+            addQuote(input: {quoteBody: "${quote.quoteBody}", originalText: "${quote.originalText}", author: {name: "${quote.author}"}})
+            { numUids}
+          }`
+    console.log(`🚀 ~file: quotes.js ~line 19 ~uploadQuote ~query`, query)
+    // try {
+    await client.request(query).then((data) => {
+        console.log(`🚀 ~ file: index.dgraph.json.js ~ line 18 ~ awaitclient.request ~ data`, data)
+        dgraph_quotes = data.queryQuote
+        console.log(`🚀 ~ file: index.dgraph.json.js ~ line 19 ~ awaitclient.request ~ dgraph_quotes`, dgraph_quotes)
+    })
+    return {
+        status: 200,
+        body: { dgraph_quotes }
+    }
+    // } catch (error) {
+    //     return {
+    //         body: { error: 'There was a server error' }
+    //     }
+    // }
 }
 
 export const deleteQuote = (id) => {
@@ -18,7 +44,34 @@ export const deleteQuote = (id) => {
     })
 }
 
-
+export const getAllQuotesFromDB = async () => {
+    try {
+        const query = getAllQuotes
+        await client.request(query).then((data) => {
+            console.log(`🚀 ~ file: index.dgraph.json.js ~ line 18 ~ awaitclient.request ~ data`, data)
+            dgraph_quotes = data.queryTodo
+            console.log(`🚀 ~ file: index.dgraph.json.js ~ line 19 ~ awaitclient.request ~ dgraph_quotes`, dgraph_quotes)
+        })
+        return {
+            status: 200,
+            body: { dgraph_quotes }
+        }
+    } catch (error) {
+        return {
+            body: { error: 'There was a server error' }
+        }
+    }
+}
+const getAllQuotes = gql`query MyQuery {
+    queryQuote {
+      id
+      quoteBody
+      author {
+        name
+      }
+    }
+    }
+  `
 
 
 export const storedQuotesFile = {

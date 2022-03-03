@@ -76,7 +76,7 @@
 	let res = query(getQuotes);
 	// let res = query(deleteTestQuotes)
 
-	console.log(`🚀 ~ file: index.json.js ~ line 38 ~ res`, res);
+	console.log(`🚀 ~ file: index.json.js ~ line 38 ~ res from urql query getQuotes: `, res);
 
 	// export let data;
 
@@ -92,7 +92,7 @@
 			console.log(`🚀 ~ file: index.svelte ~ line 80 ~ submitQuote ~ error`, error);
 		}
 
-		addNewQuote({ quoteBody: quote.quoteBody, authorName: quote.quoteAuthor }).then((res) => {
+		addNewQuote({ quoteBody: quote.quoteBody, authorName: quote.author }).then((res) => {
 			console.log(`addNewQuote: `, res.data, res.error);
 		});
 		// const res1 = mutateQuotes({ quote });
@@ -109,25 +109,27 @@
 	const data = {
 		"data": [
 			{
-				"quoteBody": 'Test 777',
+				"quoteBody": 'Test March 1, 2022 something new',
 				"author": {
 					"name": 'A',
 					"titleLong": ''
 				},
 				"context": 'apples',
 				"tags": {
-					"tag": 'apples'
+					"tag": 'freedom',
+					"tag": 'truth'
 				}
 			},
 			{
-				"quoteBody": 'Test 888',
+				"quoteBody": 'Test March 1, 2022 the SECOND PART',
 				"author": {
 					"name": 'B',
 					"titleLong": ''
 				},
 				"context": 'oranges',
 				"tags": {
-					"tag": 'oranges'
+					"tag": 'oranges',
+					"tag": 'apples'
 				}
 			}
 		]

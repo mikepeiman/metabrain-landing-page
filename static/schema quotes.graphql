@@ -23,3 +23,25 @@ type Author {
   yearDied: DateTime
   title: String @search(by: [fulltext])
 }
+
+...
+
+{
+ queryQuote {
+ 	author {
+ 			name
+      id
+ 	}
+  tags {
+  	 id
+     name
+    }
+ }
+}
+
+mutation MyMutation {
+  deleteQuote(filter: {}) {
+    msg
+    numUids
+  }
+}
