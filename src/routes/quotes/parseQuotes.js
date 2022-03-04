@@ -9,7 +9,7 @@ export const parse = (workingQuoteObject) => {
 
         workingQuoteObject = getQuoteBody(workingQuoteObject)
     }
-    if (!workingQuoteObject['author']) {
+    if (!workingQuoteObject['author']['name']) {
         console.log(`🚀 ~ file: parseQuotes.js ~ line 8 ~ parse ~ need author`)
         workingQuoteObject = getAuthor(workingQuoteObject)
     }
@@ -83,7 +83,7 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
     let splitText = text.split(/,(.+)/)
     if (splitText.length > 1) {
         title = splitText[1].trim()
-        workingQuoteObject['title'] = title
+        workingQuoteObject['author']['title'] = title
     }
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 86 ~ parseQuoteAuthorTitle ~ title`, title)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 129 ~ parseQuoteAuthorTitle ~ splitText`, splitText)
@@ -96,7 +96,7 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
     workingQuoteObject['nextPart'] = nextPart
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 95 ~ parseQuoteAuthorTitle ~ nextPart`, nextPart)
     nextPart === "axiom" && splitText !== "axiom" ? workingQuoteObject['parsingComplete'] = true : workingQuoteObject['parsingComplete'] = false
-    if (nextPart && !workingQuoteObject['parsingComplete'] ) {
+    if (nextPart && !workingQuoteObject['parsingComplete']) {
         title = Array.from(text).splice(1, separatorValue - 1).join(String()).trim();
         workingQuoteObject['remainingText'] = text = Array.from(text).splice(separatorValue, textEnd).join(String());
     } else {
@@ -105,17 +105,18 @@ function parseQuoteAuthorTitle(workingQuoteObject, separatorValue) {
     }
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 100 ~ parseQuoteAuthorTitle ~ title`, title)
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 103 ~ parseQuoteAuthorTitle ~ workingQuoteObject.authorTitle`, workingQuoteObject.authorTitle)
-    workingQuoteObject['authorTitle'] = [...workingQuoteObject.authorTitle , title]
-    console.log(`🚀 ~ file: parseQuotes.js ~ line 109 ~ parseQuoteAuthorTitle ~ workingQuoteObject['authorTitle'].length`, workingQuoteObject['authorTitle'].length)
-    workingQuoteObject['title'] = title
-    if(workingQuoteObject['authorTitle'].length > 1 ) {
-        let str = workingQuoteObject['authorTitle'].join(',').trim()
+    workingQuoteObject['author']['title'] = [...workingQuoteObject.authorTitle, title]
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 109 ~ parseQuoteAuthorTitle ~ workingQuoteObject['author']['title'].length`, workingQuoteObject['author']['title'].length)
+    console.log(`🚀 ~ file: parseQuotes.js ~ line 109 ~ parseQuoteAuthorTitle ~ workingQuoteObject['author']['title']`, workingQuoteObject['author']['title'])
+    workingQuoteObject['author']['title'] = title
+    if (Array.isArray(workingQuoteObject['author']['title'])) {
+        let str = workingQuoteObject['author']['title'].join(',').trim()
         console.log(`🚀 ~ file: parseQuotes.js ~ line 113 ~ parseQuoteAuthorTitle ~ str`, str)
-        workingQuoteObject['title'] = str
+        workingQuoteObject['author']['title'] = str
     }
     // workingQuoteObject.authorTitle[0].length < 1 ? workingQuoteObject.authorTitle = false : true
     // workingQuoteObject.title[0].length < 1 ? workingQuoteObject.title = false : true
-    // workingQuoteObject['authorTitle'].push(title.trim())
+    // workingQuoteObject['author']['title'].push(title.trim())
     // workingQuoteObject.details?.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;
     // workingQuoteObject['parsingComplete'] = true
@@ -139,7 +140,7 @@ function parseQuoteAxiom(workingQuoteObject, separatorValue) {
         title = text
         text = false
     }
-    workingQuoteObject['authorTitle'] = workingQuoteObject['title'] = title.trim();
+    workingQuoteObject['author']['title'] = title.trim();
     workingQuoteObject.details.push({ 'type': 'Author title', 'value': title })
     workingQuoteObject['remainingText'] = text;
     return workingQuoteObject;
@@ -162,7 +163,7 @@ function parseQuoteDate(workingQuoteObject, separatorValue) {
 
 function hasNumber(myString) {
     return /\d/.test(myString);
-  }
+}
 function parseQuoteSource(workingQuoteObject, separatorValue) {
     let { remainingText } = workingQuoteObject
     let text = workingQuoteObject['remainingText'].trim();

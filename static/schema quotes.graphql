@@ -45,3 +45,39 @@ mutation MyMutation {
     numUids
   }
 }
+
+...
+mutation UpsertQuote($quote: [AddQuoteInput!]!) {
+  addQuote(input: $quote, upsert: true) {
+    quote {
+      id
+      quoteBody
+      originalText
+      author {
+        name
+        title
+      }
+      tags {
+        name
+      }
+      source
+    }
+  }
+}
+
+
+{
+  "quote": {
+    "quoteBody": "Life is a dream, and the journey of mastery is about waking up.",
+    "originalText": "Life is a dream...",
+    "author": {
+      "name": "Michael Peiman",
+      "title": "Single father seeker of truth and wisdom"
+    },
+    "tags": {
+      "name": "second tag",
+      "name": "wisdom"
+    },
+    "source": "my introspective mind"
+  }
+}

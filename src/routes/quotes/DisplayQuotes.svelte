@@ -3,7 +3,8 @@
 	import Icon from '@iconify/svelte';
 	let icons = {
 		edit: 'akar-icons:edit',
-		question: 'akar-icons:question'
+		question: 'akar-icons:question',
+        upload: 'ant-design:cloud-upload-outlined',
 	};
 
 	const handleEdit = (i) => {
@@ -23,6 +24,28 @@
 			try {
 				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
 				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(id)}&queryType="getQuoteById"`);
+				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
+				if (res.ok) {
+					const { dgraph_quotes } = await res.json();
+					console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
+					return { props: { dgraph_quotes } };
+				}
+			} catch (error) {
+				console.log(`🚀 ~ DisplayQuotes called getQuote.json endpoint: error`, error);
+				return {
+					body: { error: 'There was a server error' }
+				};
+			}
+		};
+		fire();
+	}
+
+    function upsertQuote(quote) {
+    console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 44 ~ upsertQuote ~ quote`, quote)
+		const fire = async () => {
+			try {
+				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
+				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(quote)}&queryType="upsertQuote"`);
 				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
 				if (res.ok) {
 					const { dgraph_quotes } = await res.json();
@@ -68,6 +91,9 @@
 			<div class="edit-quote hover:cursor-pointer" on:click={() => handleEdit(i)}>
 				<Icon icon={icons.edit} class="w-8 h-8 ml-2 -mt-1" />
 			</div>
+			<div class="edit-quote hover:cursor-pointer" on:click={() => upsertQuote(quote)}>
+				<Icon icon={icons.upload} class="w-8 h-8 ml-2 -mt-1" />
+			</div>
 		</div>
 	</div>
 	<label class="input-group input-group-xs rounded-none">
@@ -92,22 +118,20 @@
 				>{quote.author.name ? quote.author.name : quote.author}</span
 			>
 		</label>
-		{#if quote.title}
+		{#if quote.author.title}
 			<label class="input-group input-group-xs">
 				<span class="bg-slate-900">Title</span>
-				<span class="badge badge-success bg-slate-900 text-sky-400 input-xs">{quote.title}</span>
+				<span class="badge badge-success bg-slate-900 text-sky-400 input-xs">{quote.author.title}</span>
 			</label>
 		{/if}
-		{#if quote.authorTitle && quote.authorTitle.length}
+		<!-- {#if quote.authorTitle && quote.authorTitle.length}
 			<label class="input-group input-group-xs">
 				<span class="bg-slate-900">AuthorTitle</span>
-				<!-- {#each quote.authorTitle as title}  -->
 				<span class="font-sans text-sm bg-black rounded-sm mx-1 text-fuchsia-400 input-xs"
 					>{quote.authorTitle}</span
 				>
-				<!-- {/each}  -->
 			</label>
-		{/if}
+		{/if} -->
 		{#if quote.date}
 			<label class="input-group input-group-xs rounded-none">
 				<span class="bg-slate-900 rounded-none">Date</span>

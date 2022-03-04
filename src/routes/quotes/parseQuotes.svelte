@@ -144,6 +144,10 @@
 			let workingQuoteObject = {};
 			workingQuoteObject['originalText'] = workingQuoteObject['remainingText'] = item;
 			workingQuoteObject['details'] = [];
+			workingQuoteObject['author'] = {
+				name: '',
+				title: '',
+			};
 			workingQuoteObject['authorTitle'] = [];
 			workingQuoteObject['title'] = '';
 			workingQuoteObject['tags'] = [];
