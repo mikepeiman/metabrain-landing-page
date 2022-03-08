@@ -33,12 +33,6 @@ const deleteAllQuotes = gql`
   }
   `
 
-{
-  "data" [
-
-  ]
-}
-
 
 // a data format that work in the dgraph ql explorer to add quotes
 // {

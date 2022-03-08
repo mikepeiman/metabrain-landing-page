@@ -1,35 +1,35 @@
-import { Client, Entity, Schema, Repository } from 'redis-om'
+// import { Client, Entity, Schema, Repository } from 'redis-om'
 
-// initialize redis client
-const client = new Client()
+// // initialize redis client
+// const client = new Client()
 
-async function connect() {
-    if (!client.isOpen()) {
-        await client.open(process.env.REDIS_URL)
-    }
-}
+// async function connect() {
+//     if (!client.isOpen()) {
+//         await client.open(process.env.REDIS_URL)
+//     }
+// }
 
-class Hero extends Entity {
-let schema = new Schema(
-    Hero,
-    {
-        name: { type: 'string' },
-        attribute: { type: 'string' },
-        hitpoints: { type: 'number' },
-        strength: { type: 'number' },
-        dexterity: { type: 'number' },
-        intelligence: { type: 'number' },
-    },
-    dataStructure: 'JSON'
-)
-}
+// // class Hero extends Entity {
+// let schema = new Schema(
+//     Hero,
+//     {
+//         name: { type: 'string' },
+//         attribute: { type: 'string' },
+//         hitpoints: { type: 'number' },
+//         strength: { type: 'number' },
+//         dexterity: { type: 'number' },
+//         intelligence: { type: 'number' },
+//     },
+//     dataStructure: 'JSON'
+// )
+// // }
 
-export async function createHero(data) {
-    await connect()
+// export async function createHero(data) {
+//     await connect()
 
-    const repository = new Repository(schema, client)
+//     const repository = new Repository(schema, client)
 
-    const hero = repository.createEntity(data)
+//     const hero = repository.createEntity(data)
 
-    const id = await repository.save(hero)
-}
+//     const id = await repository.save(hero)
+// }

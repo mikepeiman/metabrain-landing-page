@@ -1,11 +1,12 @@
 import preprocess from 'svelte-preprocess';
 import path from 'path'
 import { normalizePath } from 'vite'
-import adaptorVercel from '@sveltejs/adapter-vercel';
-// import adaptorNode from '@sveltejs/adapter-node';
-// import adaptorStatic from '@sveltejs/adapter-static';
+import adapterVercel from '@sveltejs/adapter-vercel';
+import adapterNode from '@sveltejs/adapter-node';
+import adapterStatic from '@sveltejs/adapter-static';
 import Icons from 'unplugin-icons/vite'
 import { promises as fs } from 'fs'
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 // loader helpers
 import { FileSystemIconLoader } from 'unplugin-icons/loaders' 
 
@@ -15,9 +16,9 @@ const config = {
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
-		adapter: adaptorVercel(),
-		// adapter: adaptorNode({ out: 'public'}),
-		// adapter: adaptorStatic(),
+		adapter: adapterVercel(),
+		// adapter: adapterNode({ out: 'public'}),
+		// adapter: adapterStatic(),
 		files: {
 			assets: 'static'
 		},
@@ -47,7 +48,15 @@ const config = {
 				noExternal: ['@urql/svelte'], // does this need the @ symbol?
 				noExternal: ['@k-vyn/coloralgorithm'], // does this need the @ symbol?
 			},
+			// build: {
+			// 	rollupOptions: {
+			// 		plugins: [
+			// 			dynamicImportVars(),
+			// 		]
+			// 	}
+			// },
 			plugins: [
+				// dynamicImportVars(),
 				Icons({
 					compiler: 'svelte',
 					customCollections: {
