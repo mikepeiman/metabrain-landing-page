@@ -15,7 +15,6 @@ const config = {
 	// root: normalizePath(path.resolve('./')),
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte',
 		adapter: adapterVercel(),
 		// adapter: adapterNode({ out: 'public'}),
 		// adapter: adapterStatic(),
