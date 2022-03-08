@@ -16,10 +16,7 @@
 </script> -->
 
 <script>
-    import { page } from '$app/stores'
-    
-    console.log(`🚀 ~ file: Todos.svelte ~ line 16 ~ $page`, $page)
-    // console.log(`🚀 ~ file: Todos.svelte ~ line 15 ~ props`, props)
+
 	export let todos, source, stodos, dtodos
     console.log(`🚀 ~ file: Todos.svelte ~ line 24 ~ stodos, dtodos`, stodos, dtodos)
     console.log(`🚀 ~ file: Todos.svelte ~ line 13 ~ source`, source)

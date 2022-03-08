@@ -5,6 +5,7 @@
 		edit: 'akar-icons:edit',
 		question: 'akar-icons:question',
         upload: 'ant-design:cloud-upload-outlined',
+        upsert: 'clarity:upload-outline-badged'
 	};
 
 	const handleEdit = (i) => {
@@ -40,12 +41,12 @@
 		fire();
 	}
 
-    function upsertQuote(quote) {
-    console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 44 ~ upsertQuote ~ quote`, quote)
+    function uploadQuote(quote, operationType) {
+    console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 44 ~ uploadQuote ~ operationType ${operationType}, quote`, quote)
 		const fire = async () => {
 			try {
 				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
-				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(quote)}&queryType="upsertQuote"`);
+				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(quote)}&queryType="${operationType}"`);
 				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
 				if (res.ok) {
 					const { dgraph_quotes } = await res.json();
@@ -91,8 +92,11 @@
 			<div class="edit-quote hover:cursor-pointer" on:click={() => handleEdit(i)}>
 				<Icon icon={icons.edit} class="w-8 h-8 ml-2 -mt-1" />
 			</div>
-			<div class="edit-quote hover:cursor-pointer" on:click={() => upsertQuote(quote)}>
+			<div class="edit-quote hover:cursor-pointer" on:click={() => uploadQuote(quote, "addQuote")}>
 				<Icon icon={icons.upload} class="w-8 h-8 ml-2 -mt-1" />
+			</div>
+			<div class="edit-quote hover:cursor-pointer" on:click={() => uploadQuote(quote, "upsertQuote")}>
+				<Icon icon={icons.upsert} class="w-8 h-8 ml-2 -mt-1" />
 			</div>
 		</div>
 	</div>

@@ -61,7 +61,7 @@ export const get = async ({ url }) => {
   }
 `
   }
-  if (queryType === "upsertQuote") {
+  if (queryType === "upsertQuote" || queryType === "addQuote") {
     quote = data
     // quote.date === "" || quote.date === "undefined" || quote.date === undefined ? quote.date = "" : quote.date
     // new Date().toISOString()
@@ -72,7 +72,7 @@ export const get = async ({ url }) => {
         "originalText": "${quote.quoteBody} - ${quote.author.name}, ${quote.author.title} [${quote.source}] @(${quote.tags})",
         "quoteBody": "${quote.quoteBody}",
         "author": {
-          "name": "${quote.author.name}",
+          "name": "${quote.author.name.trim()}",
           "title": "${quote.author.title}"
         },
         "date": "${quote.date}",
@@ -84,54 +84,31 @@ export const get = async ({ url }) => {
       }
   }
   `
+  payload2 = `
+  {
+    "quote":
+    {
+      "originalText": "${quote.quoteBody} - ${quote.author.name}, ${quote.author.title} [${quote.source}] @(${quote.tags})",
+      "quoteBody": "${quote.quoteBody}",
+      "author": {
+        "name": "${quote.author.name.trim()}",
+        "title": "${quote.author.title}"
+      },
+      "date": "${quote.date}",
+      "context": "${quote.context}",
+      "tags": [${quote.tags}],
+      "source": {
+        "name": "${quote.source}"
+      }
+    }
+}
+`
 
-  // mutation DeleteSources {
-  //   deleteSource(filter: {}) {
-  //     msg
-  //     numUids
-  //   }
-  // }
-  
-  // mutation DeleteAllQuotes {
-  //   deleteQuote(filter: {}) {
-  //     msg
-  //     numUids
-  //   }
-  // }
-  
-  // mutation DeleteAllAuthors {
-  //   deleteAuthor(filter: {}) {
-  //     msg
-  //     numUids
-  //   }
-  // }
-  
-  // mutation DeleteAllTags {
-  //   deleteTag(filter: {}) {
-  //     msg
-  //     numUids
-  //   }
-  // }
-  
-  //   payload = `
-  //   {
-  //     "quote":
-  //     {
-  //       "originalText": ${quote.originalText},
-  //       "quoteBody": ${quote.quoteBody},
-  //       "author": {
-  //         "name": ${quote.author.name},
-  //         "title": ${quote.author.title}
-  //       },
-  //       "tags": [${quote.tags}],
-  //       "source": ${quote.source}
-  //     }
-  // }
-  // `
   console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 62 ~ get ~ payload`, payload)
     payload = JSON.parse(payload)
     console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 64 ~ get ~ payload`, payload)
     console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 60 ~ get ~ quote`, quote)
+  if(queryType === "upsertQuote"){
 
     query = gql`mutation UpsertQuote($quote: [AddQuoteInput!]!) {
       addQuote(input: $quote, upsert: true) {
@@ -150,9 +127,32 @@ export const get = async ({ url }) => {
             name
           }
         }
-      }
+      } 
     },
     `
+    } else if (queryType === "addQuote") {
+      // query = gql`mutation AddQuote($quote: [AddQuoteInput!]!) {
+      //   addQuote(input: $quote) {
+      //     quote {
+      //       id
+      //       quoteBody
+      //       originalText
+      //       author {
+      //         name
+      //         title
+      //       }
+      //       tags {
+      //         name
+      //       }
+      //       source {
+      //         name
+      //       }
+      //     }
+      //   }
+      // },
+      // `
+      query = gql`mutation newQuote(body: "${quote.quoteBody}")`
+    }
   }
   let varQuote = `{
     "quote": 
@@ -174,12 +174,12 @@ export const get = async ({ url }) => {
   varQuote = JSON.parse(varQuote)
 
   try {
-    await client.request(query, payload).then((res) => {
+    await client.request(query).then((res) => {
       console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 103 ~ awaitclient.request ~ payload`, payload)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res.length)
       data = res.queryQuote
-      queryType === "upsertQuote" ? data = res.addQuote.quote : data = res.queryQuote
+      queryType === "upsertQuote" || queryType === "addQuote" ? data = res.addQuote.quote : data = res.queryQuote
       console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 141 ~ awaitclient.request ~ data`, data)
     })
     return {
@@ -193,3 +193,21 @@ export const get = async ({ url }) => {
     }
   }
 }
+
+// example script for server, here for reference, modified to Quotes from https://dgraph.io/docs/graphql/lambda/mutation/
+// async function newQuote({args, graphql}) {
+//   const results = await graphql(`mutation ($body: String!) {
+//       addQuote(input: [{quoteBody: $body, name: "Mike Peiman" }]) {
+//           quote {
+//               id
+//               name
+//               quoteBody
+//           }
+//       }
+//   }`, {"body": args.name})
+//   return results.data.addQuote.quote[0].id
+// }
+
+// self.addGraphQLResolvers({
+//   "Mutation.newQuote": newQuote
+// })

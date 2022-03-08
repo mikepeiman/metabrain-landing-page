@@ -4,11 +4,11 @@
 	import '../../app.scss';
 	import Nav from '$components/Nav.svelte';
 	import { page } from '$app/stores';
-	$: params = $page.params;
+	// $: params = $page.params;
 	$: path = $page.url.pathname;
 	$: path;
 	$: console.log(`🚀 ~ file: __layout.svelte ~ line 10 ~ path`, path.split('/').length);
-	$: console.log(`🚀 ~ file: __layout.svelte ~ line 9 ~ params`, params);
+	// $: console.log(`🚀 ~ file: __layout.svelte ~ line 9 ~ params`, params);
 </script>
 
 {#if path.split('/').length > 2}
