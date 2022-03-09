@@ -131,50 +131,32 @@ export const get = async ({ url }) => {
     },
     `
     } else if (queryType === "addQuote") {
-      // query = gql`mutation AddQuote($quote: [AddQuoteInput!]!) {
-      //   addQuote(input: $quote) {
-      //     quote {
-      //       id
-      //       quoteBody
-      //       originalText
-      //       author {
-      //         name
-      //         title
-      //       }
-      //       tags {
-      //         name
-      //       }
-      //       source {
-      //         name
-      //       }
-      //     }
-      //   }
-      // },
-      // `
-      query = gql`mutation newQuote(body: "${quote.quoteBody}")`
+      query = gql`mutation AddQuote($quote: [AddQuoteInput!]!) {
+        addQuote(input: $quote) {
+          quote {
+            id
+            quoteBody
+            originalText
+            author {
+              name
+              title
+            }
+            tags {
+              name
+            }
+            source {
+              name
+            }
+          }
+        }
+      },
+      `
+      // query = gql`mutation newQuote(body: "${quote.quoteBody}")`
     }
   }
-  let varQuote = `{
-    "quote": 
-      {
-        "quoteBody": "What a second, is this working on Friday morning?",
-        "originalText": "Getting uploads! It's Friday, March 04, 2022",
-        "author": {
-          "name": "Michael Peiman",
-          "title": "Single father seeker of truth and wisdom"
-        },
-        "tags": {
-          "name": "third tag",
-          "name": "morning"
-        },
-        "source": "my introspective mind"
-  }
-}
-  `
-  varQuote = JSON.parse(varQuote)
 
   try {
-    await client.request(query).then((res) => {
+    await client.request(query, payload).then((res) => {
       console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 103 ~ awaitclient.request ~ payload`, payload)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res.length)
