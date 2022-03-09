@@ -15,7 +15,6 @@ const config = {
 	// root: normalizePath(path.resolve('./')),
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte',
 		adapter: adapterVercel(),
 		// adapter: adapterNode({ out: 'public'}),
 		// adapter: adapterStatic(),
@@ -42,7 +41,7 @@ const config = {
 			},
 			optimizeDeps: {
 				exclude: ['@urql/svelte'],
-				exclude: ['@k-vyn/coloralgorithm	'],
+				exclude: ['@k-vyn/coloralgorithm', 'local-access'],
 			},
 			ssr: {
 				noExternal: ['@urql/svelte'], // does this need the @ symbol?
