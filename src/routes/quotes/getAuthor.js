@@ -12,8 +12,18 @@ const getAuthor = (workingQuoteObject) => {
     // let separator = findNextSeparatingCharacter(remainingText);
     // console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ separator`, separator)
     if (remainingText && remainingText.includes("-")) {
+        console.log(`🚀 ~ file: getAuthor.js ~ line 15 ~ getAuthor ~ remainingText`, remainingText)
+        console.log(`🚀 ~ file: getAuthor.js ~ line 18 ~ getAuthor ~ author`, author)
         console.log(`🚀 ~ file: getAuthor.js ~ line 12 ~ getAuthor ~ remainingText && remainingText.includes("-")`, remainingText && remainingText.includes("-"))
-        author = remainingText = remainingText.split(/-(.+)/)[1]
+        if (remainingText.split(/-(.+)/)[1]) {
+            console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ remainingText.split(/-(.+)/)[1]`, remainingText.split(/-(.+)/)[1])
+            author = remainingText.split(/-(.+)/)[1]
+
+        } else {
+
+            author = remainingText.split("-")[1]
+        }
+        console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ authorafter regex split`, author)
         author = author.trim()
         author.replace(/\s{2,}/g, ' ');
         // author = remainingText = remainingText.split("-")[1]
@@ -35,12 +45,12 @@ const getAuthor = (workingQuoteObject) => {
         let i2 = remainingText[separator.value]
         console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ i1, i2, separator`, i1, i2, separator)
 
-         author = Array.from(author).splice(0, separator.value ).join(String()).trim();
-         author.replace(/\s{2,}/g, ' ');
+        author = Array.from(author).splice(0, separator.value).join(String()).trim();
+        author.replace(/\s{2,}/g, ' ');
         console.log(`🚀 ~ file: getAuthor.js ~ line 16 ~ getAuthor ~ author`, author)
 
         // author = Array.from(remainingText).splice(separator.value + 2, textEnd).join(String()).trim();
-        remainingText = Array.from(remainingText).splice(separator.value - 2, textEnd).join(String()).trim(); 
+        remainingText = Array.from(remainingText).splice(separator.value - 2, textEnd).join(String()).trim();
         // must be value - 2 to capture separating character and properly parse next part
         console.log(`🚀 ~ file: getAuthor.js ~ line 31 ~ getAuthor ~ remainingText`, remainingText)
         // console.log(`🚀 ~ file: parseQuotes.js ~ line 79 ~ getQuoteAuthor ~ remainingText`, remainingText)
@@ -53,12 +63,12 @@ const getAuthor = (workingQuoteObject) => {
         console.log('parse.js line:45 separator', separator);
         // author = authorContainsDash(workingQuoteObject['remainingText'])
         // author = authorContainsDash(remainingText)
-        workingQuoteObject['author']['name'] =  author.replace(/\s{2,}/g, ' ');
+        workingQuoteObject['author']['name'] = author.replace(/\s{2,}/g, ' ');
         workingQuoteObject['remainingText'] = false
         workingQuoteObject['parsingComplete'] = true
     }
     let checkAuthor = findNextSeparatingCharacter(author)
-    if(checkAuthor){
+    if (checkAuthor) {
         workingQuoteObject['author']['name'] = author = author.split(checkAuthor.openingChar)[0].trim()
         console.log(`🚀 ~ file: getAuthor.js ~ line 46 ~ getAuthor ~ author`, author)
     }
