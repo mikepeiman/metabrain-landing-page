@@ -10,11 +10,12 @@
 </script>
 
 <script>
+	import { quotesArray, getAllQuotesFromDB } from '$stores/quotes';
 	import Quotes from '$components/Quotes.svelte';
 	import ParseQuotes from './parseQuotes.svelte';
 	import AddQuote from './AddQuote.svelte';
-	import { quotesArray } from '$stores/quotes';
 	import { onMount } from 'svelte';
+	import DisplayQuotes from './DisplayQuotes.svelte';
 	let fq = [];
 	// $: console.log(`🚀 ~ file: index.svelte ~ line 18 ~ fq`, fq);
 
@@ -29,9 +30,13 @@
 		// 	// }, 30);
 		// });
 	});
-	// onMount(() => {
-	// 	console.log(`🚀 ~ file: index.svelte ~ line 18 ~ fq`, fq);
-	// }
+	onMount(async () => {
+		// 	console.log(`🚀 ~ file: index.svelte ~ line 18 ~ fq`, fq);
+		let dbQuotes = await getAllQuotesFromDB();
+		console.log(`🚀 ~ file: index.svelte ~ line 35 ~ onMount ~ dbQuotes`, dbQuotes);
+		quotesArray.set(dbQuotes.body.dgraph_quotes);
+		// console.log(`🚀 ~ file: index.svelte ~ line 36 ~ //onMount ~ $getAllQuotesFromDB`, $getAllQuotesFromDB)
+	});
 
 	function uploadQuote(quote, operationType) {
 		console.log(
@@ -62,7 +67,19 @@
 </script>
 
 <div class="flex w-full h-full justify-start">
-	<ParseQuotes bind:filteredQuotes={fq} />
+	<div class="quotes">
+		{#if quotes}
+			{#if quotes.length}
+				{#each quotes as quote, i}
+					<DisplayQuotes {quote} {i} />
+				{/each}
+			{:else}
+				loading index...
+			{/if}
+		{/if}
+	</div>
+
+	<ParseQuotes bind:filteredQuotes={fq}  />
 	<!-- <Quotes {quotes} /> -->
 	<!-- <AddQuote /> -->
 </div>

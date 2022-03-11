@@ -13,7 +13,8 @@
 		quotesArray,
 		addedQuotes,
 		storedFileContent,
-		storedQuotesArray
+		storedQuotesArray,
+		getAllQuotesFromDB
 	} from '$stores/quotes.js';
 	import { onMount } from 'svelte';
 	import DisplayQuotes from './DisplayQuotes.svelte'
@@ -23,6 +24,7 @@
 
 	let fsFileContent,
 		fsQuotesArray,
+		dbQuotes,
 		file = false;
 	$: if (fsFileContent) {
 		// parseFile(fsFileContent); // use this is you want the old behavior
@@ -44,6 +46,13 @@
 			parseFile(fsFileContent);
 		}
 	}
+	$: if (dbQuotes){
+        console.log(`🚀 ~ file: parseQuotes.svelte ~ line 50 ~ dbQuotes`, dbQuotes)
+		storedQuotesArray.set(dbQuotes.body.dgraph_quotes);
+		filteredQuotes = dbQuotes.body.dgraph_quotes
+        console.log(`🚀 ~ file: parseQuotes.svelte ~ line 52 ~ dbQuotes.body.dgraph_quotes`, dbQuotes.body.dgraph_quotes)
+	}
+
 	let addQuoteForm = false;
 	let input_file = [];
 	let contents = '';
@@ -71,10 +80,13 @@
 			filteredQuotes = [...$addedQuotes, ...$quotesArray];
 		}
 	}
-	onMount(() => {
+	onMount(async () => {
 		fsFileContent = localStorage.getItem('fileContent');
 		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 64 ~ onMount ~ fsFileContent`, fsFileContent);
 		fsQuotesArray = localStorage.getItem('quotesArray');
+
+		dbQuotes = await getAllQuotesFromDB();
+		quotesArray.set(dbQuotes.body.dgraph_quotes);
 		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ onMount ~ fsQuotesArray`, fsQuotesArray);
 		// $quotesArray.forEach((quote) => {
 		// 	uploadQuote(quote, "addQuote")
@@ -304,6 +316,7 @@
 				>Add New Quote</button
 			>
 		{/if}
+		<!-- {#if !dbQuotes?.body?.dgraph_quotes}
 		<button class="p-4 rounded bg-indigo-600 m-3" on:click={reParseFile(file)}
 			>Re-parse quotes file</button
 		>
@@ -313,10 +326,11 @@
 		<button class="p-4 rounded bg-indigo-600 m-3" on:click={addQuotesToDgraph}
 			>Add many quotes to dgraph</button
 		>
+		{/if} -->
 	</div>
 
 	<div class="quotes">
-		{#if quotes.length}
+		{#if filteredQuotes.length}
 			{#each filteredQuotes as quote, i}
 		<DisplayQuotes quote={quote} i={i} />
 			{/each}

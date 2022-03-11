@@ -45,11 +45,12 @@ export const deleteQuote = (id) => {
 }
 
 export const getAllQuotesFromDB = async () => {
+    let dgraph_quotes
     try {
         const query = getAllQuotes
         await client.request(query).then((data) => {
             console.log(`🚀 ~ file: index.dgraph.json.js ~ line 18 ~ awaitclient.request ~ data`, data)
-            dgraph_quotes = data.queryTodo
+            dgraph_quotes = data.queryQuote
             console.log(`🚀 ~ file: index.dgraph.json.js ~ line 19 ~ awaitclient.request ~ dgraph_quotes`, dgraph_quotes)
         })
         return {
@@ -58,7 +59,7 @@ export const getAllQuotesFromDB = async () => {
         }
     } catch (error) {
         return {
-            body: { error: 'There was a server error' }
+            body: { error: 'There was a server error: ', error }
         }
     }
 }

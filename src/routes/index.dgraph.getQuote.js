@@ -22,10 +22,13 @@ const getAllQuotes = gql`query MyQuery {
 export const get = async ({ url }) => {
   console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 23 ~ get ~ url`, url)
   let queryType = JSON.parse(url.searchParams.get("queryType"))
+  console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 25 ~ get ~ queryType`, queryType)
   let data = JSON.parse(url.searchParams.get("data"))
   let payload
   console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 25 ~ get ~ queryType & data: `, queryType, data)
   let query, id, quote
+
+
   if (queryType === "getQuoteById") {
     id = data
     query = gql`query MyQuery {
@@ -162,7 +165,7 @@ export const get = async ({ url }) => {
   }
 
   try {
-    await client.request(query, payload).then((res) => {
+    await client.request(getAllQuotes).then((res) => {
       console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 103 ~ awaitclient.request ~ payload\n\n`, payload)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res\n\n`, res)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res\n\n`, res.length)
