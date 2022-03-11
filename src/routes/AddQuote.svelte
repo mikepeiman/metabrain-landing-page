@@ -13,20 +13,19 @@
 <script>
 	import { addQuote, uploadQuote } from '$stores/quotes.js';
 	import { onMount } from 'svelte';
-  import { gql, request } from 'graphql-request'
-  import { client } from '$lib/dgraph-client'
+	import { gql, request } from 'graphql-request';
+	import { client } from '$lib/dgraph-client';
 	export let quotes, dgraph_quotes;
-	let quoteBody, authorName, authorTitle, context, tags, source, originalText
+	let quoteBody, authorName, authorTitle, context, tags, source, originalText;
 	const handleSubmit = () => {
-    originalText = `${quoteBody} - ${authorName}, ${authorTitle} @(${context}), #(${tags}), [${source}]`
-
-		tags ? tags = tags.split(',').map((tag) => tag.trim()) : null
+		originalText = `${quoteBody} - ${authorName}, ${authorTitle} @(${context}), #(${tags}), [${source}]`;
+		tags ? (tags = tags.split(',').map((tag) => tag.trim())) : null;
 		console.log(`🚀 ~ file: AddQuote.svelte ~ line 14 ~ handleSubmit ~ tags`, tags);
 		let quote = {
-      originalText,
-      quoteBody,
+			originalText,
+			quoteBody,
 			authorName,
-      authorTitle,
+			authorTitle,
 			context,
 			tags,
 			source
@@ -35,34 +34,29 @@
 		uploadQuote(quote);
 	};
 
-  let addQuoteMutation = gql`mutation MyMutation {
-  addQuote(input: {quoteBody: "", originalText: "", author: {}})
-}`
-
 	onMount(() => {
 		// console.log(`🚀 ~ file: AddQuote.svelte ~ line 42 ~ onMount ~ quotes`, quotes);
-    // quotes.forEach(quote => {
-    //   addQuote(quote);
-    // });
+		quotes.forEach(quote => {
+		  addQuote(quote);
+		});
 	});
 
 	function endpoint() {
 		const fire = async () => {
-		const res = await fetch('/quotes.dgraph.json');
-    console.log(`🚀 ~ file: AddQuote.svelte ~ line 46 ~ fire ~ res`, res)
+			const res = await fetch('/quotes.dgraph.json');
+			console.log(`🚀 ~ file: AddQuote.svelte ~ line 46 ~ fire ~ res`, res);
 
-		if (res.ok) {
-			const { dgraph_quotes } = await res.json();
-			console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
-      dgraph_quotes.forEach(quote => {
-      // console.log(`🚀 ~ file: AddQuote.svelte ~ line 73 ~ endpoint ~ quote`, quote)
-      addQuote(quote);
-    });
-			return { props: { dgraph_quotes } };
-		}
-	};
+			if (res.ok) {
+				const { dgraph_quotes } = await res.json();
+				console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
+				dgraph_quotes.forEach((quote) => {
+					// console.log(`🚀 ~ file: AddQuote.svelte ~ line 73 ~ endpoint ~ quote`, quote)
+					addQuote(quote);
+				});
+				return { props: { dgraph_quotes } };
+			}
+		};
 		fire();
-
 	}
 </script>
 

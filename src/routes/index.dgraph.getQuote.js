@@ -84,25 +84,7 @@ export const get = async ({ url }) => {
       }
   }
   `
-  payload2 = `
-  {
-    "quote":
-    {
-      "originalText": "${quote.quoteBody} - ${quote.author.name}, ${quote.author.title} [${quote.source}] @(${quote.tags})",
-      "quoteBody": "${quote.quoteBody}",
-      "author": {
-        "name": "${quote.author.name.trim()}",
-        "title": "${quote.author.title}"
-      },
-      "date": "${quote.date}",
-      "context": "${quote.context}",
-      "tags": [${quote.tags}],
-      "source": {
-        "name": "${quote.source}"
-      }
-    }
-}
-`
+
 
   console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 62 ~ get ~ payload`, payload)
     payload = JSON.parse(payload)
@@ -130,7 +112,8 @@ export const get = async ({ url }) => {
       } 
     },
     `
-    } else if (queryType === "addQuote") {
+    } 
+     if (queryType === "addQuote" || queryType === "addManyQuotes") {
       query = gql`mutation AddQuote($quote: [AddQuoteInput!]!) {
         addQuote(input: $quote) {
           quote {
@@ -152,24 +135,47 @@ export const get = async ({ url }) => {
       },
       `
       // query = gql`mutation newQuote(body: "${quote.quoteBody}")`
-    }
+    }       
+  }
+  if (queryType === "addManyQuotes") {
+    data
+    console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 161 ~ get ~ addManyQuotes data`, data)
+    payload = `
+    {
+      "quote":
+      {
+        "originalText": "${quote.quoteBody} - ${quote.author.name}, ${quote.author.title} [${quote.source}] @(${quote.tags})",
+        "quoteBody": "${quote.quoteBody}",
+        "author": {
+          "name": "${quote.author.name.trim()}",
+          "title": "${quote.author.title}"
+        },
+        "date": "${quote.date}",
+        "context": "${quote.context}",
+        "tags": [${quote.tags}],
+        "source": {
+          "name": "${quote.source}"
+        }
+      }
+  }
+  `
   }
 
   try {
     await client.request(query, payload).then((res) => {
-      console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 103 ~ awaitclient.request ~ payload`, payload)
-      console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res)
-      console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res`, res.length)
+      console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 103 ~ awaitclient.request ~ payload\n\n`, payload)
+      console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res\n\n`, res)
+      console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitclient.request ~ res\n\n`, res.length)
       data = res.queryQuote
       queryType === "upsertQuote" || queryType === "addQuote" ? data = res.addQuote.quote : data = res.queryQuote
-      console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 141 ~ awaitclient.request ~ data`, data)
+      console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 141 ~ awaitclient.request ~ data\n\n`, data)
     })
     return {
       status: 200,
       body: { data }
     }
   } catch (error) {
-    console.log(`🚀 ~ file: index.json.js ~ line 123 ~ get ~ error`, error)
+    console.log(`🚀 ~ file: index.dgraph.json.js ~ line 123 ~ get ~ error`, error)
     return {
       body: { error: 'There was a server error' }
     }

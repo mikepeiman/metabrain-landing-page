@@ -5,12 +5,12 @@ export const parse = (workingQuoteObject) => {
     // let { originalText, nextPart } = workingQuoteObject
     // console.log(`🚀 ~ file: parseQuotes.js ~ line 3 ~ parse ~ originalText`, originalText)
     if (!workingQuoteObject['quoteBody']) {
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 8 ~ parse ~ need quoteBody`)
+        // console.log(`🚀 ~ file: parseQuotes.js ~ line 8 ~ parse ~ need quoteBody`)
 
         workingQuoteObject = getQuoteBody(workingQuoteObject)
     }
     if (!workingQuoteObject['author']['name']) {
-        console.log(`🚀 ~ file: parseQuotes.js ~ line 8 ~ parse ~ need author`)
+        // console.log(`🚀 ~ file: parseQuotes.js ~ line 8 ~ parse ~ need author`)
         workingQuoteObject = getAuthor(workingQuoteObject)
     }
 

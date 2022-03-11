@@ -14,7 +14,7 @@
 		addedQuotes,
 		storedFileContent,
 		storedQuotesArray
-	} from '../../stores/quotes.js';
+	} from '$stores/quotes.js';
 	import { onMount } from 'svelte';
 	import DisplayQuotes from './DisplayQuotes.svelte'
 	import { parse } from './parseQuotes.js';
@@ -28,7 +28,16 @@
 		// parseFile(fsFileContent); // use this is you want the old behavior
 		if (fsQuotesArray) {
 			filteredQuotes = quotes = JSON.parse(fsQuotesArray);
-			console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
+			// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 28 ~ quotes`, quotes);
+			if(quotes.length){
+
+				// quotes.forEach((quote) => {
+				// 	console.log(`🚀 ~ file: parseQuotes.svelte ~ line 39 ~ quotes.forEach ~ quote`, quote)
+				// 	// setTimeout(() => {
+				// 	// 	uploadQuote(quote, "upsertQuote")
+				// 	// }, 100);
+				// });
+			}
 			storedQuotesArray.set(quotes);
 			filteredQuotes = [...$addedQuotes, ...$quotesArray];
 		} else {
@@ -67,8 +76,33 @@
 		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 64 ~ onMount ~ fsFileContent`, fsFileContent);
 		fsQuotesArray = localStorage.getItem('quotesArray');
 		// console.log(`🚀 ~ file: parseQuotes.svelte ~ line 66 ~ onMount ~ fsQuotesArray`, fsQuotesArray);
-		// filteredQuotes = JSON.parse(fsQuotesArray);
+		// $quotesArray.forEach((quote) => {
+		// 	uploadQuote(quote, "addQuote")
+		// });
 	});
+
+	
+    function uploadQuote(quote, operationType) {
+    console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 44 ~ uploadQuote ~ operationType ${operationType}, quote`, quote)
+		const fire = async () => {
+			try {
+				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
+				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(quote)}&queryType="${operationType}"`);
+				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
+				if (res.ok) {
+					const { dgraph_quotes } = await res.json();
+					console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
+					return { props: { dgraph_quotes } };
+				}
+			} catch (error) {
+				console.log(`🚀 ~ DisplayQuotes called getQuote.json endpoint: error`, error);
+				return {
+					body: { error: 'There was a server error' }
+				};
+			}
+		};
+		fire();
+	}
 
 	function readFile(input_file) {
 		if (input_file) {
@@ -135,7 +169,7 @@
 				// check on 570, samurai carpenter, see if tags are corrected
 				// 620, tags knowledge management in paranethesis
 			// for (let i = 16; i < 22; i++) {
-			// for (let i = 58; i < 61; i++) {
+			// for (let i = 58; i < 71; i++) {
 			// 54-64 gives the meical journal quotes
 			let item = stringifyArray(quotesArrays[i]);
 			if (item.includes('\\r') || item.includes('\\n')) {
@@ -219,6 +253,27 @@
 		};
 		fire();
 	}
+
+	function addQuotesToDgraph() {
+		const fire = async () => {
+			try {
+				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
+				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(filteredQuotes)}?queryType="addManyQuotes"`);
+				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
+				if (res.ok) {
+					const { dgraph_quotes } = await res.json();
+					console.log(`🚀 ~ file: AddQuote.svelte ~ line 53 ~ load ~ dgraph_quotes`, dgraph_quotes);
+					return { props: { dgraph_quotes } };
+				}
+			} catch (error) {
+				console.log(`🚀 ~ DisplayQuotes called getQuote.json endpoint: error`, error);
+				return {
+					body: { error: 'There was a server error' }
+				};
+			}
+		};
+		fire();
+	}
 </script>
 
 <div class=" quotes-wrapper flex flex-col w-full bg-black">
@@ -254,6 +309,9 @@
 		>
 		<button class="p-4 rounded bg-indigo-600 m-3" on:click={getDgraphQuotes}
 			>Get dgraph quotes</button
+		>
+		<button class="p-4 rounded bg-indigo-600 m-3" on:click={addQuotesToDgraph}
+			>Add many quotes to dgraph</button
 		>
 	</div>
 

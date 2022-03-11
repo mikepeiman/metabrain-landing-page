@@ -1,11 +1,12 @@
 <script>
 	export let quote, i;
 	import Icon from '@iconify/svelte';
+
 	let icons = {
 		edit: 'akar-icons:edit',
 		question: 'akar-icons:question',
-        upload: 'ant-design:cloud-upload-outlined',
-        upsert: 'clarity:upload-outline-badged'
+		upload: 'ant-design:cloud-upload-outlined',
+		upsert: 'clarity:upload-outline-badged'
 	};
 
 	const handleEdit = (i) => {
@@ -24,7 +25,9 @@
 		const fire = async () => {
 			try {
 				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
-				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(id)}&queryType="getQuoteById"`);
+				const res = await fetch(
+					`/quotes.dgraph.getQuote?data=${JSON.stringify(id)}&queryType="getQuoteById"`
+				);
 				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
 				if (res.ok) {
 					const { dgraph_quotes } = await res.json();
@@ -41,12 +44,17 @@
 		fire();
 	}
 
-    function uploadQuote(quote, operationType) {
-    console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 44 ~ uploadQuote ~ operationType ${operationType}, quote`, quote)
+	function uploadQuote(quote, operationType) {
+		console.log(
+			`🚀 ~ file: DisplayQuotes.svelte ~ line 44 ~ uploadQuote ~ operationType ${operationType}, quote`,
+			quote
+		);
 		const fire = async () => {
 			try {
 				// const res = await fetch(`/quotes.dgraph.getQuote.json?data=${JSON.stringify(id)}`);
-				const res = await fetch(`/quotes.dgraph.getQuote?data=${JSON.stringify(quote)}&queryType="${operationType}"`);
+				const res = await fetch(
+					`/quotes.dgraph.getQuote?data=${JSON.stringify(quote)}&queryType="${operationType}"`
+				);
 				console.log(`🚀 ~ file: DisplayQuotes.svelte ~ line 24 ~ fire ~ res`, res);
 				if (res.ok) {
 					const { dgraph_quotes } = await res.json();
@@ -92,10 +100,13 @@
 			<div class="edit-quote hover:cursor-pointer" on:click={() => handleEdit(i)}>
 				<Icon icon={icons.edit} class="w-8 h-8 ml-2 -mt-1" />
 			</div>
-			<div class="edit-quote hover:cursor-pointer" on:click={() => uploadQuote(quote, "addQuote")}>
+			<div class="edit-quote hover:cursor-pointer" on:click={() => uploadQuote(quote, 'addQuote')}>
 				<Icon icon={icons.upload} class="w-8 h-8 ml-2 -mt-1" />
 			</div>
-			<div class="edit-quote hover:cursor-pointer" on:click={() => uploadQuote(quote, "upsertQuote")}>
+			<div
+				class="edit-quote hover:cursor-pointer"
+				on:click={() => uploadQuote(quote, 'upsertQuote')}
+			>
 				<Icon icon={icons.upsert} class="w-8 h-8 ml-2 -mt-1" />
 			</div>
 		</div>
@@ -125,7 +136,9 @@
 		{#if quote.author.title}
 			<label class="input-group input-group-xs">
 				<span class="bg-slate-900">Title</span>
-				<span class="badge badge-success bg-slate-900 text-sky-400 input-xs">{quote.author.title}</span>
+				<span class="badge badge-success bg-slate-900 text-sky-400 input-xs"
+					>{quote.author.title}</span
+				>
 			</label>
 		{/if}
 		<!-- {#if quote.authorTitle && quote.authorTitle.length}

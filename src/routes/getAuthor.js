@@ -16,12 +16,13 @@ const getAuthor = (workingQuoteObject) => {
         console.log(`🚀 ~ file: getAuthor.js ~ line 18 ~ getAuthor ~ author`, author)
         console.log(`🚀 ~ file: getAuthor.js ~ line 12 ~ getAuthor ~ remainingText && remainingText.includes("-")`, remainingText && remainingText.includes("-"))
         if (remainingText.split(/-(.+)/)[1]) {
-            console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ remainingText.split(/-(.+)/)[1]`, remainingText.split(/-(.+)/)[1])
+            console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~authorCHECK remainingText.split(/-(.+)/)[1]`, remainingText.split(/-(.+)/))
             author = remainingText.split(/-(.+)/)[1]
+            console.log(`🚀 ~ file: getAuthor.js ~ line 21 ~ getAuthor ~ authorCHECK`, author)
 
         } else {
-
             author = remainingText.split("-")[1]
+            console.log(`🚀 ~ file: getAuthor.js ~ line 25 ~ getAuthor ~ authorCHECK`, author)
         }
         console.log(`🚀 ~ file: getAuthor.js ~ line 19 ~ getAuthor ~ authorafter regex split`, author)
         author = author.trim()

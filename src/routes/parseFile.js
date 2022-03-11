@@ -1,7 +1,7 @@
 import { parse } from './parseQuotes.js';
 const cheerio = require('cheerio')
 const htmlparser2 = require('htmlparser2');
-import { storedQuotesFile, storedFileContent, storedQuotesArray } from '../../stores/quotes.js';
+import { storedQuotesFile, storedFileContent, storedQuotesArray } from '$stores/quotes.js';
 let input_file = [];
 let contents = '';
 let quotes = [];
