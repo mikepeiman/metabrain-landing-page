@@ -47,3 +47,4 @@
 
 ## Reminders
 * Remember that all this work on string manipulation, graphs and datasets, and UI are directly applicable to the serious and significant software that I want to develop, most especially LifeIQ/MetaBrain
+* just a small change to push this branch to production on vercel
