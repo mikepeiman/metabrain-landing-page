@@ -9,10 +9,6 @@
 </script>
 
 <script>
-	import Quotes from '$components/Quotes.svelte';
-
-	import ParseQuotes from '../quotes/parseQuotes.svelte';
-
 	import { initClient, operationStore, query, mutation } from '@urql/svelte';
 	const VITE_DGRAPH_ENDPOINT = import.meta.env['VITE_DGRAPH_ENDPOINT'];
 	initClient({
