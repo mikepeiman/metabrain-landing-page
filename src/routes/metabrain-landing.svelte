@@ -7,6 +7,27 @@
 		mounted = true;
 	});
 
+	function GTagFormClick() {
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({
+			event: 'signup_form_click',
+			eventCategory: 'Form',
+			eventAction: 'Submit',
+			eventLabel: 'Contact Form'
+		});
+	}
+
+
+	function GTagFormSubmit() {
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({
+			event: 'signup_form_submit',
+			eventCategory: 'Form',
+			eventAction: 'Submit',
+			eventLabel: 'Contact Form'
+		});
+	}
+
 	import Icon from '@iconify/svelte';
 	let email = ""
 	const icons = {
@@ -66,6 +87,7 @@ $: email.length > 3 ? fadeMceError() : ""
 						<form
 							action="https://mikepeiman.us7.list-manage.com/subscribe/post?u=2e0789618f3335c1fdeae5f80&amp;id=4f26dc006f"
 							method="post"
+							on:submit={GTagFormSubmit}
 							id="mc-embedded-subscribe-form"
 							name="mc-embedded-subscribe-form"
 							class="validate bg-none bg-transparent flex items-center justify-center w-full"
@@ -85,6 +107,7 @@ $: email.length > 3 ? fadeMceError() : ""
 										<!-- <label for="mce-EMAIL">Email Address <span class="asterisk">*</span> </label> -->
 										<input
 											type="email"
+											on:click={GTagFormClick}
 											bind:value={email}
 											name="EMAIL"
 											class="z-50 required email rounded bg-transparent focus:border-none focus:outline-none focus:shadow-none focus:ring-0 outline-none border-none -ml-4 text-gray-100 w-auto"
