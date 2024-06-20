@@ -161,13 +161,14 @@ $: email.length > 3 ? fadeMceError() : ""
 			</script>
 			<!--End mc_embed_signup-->
 		</div>
-		<div class="absolute w-screen h-screen top-0 left-0 bg-black">
+		<div id="canvas-wrapper" class="absolute w-1/2 h-screen top-0 left-0 bg-black">
 			<MetabrainCanvas />
 		</div>
 	</div>
 {/if}
 
 <style global lang="scss">
+
 	#mce-responses {
 		position: absolute;
 		display: flex;

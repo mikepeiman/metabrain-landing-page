@@ -440,6 +440,17 @@
 	canvas {
 		z-index: -1;
 	}
+	
+	.sketch::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: hsla(0, 0%, 0%, 0.75);
+		z-index: 1;
+	}
 
 	.controls {
 		grid-area: controls;
