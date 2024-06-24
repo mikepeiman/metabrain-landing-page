@@ -7,6 +7,8 @@
 	});
 
 	import McMailingList from '$components/MCMailingList.svelte';
+	import MetabrainCanvas2 from '$components/MetabrainCanvas2.svelte';
+	import MetabrainCanvas3 from '$components/MetabrainCanvas3.svelte';
 </script>
 
 {#if mounted}
@@ -38,6 +40,8 @@
 		</div>
 		<div class="absolute z-0 w-screen h-screen top-0 left-0 ">
 			<MetabrainCanvas {mounted} />
+			<!-- <MetabrainCanvas2 {mounted} /> -->
+			<!-- <MetabrainCanvas3 {mounted} /> -->
 		</div>
 	</div>
 	<!-- </main> -->
