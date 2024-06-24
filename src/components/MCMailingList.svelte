@@ -206,7 +206,7 @@
 	};
 </script>
 
-<div id="mc_embed_signup" class="">
+<div id="mc_embed_signup" class="relative">
 	<form
 		action="https://mikepeiman.us7.list-manage.com/subscribe/post?u=2e0789618f3335c1fdeae5f80&amp;id=4f26dc006f"
 		method="post"
@@ -216,8 +216,8 @@
 		target="_blank"
 		novalidate
 	>
-		<div class="flex items-center m-0 flex-col absolute top-[12rem] w-auto md:w-auto mt-12">
-			<h2 class="font-display text-base mb-1 lg:mb-2 lg:text-lg text-winterblues-200 mx-0">
+		<div class="flex items-center m-0 flex-col absolute  w-auto md:w-auto">
+			<h2 class="font-montserrat text-base mb-1 lg:mb-2 lg:text-lg text-winterblues-200 mx-0">
 				Get on the list for updates and early access.
 			</h2>
 			<div

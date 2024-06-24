@@ -57,8 +57,9 @@ $: email.length > 3 ? fadeMceError() : ""
 			<div
 				class="flex flex-col py-8 my-4 w-fit  rounded-xl p-4 bg-black/60 text-xl md:text-2xl lg:text-3xl xl:text-4xl font-montserrat"
 			>
-				<h2 class="p-2">One app to rule them all, one platform to unite them;</h2>
-				<h2 class="p-2">One knowledge graph to learn and plan and prosper for a lifetime.</h2>
+			<p>An app that unites planning, learning, execution, & tracking.
+				<br>Helping you to learn more, do more, & achieve more.<br>
+				Be better in every way.</p>
 				<!-- Begin Mailchimp Signup Form -->
 				<div class="w-full flex align-center justify-center">
 					<!-- <div id="mc_embed_signup" class="w-1/2 py-6 border-t-2 border-b-2 border-sky-50"> -->

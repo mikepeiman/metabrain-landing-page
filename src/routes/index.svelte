@@ -5,64 +5,44 @@
 	onMount(() => {
 		mounted = true;
 	});
-	import { page } from '$app/stores';
-	$: path = $page.url.pathname;
-	import Icon from '@iconify/svelte';
-import McMailingList from '$components/MCMailingList.svelte';
-	let email = '';
-	const icons = {
-		fire1: 'wi:fire',
-		fire2: 'vaadin:fire',
-		fire3: 'mdi:fire',
-		fire4: 'fa:fire',
-		fire5: 'fa5:fire',
-		fire6: 'fa5:fire-alt',
-		fire7: 'el:fire',
-		fire8: 'eva:fire',
-		arrowCircle1: 'bi:arrow-down-circle-fill',
-		arrowCircle2: 'eva:arrow-circle-down-fill',
-		arrowCircleLeft2: 'eva:arrow-circle-left-fill',
-		home: 'bx:bxs-home-heart',
-		x: 'bx:bxs-x-square'
-	};
-	// let windowInnerWidth;
-	// $: windowInnerWidth && resizeCanvases();
 
+	import McMailingList from '$components/MCMailingList.svelte';
 </script>
 
 {#if mounted}
-<!-- <svelte:window bind:innerWidth={windowInnerWidth} /> -->
+	<!-- <svelte:window bind:innerWidth={windowInnerWidth} /> -->
 
-<!-- <main
+	<!-- <main
 	class="homepage bg-black mt-20 flex flex-col self-center justify-items-center items-center w-full lg:text-sm lg:px-12 xl:px-24 2xl:w-4/5 2xl:px-12 3xl:w-3/4 3xl:px-36 mt-4 md:mt-20"
 > -->
-<div class="flex flex-col w-full h-full align-center justify-start text-center">
-	<h1
-		class="relative z-10 text-5xl mt-[12rem] md:text-[5rem] lg:text-[7rem] xl:text-[10rem] font-display"
-	>
-		MetaBrain
-	</h1>
-	<div
-		class="flex relative z-10 flex-col relative py-8 my-4 w-auto mx-8 rounded-lg p-0 mx-6 md:p-8 md:mx-12  text-lg md:text-2xl lg:text-3xl xl:text-4xl font-montserrat"
-	>
-		<h2 class="p-2 relative z-10 ">One app to rule them all, one platform to unite them;</h2>
-		<h2 class="p-2 relative z-10">
-			One knowledge graph to learn and plan and prosper for a lifetime.
-		</h2>
-		<!-- Begin Mailchimp Signup Form -->
-		<div class="w-full flex align-center justify-center">
-			<!-- <div id="mc_embed_signup" class="w-1/2 py-6 border-t-2 border-b-2 border-sky-50"> -->
+	<div class="flex flex-col w-full h-full align-center justify-start text-center">
+		<h1
+			class="relative z-10 text-5xl mt-[12rem] md:text-[5rem] lg:text-[7rem] xl:text-[10rem] font-display"
+		>
+			MetaBrain
+		</h1>
+		<h2 class=" text-2xl z-[99] font-display text-winterblues-200">Your Operating System For Life.</h2>
+		<div
+			class="flex relative z-10 flex-col relative py-8 my-4 w-auto mx-8 rounded-lg p-0 mx-6 md:p-8 md:mx-12  text-lg md:text-2xl lg:text-3xl xl:text-4xl font-montserrat"
+		>
+			<p class="leading-normal text-winterblues-500 pb-12">
+				An app that unites planning, learning, execution, & tracking.
+				<br /><br />Helping you to learn more, do more, & achieve more.<br /><br />
+				Be better in every way.
+			</p>
+			<!-- Begin Mailchimp Signup Form -->
+			<div class="w-full flex align-center justify-center mt-8">
+				<!-- <div id="mc_embed_signup" class="w-1/2 py-6 border-t-2 border-b-2 border-sky-50"> -->
 				<McMailingList />
-
+			</div>
+		</div>
+		<div class="absolute z-0 w-screen h-screen top-0 left-0 ">
+			<MetabrainCanvas {mounted} />
 		</div>
 	</div>
-	<div class="absolute z-0 w-screen h-screen top-0 left-0 ">
-		<MetabrainCanvas {mounted} />
-	</div>
-</div>
-<!-- </main> -->
-
+	<!-- </main> -->
 {/if}
+
 <style lang="scss">
 	.statement {
 		line-height: 1.25em;
