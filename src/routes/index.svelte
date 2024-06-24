@@ -21,12 +21,12 @@
 		>
 			MetaBrain
 		</h1>
-		<h2 class=" text-2xl z-[99] font-display text-winterblues-200">Your Operating System For Life.</h2>
+		<h2 class=" text-2xl z-10 text-5xl  md:text-[2rem] lg:text-[3rem] xl:text-[4rem] font-display text-winterblues-200">An Operating System For Life.</h2>
 		<div
 			class="flex relative z-10 flex-col relative py-8 my-4 w-auto mx-8 rounded-lg p-0 mx-6 md:p-8 md:mx-12  text-lg md:text-2xl lg:text-3xl xl:text-4xl font-montserrat"
 		>
-			<p class="leading-normal text-winterblues-500 pb-12">
-				An app that unites planning, learning, execution, & tracking.
+			<p class="leading-7 text-winterblues-200 pb-12 font-display">
+				Uniting planning, learning, execution, & tracking across all domains of life.
 				<br /><br />Helping you to learn more, do more, & achieve more.<br /><br />
 				Be better in every way.
 			</p>

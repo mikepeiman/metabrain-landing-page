@@ -218,7 +218,9 @@
 	>
 		<div class="flex items-center m-0 flex-col absolute  w-auto md:w-auto">
 			<h2 class="font-montserrat text-base mb-1 lg:mb-2 lg:text-lg text-winterblues-200 mx-0">
-				Get on the list for updates and early access.
+				Sign up for updates and early access.<br>
+				<span class="text-orange-200">Planning early alpha release Q3 2024!</span>
+
 			</h2>
 			<div
 				id="mc_embed_signup_scroll"
