@@ -170,7 +170,7 @@
 	};
 </script>
 
-<div id="mc_embed_signup" class="relative">
+<div id="mc_embed_signup" class="relative font-montserrat">
 	<form
 		action="https://mikepeiman.us7.list-manage.com/subscribe/post?u=2e0789618f3335c1fdeae5f80&amp;id=4f26dc006f"
 		method="post"
@@ -183,13 +183,16 @@
 		<div
 			class="flex items-center m-0 flex-col   w-full  py-[1rem]  border-winterblues-400/40 border-t-[2px]  "
 		>
-			<h2 class="font-montserrat text-base mb-1 lg:mb-2 text-sm lg:text-lg text-winterblues-200 mx-0">
-				Sign up for updates and early access.<br />
-				<span class="text-orange-200">Planning early alpha release Q3 2024!</span>
-			</h2>
+			<div class="flex items-center justify-center z-30">
+				<h2 class="font-montserrat text-base mb-1 lg:mb-2 text-sm lg:text-lg text-winterblues-200 mx-0">
+					Sign up for updates and early access.<br />
+					<span class="text-orange-200">Planning early alpha release Q3 2024!</span>
+				</h2>
+
+			</div>
 			<div
 				id="mc_embed_signup_scroll"
-				class="statement px-4 flex items-center rounded-xl justify-center relative z-10 "
+				class="statement px-4 mt-4 flex items-center rounded-xl justify-center relative z-10 "
 			>
 				<div class="mc-field-group flex items-center justify-center relative w-auto">
 					<input
@@ -211,6 +214,9 @@
 						on:click={signupSubmit}>Subscribe</button
 					>
 				</div>
+
+				
+
 				<div id="mce-responses" class="clear foot transition relative left-0 top-0 text-lg w-full ">
 					<div class="response h-8 relative p-1 rounded-xl fadeOut" id="mce-error-response" />
 					<div
@@ -230,6 +236,15 @@
 				<div class="optionalParent">
 					<div class="clear foot" />
 				</div>
+			</div>
+
+			<div class="flex mt-4 items-center justify-center font-montserrat text-base">
+				<a href="https://x.com/HelloMetabrain" class=" w-auto h-auto ml-2 flex align-center justify-center text-winterblues-500 cursor-pointer" target="_blank" rel="noopener noreferrer">
+					<p class="text-white mr-2">Follow us on</p>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"  fill="currentColor">
+						<path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+					  </svg>
+				</a>
 			</div>
 			<script
 				type="text/javascript"
