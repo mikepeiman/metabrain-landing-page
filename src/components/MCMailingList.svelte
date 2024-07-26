@@ -181,9 +181,9 @@
 		novalidate
 	>
 		<div
-			class="flex items-center m-0 flex-col absolute  w-auto md:w-auto  px-[4rem] py-[1rem]  border-winterblues-400/40 border-t-[2px] mt-[8rem] "
+			class="flex items-center m-0 flex-col   w-full  py-[1rem]  border-winterblues-400/40 border-t-[2px]  "
 		>
-			<h2 class="font-montserrat text-base mb-1 lg:mb-2 lg:text-lg text-winterblues-200 mx-0">
+			<h2 class="font-montserrat text-base mb-1 lg:mb-2 text-sm lg:text-lg text-winterblues-200 mx-0">
 				Sign up for updates and early access.<br />
 				<span class="text-orange-200">Planning early alpha release Q3 2024!</span>
 			</h2>
@@ -196,7 +196,7 @@
 						type="email"
 						bind:value={email}
 						name="EMAIL"
-						class=" z-10 text-sm md:text-base xl:text-lg required email rounded-xl bg-transparent focus:shadow-none focus:ring-0 outline-none border-none w-[26ch] -ml-4 text-gray-100 w-auto"
+						class=" z-10 text-sm md:text-base xl:text-lg required email rounded-xl bg-transparent focus:shadow-none focus:ring-0 outline-none border-none w-auto -ml-4 text-gray-100 w-auto"
 						id="mce-EMAIL"
 						placeholder="email address"
 						on:blur={onBlurMCE}

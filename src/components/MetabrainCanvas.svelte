@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import random from 'canvas-sketch-util/random.js';
-	export let mounted
+	export let mounted;
 	const data = {
 		TITLE: 'Sketch05',
 		fps: 60,
@@ -146,34 +146,15 @@
 	}
 
 	function setStartCoords() {
-		// Math.random() < 0.5 ? (starter.x = 0) : (starter.x = w);
-		// let modX = Math.random() * Math.floor(w / data.minDist) * data.minDist;
-		// let modY = Math.random() * Math.floor(h / data.minDist) * data.minDist;
-		// starter.x = modX
-		// starter.y = modY
-
-		// let evenSpacingArrayX = [],
-		// 	evenSpacingArrayY = [];
-		// let evenX = Math.floor(w / data.minDist);
-		// let evenY = Math.floor(h / data.minDist);
-		// evenSpacingArrayX = Array.from(Array(evenX), (x, i) => i * data.minDist);
-		// evenSpacingArrayY = Array.from(Array(evenY), (x, i) => i * data.minDist);
 		starter.x = random.pick(evenSpacingArrayX);
-		// console.log(`🚀 ~ file: sketch05.svelte ~ line 153 ~ setStartCoords ~ starter.x`, starter.x)
 		starter.y = random.pick(evenSpacingArrayY);
-		// console.log(`🚀 ~ file: sketch05.svelte ~ line 155 ~ setStartCoords ~ starter.y`, starter.y)
-		// starter.x = random.range(0, w);
-		// starter.y = random.range(0, h);
-		// starter.randomFactor = random.range(0.5, 1.5);
-		// starter.x = w / 2;
-		// starter.y = h / 2;
+
 		starter.dirIndex = Math.floor(random.range(0, 6));
 	}
 
 	function init() {
 		lines.length = 0;
 
-		// console.log(`🚀 ~ file: sketch05.svelte ~ line 160 ~ init ~ evenSpacingArrayX`, evenSpacingArrayX)
 		for (let i = 0; i < data.initialLines; ++i) {
 			setStartCoords();
 			let line = new Line(starter);
@@ -211,12 +192,10 @@
 		setTimeout(function () {
 			requestAnimationFrame(anim);
 		}, 1000 / data.fps);
-		// window.requestAnimationFrame(anim);
 
 		++frame;
 		++logCounter;
 		if (logCounter > 1000) {
-			// console.log(`🚀 ~ file: sketch05.svelte ~ line 191 ~ anim ~ lines`, lines);
 			logCounter = 0;
 		}
 
@@ -225,31 +204,18 @@
 		ctx.fillRect(0, 0, w, h);
 		ctx.shadowBlur = 0.5;
 
-		// console.log(`🚀 ~ file: sketch05.svelte ~ line 124 ~ anim ~ lines`, lines)
 		for (let i = 0; i < lines.length; ++i) {
-			// lines[i].bounce()
-			// lines[i].width *= 0.995;
 			lines[i].reverse ? (lines[i].width *= 0.995) : (lines[i].width *= 1.005);
-			// lines.splice(i, 1);
-			// --i;
-			// console.log(`🚀 ~ file: sketch05.svelte ~ line 125 ~ anim ~ lines[i]`, lines[i])
+			// console.log(`🚀 ~ file: sketch05.svelte ~ line 125 ~ anim ~ lines[i]`, lines[i]);
 			if (lines[i].step()) {
-				// if true it's dead
-
 				lines.splice(i, 1);
 				--i;
-
-				// i += 10;
-				// i -= 10;
 			}
 		}
-		// spawn new
 
 		++timeSinceLast;
 
 		if (lines.length < data.maxLines) {
-			// if (lines.length < data.maxLines) {
-			// && timesincelast > 10
 			timeSinceLast = 0;
 			setStartCoords();
 			let line = new Line(starter);
@@ -260,28 +226,22 @@
 			// cover the middle;
 			ctx.fillStyle = ctx.shadowColor = getColor(line.colorFunction.value, starter.x, starter.y);
 			ctx.beginPath();
-			// ctx.arc(starter.x, starter.y, data.minWidth / 4, 0, Math.PI * 2);
-			// ctx.fill();
+			// ctx.arc(
 		}
 	}
 
 	function Line(parent) {
 		this.x = parent.x | 0;
 		this.y = parent.y | 0;
-		// this.width = parent.width / 1.25;
 		this.width = parent.width | 1;
-		// this.width = random.range(data.minWidth, data.maxWidth);
 		this.reverse = false;
 		this.dirIndex = parent.dirIndex;
 		this.colorFunction = random.pick(data.colorFunctions);
 		this.randomFactor = random.range(0.1, 1);
 		do {
-			// Math.random() > 0.5 ? this.dirIndex++ : this.dirIndex--;
 			this.dirIndex = ++this.dirIndex % 6;
 			this.dirIndex = makePositive(this.dirIndex);
 			let dir = dirs[this.dirIndex];
-			// this.vx = dir.x * data.speed * this.randomFactor;
-			// this.vy = dir.y * data.speed * this.randomFactor;
 			this.vx = dir.x * data.speed;
 			this.vy = dir.y * data.speed;
 		} while (
@@ -291,9 +251,6 @@
 
 		this.lineDist = data.minDist;
 		this.hexDist = maxDist;
-
-		// this.lineDist = data.minDist * Math.random() * 10;
-		// this.hexDist = maxDist * Math.random() * 10;
 	}
 
 	Line.prototype.wrap = function () {
@@ -309,10 +266,6 @@
 			this.vy *= -1;
 		}
 		this.dirIndex = (this.dirIndex + 3) % 6;
-		// this.x <= 0 ? this.x = this.vx : this.x;
-		// this.x >= w ? this.x = w - this.vx : this.x;
-		// this.y <= 0 ? this.y = this.vy : this.y;
-		// this.y >= h ? this.y = h - this.vy : this.y;
 	};
 	Line.prototype.step = function () {
 		let dead = false;
@@ -320,53 +273,35 @@
 			prevY = this.y;
 
 		this.dirIndex = makePositive(this.dirIndex % 6);
-		// let lineDist = Math.sqrt(Math.pow(makePositive(this.x - (this.x + this.vx)), 2) + Math.pow(makePositive(this.y - (this.y + this.vy)), 2));
-		// this return a value almost exactly the same as speed
 
 		this.x += this.vx;
 		this.y += this.vy;
 
-		// this.lineDist -= lineDist
 		this.lineDist -= data.speed;
-		// this.hexDist -= lineDist
 		this.hexDist -= data.speed;
 
 		// kill if out of screen
 		if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.bounce();
-		// if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) dead = true;
-		//  dead = true;
 
 		// make children :D
-		// if (this.dist <= 0 && this.width > data.minWidth) {
 		if (this.lineDist <= 0) {
 			let dir;
-			// dir = dirs[(Math.random() * dirs.length) | 0];
 			this.dirIndex++;
 			Math.random > 0.5 ? ++this.dirIndex : --this.dirIndex;
 			this.dirIndex = makePositive(this.dirIndex) % 6;
-			// console.log(`🚀 ~ file: sketch05.svelte ~ line 243 ~ anim ~ this.dirIndex`, this.dirIndex)
 			dir = dirs[this.dirIndex];
-			// console.log(`🚀 ~ file: sketch05.svelte ~ line 352 ~ anim ~ this.dirIndex`, this.dirIndex)
-			// console.log(`🚀 ~ file: sketch05.svelte ~ line 352 ~ anim ~ dir`, dir)
 			this.vx = dir.x * data.speed;
 			this.vy = dir.y * data.speed;
 			this.lineDist = data.minDist;
 			this.hexDist = data.minDist;
 			// add 2 children
 			if (lines.length < data.maxLines) lines.push(new Line(this));
-			// if (lines.length < data.maxLines && Math.random() < 0.5) lines.push(new Line(this));
 			if (Math.random() < data.lineBirthFactor) {
 				lines.push(new Line(this));
 				// remove a random line from lines array
 				let index = (Math.random() * lines.length) | 0;
 				lines.splice(index, 1);
 			}
-
-			// adjust first data.maxLines condition above 1 to create a pause in emitter while lines diminish
-
-			// kill the poor thing
-			// if (Math.random() < 0.5) dead = true;
-			// dead = true;
 		}
 		let velFactor = 1;
 		//  velFactor = ((this.vx * this.vy) + 1) * .5;
@@ -386,18 +321,12 @@
 			this.y,
 			velFactor
 		);
-		// ctx.save()
 		ctx.beginPath();
 		ctx.lineWidth = this.width;
-		// console.log(`🚀 ~ file: sketch05.svelte ~ line 368 ~ anim ~ this.width`, this.width)
 		ctx.moveTo(this.x, this.y);
 		ctx.lineTo(prevX, prevY);
 		ctx.stroke();
-		// ctx.restore()
 
-		// if (this.width < data.minWidth) {
-		// 	dead = true;
-		// }
 		if (this.width > data.maxWidth) {
 			this.reverse = true;
 		} else if (this.width < data.minWidth) {
@@ -406,18 +335,8 @@
 		if (this.hexDist <= 0) {
 			dead = true;
 		}
-		// if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) {
-		// 	dead = true;
-		// }
-		if (dead) {
-			// ctx.strokeStyle = black;
-			// let reps = data.minDist / greaterOf(this.vx, this.vy)
-			// let newX = reps * this.vx;
-			// let newY = reps * this.vy;
 
-			// ctx.beginPath();
-			// ctx.moveTo(newX, newY);
-			// ctx.stroke()
+		if (dead) {
 			return true;
 		}
 	};
@@ -426,21 +345,22 @@
 		return a > b ? a : b;
 	}
 </script>
+
 <!-- {#if mounted} -->
 <div class="relative flex -z-1 h-full w-screen sketch">
 	<div id="canvasContainer" class="relative w-full z-0">
 		<canvas id="c" class="relative -z-1" />
 	</div>
 </div>
-<!-- {/if} -->
 
+<!-- {/if} -->
 <style global lang="scss">
 	.sketch,
 	#canvasContainer,
 	canvas {
 		z-index: -1;
 	}
-	
+
 	.sketch::before {
 		content: '';
 		position: absolute;

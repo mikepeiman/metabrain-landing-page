@@ -69,126 +69,85 @@ $: email.length > 3 ? fadeMceError() : ""
 	}
 </script>
 
+
 {#if mounted}
-	<div class="flex flex-col w-screen h-screen relative align-center justify-center">
-		<div
-			class="flex flex-col z-10 w-auto h-full align-center justify-center text-center bg-black/40"
-		>
-			<h1 class="text-6xl md:text-[5rem] lg:text-[7rem] xl:text-[10rem] font-display">MetaBrain</h1>
-			<div
-				class="flex flex-col py-8 my-4 w-fit mx-auto rounded-xl p-4 bg-black/60 text-xl md:text-2xl lg:text-3xl xl:text-4xl font-montserrat"
-			>
-				<h2 class="p-2">One app to rule them all, one platform to unite them;</h2>
-				<h2 class="p-2">One knowledge graph to learn and plan and prosper for a lifetime.</h2>
-				<!-- Begin Mailchimp Signup Form -->
-				<div class="w-full flex align-center justify-center">
-					<!-- <div id="mc_embed_signup" class="w-1/2 py-6 border-t-2 border-b-2 border-sky-50"> -->
-					<div id="mc_embed_signup" class="">
-						<form
-							action="https://mikepeiman.us7.list-manage.com/subscribe/post?u=2e0789618f3335c1fdeae5f80&amp;id=4f26dc006f"
-							method="post"
-							on:submit={GTagFormSubmit}
-							id="mc-embedded-subscribe-form"
-							name="mc-embedded-subscribe-form"
-							class="validate bg-none bg-transparent flex items-center justify-center w-full"
-							target="_blank"
-							novalidate
-						>
-							<div class="flex items-center flex-col  mt-12">
-								<h2 class="font-display text-lg mb-1 text-winterblues-200 mx-4">
-									Get on the list for updates and early access.
-								</h2>
-								<div
-									id="mc_embed_signup_scroll"
-									class="statement px-4 flex items-center justify-center relative z-50"
-								>
-									<!-- <div class="indicates-required"><span class="asterisk">*</span> indicates required</div> -->
-									<div class="mc-field-group flex items-center justify-center relative">
-										<!-- <label for="mce-EMAIL">Email Address <span class="asterisk">*</span> </label> -->
-										<input
-											type="email"
-											on:click={GTagFormClick}
-											bind:value={email}
-											name="EMAIL"
-											class="z-50 required email rounded bg-transparent focus:border-none focus:outline-none focus:shadow-none focus:ring-0 outline-none border-none -ml-4 text-gray-100 w-auto"
-											id="mce-EMAIL"
-											placeholder="email address"
-											on:blur="{checkMCEError}"
-										/>
-										<button
-											type="submit"
-											name="subscribe"
-											value="Subscribe"
-											id="mc-embedded-subscribe"
-											class="button text-lg h-6 w-auto ml-4 -mr-4 p-5 rounded flex items-center justify-center text-center bg-gray-900 hover:bg-gray-800 text-winterblues-400"
-											>Subscribe</button
-										>
-									</div>
-									<div id="mce-responses" class="clear foot transition absolute text-lg ">
-										<div
-											class="response h-8 block absolute -top-6 translate-y-8 w-60 text-lg flex items-center"
-											id="mce-error-response"
-											style="opacity:0;"
-										/>
-										<div class="response h-8 relative" id="mce-success-response" style="opacity:0;">
-											<Icon icon={icons.x} class="h-8 w-8 p-0 absolute text-white" />
-										</div>
-									</div>
-									<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-									<div style="position: absolute; left: -5000px;" aria-hidden="true">
-										<input
-											type="text"
-											name="b_2e0789618f3335c1fdeae5f80_4f26dc006f"
-											tabindex="-1"
-											value=""
-										/>
-									</div>
-									<div class="optionalParent">
-										<div class="clear foot">
-											<!-- <input
-												type="submit"
-												value="Subscribe"
-												name="subscribe"
-												id="mc-embedded-subscribe"
-												class="button"
-											/> -->
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-
-
-			<script
-				type="text/javascript"
-				src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script
-				type="text/javascript">
-				(function ($) {
-					window.fnames = new Array();
-					window.ftypes = new Array();
-					fnames[0] = 'EMAIL';
-					ftypes[0] = 'email';
-					fnames[1] = 'FNAME';
-					ftypes[1] = 'text';
-					fnames[2] = 'LNAME';
-					ftypes[2] = 'text';
-					fnames[3] = 'ADDRESS';
-					ftypes[3] = 'address';
-					fnames[4] = 'PHONE';
-					ftypes[4] = 'phone';
-				})(jQuery);
-				var $mcj = jQuery.noConflict(true);
-			</script>
-			<!--End mc_embed_signup-->
-		</div>
-		<div id="canvas-wrapper" class="absolute w-1/2 h-screen top-0 left-0 bg-black">
-			<MetabrainCanvas />
-		</div>
-	</div>
+  <!-- <div class="flex flex-col w-screen min-h-screen relative align-center justify-center"> -->
+    <div class="flex flex-col z-10 w-full h-full align-center justify-center text-center bg-black/40 ">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-display mb-4">MetaBrain</h1>
+      <div class="flex flex-col py-4 my-4 w-11/12 sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto rounded-xl p-4 bg-black/60 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-montserrat">
+        <h2 class="p-2">One app to rule them all, one platform to unite them;</h2>
+        <h2 class="p-2">One knowledge graph to learn and plan and prosper for a lifetime.</h2>
+        
+        <!-- Begin Mailchimp Signup Form -->
+        <div class="w-full flex align-center justify-center mt-8">
+          <div id="mc_embed_signup" class="w-full sm:w-4/5 md:w-3/4 lg:w-2/3">
+            <form
+              action="https://mikepeiman.us7.list-manage.com/subscribe/post?u=2e0789618f3335c1fdeae5f80&amp;id=4f26dc006f"
+              method="post"
+              on:submit={GTagFormSubmit}
+              id="mc-embedded-subscribe-form"
+              name="mc-embedded-subscribe-form"
+              class="validate bg-none bg-transparent flex flex-col items-center justify-center w-full"
+              target="_blank"
+              novalidate
+            >
+              <h2 class="font-display text-base sm:text-lg md:text-xl lg:text-2xl mb-4 text-winterblues-200">
+                Get on the list for updates and early access.
+              </h2>
+              <div id="mc_embed_signup_scroll" class="statement  flex flex-col sm:flex-row items-center justify-center relative z-50 w-full">
+                <div class="mc-field-group flex items-center justify-center relative w-full sm:w-auto mb-4 sm:mb-0">
+                  <input
+                    type="email"
+                    on:click={GTagFormClick}
+                    bind:value={email}
+                    name="EMAIL"
+                    class="z-50 required email rounded bg-transparent focus:border-none focus:outline-none focus:shadow-none focus:ring-0 outline-none border-none text-gray-100 w-full sm:w-auto px-4 py-2"
+                    id="mce-EMAIL"
+                    placeholder="email address"
+                    on:blur="{checkMCEError}"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  name="subscribe"
+                  value="Subscribe"
+                  id="mc-embedded-subscribe"
+                  class="button text-base sm:text-lg h-10 w-full sm:w-auto px-6 py-2 rounded flex items-center justify-center text-center bg-gray-900 hover:bg-gray-800 text-winterblues-400"
+                >
+                  Subscribe
+                </button>
+              </div>
+              <div id="mce-responses" class="clear foot transition absolute text-base sm:text-lg mt-4">
+                <div
+                  class="response h-8 block absolute top-full left-0 w-full text-base sm:text-lg flex items-center"
+                  id="mce-error-response"
+                  style="opacity:0;"
+                />
+                <div class="response h-8 relative" id="mce-success-response" style="opacity:0;">
+                  <Icon icon={icons.x} class="h-8 w-8 p-0 absolute text-white" />
+                </div>
+              </div>
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input
+                  type="text"
+                  name="b_2e0789618f3335c1fdeae5f80_4f26dc006f"
+                  tabindex="-1"
+                  value=""
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- End Mailchimp Signup Form -->
+      </div>
+    </div>
+    <div id="canvas-wrapper" class="absolute w-full h-full top-0 left-0 bg-black -z-10">
+      <MetabrainCanvas />
+    </div>
+  <!-- </div> -->
 {/if}
+
 
 <style global lang="scss">
 
