@@ -1,0 +1,219 @@
+@import 'tailwindcss';
+
+/*
+ * Metabrain design tokens.
+ *
+ * Colour carries meaning: each of the four views owns one hue, and that hue is
+ * used for everything belonging to the view — its chips, mockups, graph nodes
+ * and the strands of the hero lattice.
+ *   journal  (Metabrain · Journal & Log)  amber
+ *   curatio  (browser & web curation)     teal
+ *   workbench (project command centre)    violet
+ *   metachat (communications record)      rose
+ */
+@theme {
+	--font-sans: 'Albert Sans Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-display: 'Newsreader Variable', ui-serif, Georgia, serif;
+	--font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+
+	--color-ink: #07080b;
+	--color-ink-2: #0c0e12;
+	--color-surface: #111318;
+	--color-surface-2: #161920;
+	--color-surface-3: #1d212a;
+	--color-line: rgb(255 255 255 / 0.07);
+	--color-line-2: rgb(255 255 255 / 0.12);
+	--color-line-3: rgb(255 255 255 / 0.2);
+
+	--color-fg: #eeebe4;
+	--color-fg-2: #b7b2a8;
+	--color-fg-3: #7d7970;
+	--color-fg-4: #57544e;
+
+	--color-journal: oklch(0.82 0.13 78);
+	--color-curatio: oklch(0.8 0.11 190);
+	--color-workbench: oklch(0.74 0.15 292);
+	--color-metachat: oklch(0.76 0.14 12);
+
+	--color-ok: oklch(0.82 0.13 152);
+	--color-warn: oklch(0.86 0.12 78);
+
+	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+	--animate-caret: caret 1.05s steps(1) infinite;
+	--animate-flow: flow 2.4s linear infinite;
+	--animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+
+	@keyframes caret {
+		50% {
+			opacity: 0;
+		}
+	}
+	@keyframes flow {
+		to {
+			stroke-dashoffset: -24;
+		}
+	}
+	@keyframes pulse-soft {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.35;
+		}
+	}
+}
+
+@layer base {
+	html {
+		background: var(--color-ink);
+		color: var(--color-fg);
+		font-family: var(--font-sans);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		scroll-behavior: smooth;
+		scroll-padding-top: 5rem;
+	}
+
+	body {
+		min-height: 100dvh;
+		overflow-x: clip;
+	}
+
+	::selection {
+		background: color-mix(in oklab, var(--color-journal) 35%, transparent);
+		color: var(--color-fg);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-journal);
+		outline-offset: 3px;
+		border-radius: 6px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+		*,
+		*::before,
+		*::after {
+			animation-duration: 1ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 1ms !important;
+		}
+	}
+}
+
+@layer components {
+	/* Section eyebrow: small mono label with a leading rule. */
+	.eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-fg-3);
+	}
+	.eyebrow::before {
+		content: '';
+		width: 1.75rem;
+		height: 1px;
+		background: currentColor;
+		opacity: 0.6;
+	}
+
+	.display {
+		font-family: var(--font-display);
+		font-optical-sizing: auto;
+		font-weight: 380;
+		letter-spacing: -0.022em;
+		line-height: 1.02;
+		text-wrap: balance;
+	}
+
+	/* Glassy panel used for product mockups. */
+	.panel {
+		background:
+			linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0) 40%),
+			color-mix(in oklab, var(--color-surface) 88%, transparent);
+		border: 1px solid var(--color-line);
+		border-radius: 1.25rem;
+		box-shadow:
+			0 1px 0 0 rgb(255 255 255 / 0.04) inset,
+			0 30px 80px -30px rgb(0 0 0 / 0.8);
+	}
+
+	/* A metatag pill, tinted by its --tag colour. */
+	.pill {
+		--tag: var(--color-journal);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35em;
+		padding: 0.08em 0.5em 0.12em;
+		border-radius: 0.45em;
+		font-family: var(--font-mono);
+		font-size: 0.86em;
+		line-height: 1.5;
+		white-space: nowrap;
+		color: color-mix(in oklab, var(--tag) 88%, white);
+		background: color-mix(in oklab, var(--tag) 14%, transparent);
+		box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--tag) 32%, transparent);
+	}
+	.pill .v {
+		color: var(--color-fg);
+	}
+	.pill .sep {
+		opacity: 0.45;
+	}
+
+	.kbd {
+		display: inline-grid;
+		place-items: center;
+		min-width: 1.6rem;
+		height: 1.6rem;
+		padding: 0 0.4rem;
+		border-radius: 0.4rem;
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		color: var(--color-fg-2);
+		background: var(--color-surface-2);
+		box-shadow:
+			inset 0 -2px 0 rgb(0 0 0 / 0.5),
+			inset 0 0 0 1px var(--color-line-2);
+	}
+}
+
+/* Scroll reveal (see src/lib/reveal.ts). Hidden only once JS is known to run. */
+.js [data-reveal] {
+	opacity: 0;
+	transform: translateY(18px);
+	transition:
+		opacity 0.9s var(--ease-out-expo) var(--reveal-delay, 0ms),
+		transform 0.9s var(--ease-out-expo) var(--reveal-delay, 0ms);
+}
+.js [data-reveal='in'] {
+	opacity: 1;
+	transform: none;
+}
+
+/* Headline accent: the four view hues as one gradient. */
+.text-gradient {
+	background: linear-gradient(
+		100deg,
+		var(--color-journal) 0%,
+		var(--color-metachat) 38%,
+		var(--color-workbench) 68%,
+		var(--color-curatio) 100%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	/* Italic overhang would otherwise be clipped. */
+	padding-right: 0.08em;
+	margin-right: -0.08em;
+}

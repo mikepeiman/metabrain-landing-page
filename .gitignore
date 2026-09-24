@@ -2,8 +2,9 @@
 node_modules
 /build
 /.svelte-kit
-/.vercel_build_output
+/.vercel
 /package
-/static/images
 .env
-.vercel_build_output
+.env.*
+!.env.example
+vite.config.*.timestamp-*

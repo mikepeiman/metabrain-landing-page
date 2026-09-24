@@ -1,18 +1,62 @@
-# MetaBrain
+# Metabrain — landing page
 
-## One app to rule them all. One knowledge graph for a lifetime.
+The early-access landing page for [Metabrain](https://x.com/HelloMetabrain), an operating system for life.
 
-Many years in conception, something is being born here...
+**Stack:** SvelteKit 2 · Svelte 5 · Tailwind CSS 4 · TypeScript, prerendered and deployed to Vercel
+with `@sveltejs/adapter-vercel`.
 
-First landing page deployed in 2015 at (the inactive) [LifewardLabs](www.lifewardlabs.com). That operating name was to encompass several projects, of which MetaBrain (then to be called LifeOS or LifeIQ - the concept of an operating system for life, and intelligence for life) was but one.
+## Develop
 
-The aim is simple yet audacious: to make the best knowledge-management tool in the world. This encompasses task & project management, research & learning management platform, "quantified self" tracking, media curation of all kinds (local files, online playlists, browser windows and tabs). And more.
+```sh
+npm install
+npm run dev       # http://localhost:5173
+npm run check     # type-check
+npm run build     # production build → .vercel/output
+npm run format    # prettier
+```
 
-Several examples of the tools I want to integrate and transcend: Evernote, Notion, TODOist, Pivotal Tracker, tabs managers, playlist apps, workout apps, academic research apps, learning management platforms, and more.
+Deploys automatically on push through the Vercel Git integration (Node 20+).
 
-Not all of this will arrive immediately, of course. The first MVP will be a minimal tracking input interface for notes and items. Tracking web browsing will be a nearterm priority. Other features will follow.
+## Configuration
 
-Eventually this app will form the nucleus of several projects, where you can choose to share your data to support open science/citizen science, and public conversations/arguments. 
+| Variable          | Purpose                                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `PUBLIC_SITE_URL` | Optional. Absolute origin for canonical/Open Graph tags, e.g. `https://metabrain.app`. Defaults to Vercel's production domain. |
 
-I still have several ambitious projects in slow development. Learn more at [my IndieHackers profile](https://www.indiehackers.com/mountaindad), or my (developer blog)[https://www.mikepeiman.dev/].
+## Structure
 
+```
+src/
+  app.css                    design tokens (view hues, type, surfaces) + shared components
+  lib/canvas/lattice.ts      the hero animation engine (framework-free)
+  lib/components/
+    LatticeCanvas.svelte     mounts the engine: resize, visibility, pointer, bloom layer
+    SignupForm.svelte        Mailchimp signup (inline JSONP, POST fallback)
+    ComposerDemo.svelte      animated #metatag composer demo
+    ScatterToFabric.svelte   "scattered apps → one fabric" problem visual
+    ViewsBento.svelte        Journal & Log / Curatio / Workbench / Metachat mockups
+    FabricGraph.svelte       cross-view object graph
+    Logo.svelte              the mark
+  routes/+page.svelte        page content and copy
+static/                      favicon, icons, og.png social card
+```
+
+### Colour carries meaning
+
+Each view owns one hue, used consistently for its chips, mockups, graph nodes and the strands of
+the hero lattice: **Journal** amber, **Curatio** teal, **Workbench** violet, **Metachat** rose. The
+logo's four strokes are the four views.
+
+### The lattice
+
+Strands grow along a triangular (hex) lattice, turn and branch at nodes and fade, leaving a faint
+trace of every path. The engine runs a fixed 60 Hz simulation (identical on 60/120/144 Hz
+displays), is DPR-aware, pauses when off-screen or in a background tab, renders a single settled
+frame under `prefers-reduced-motion`, and grows new strands from the mouse pointer. A
+quarter-resolution copy, blurred and screened on top, provides the bloom.
+
+### Mailing list
+
+`SignupForm` posts to the Mailchimp audience via the JSONP endpoint so visitors stay on the page.
+If that endpoint is unreachable, it falls back to a regular POST to Mailchimp's hosted signup, which
+is also the no-JS behaviour. Successful signups fire a GA4 `sign_up` event.
