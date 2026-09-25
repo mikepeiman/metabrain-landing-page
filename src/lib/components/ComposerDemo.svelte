@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { whenVisible } from '$lib/reveal';
 
-	type Hue = 'journal' | 'workbench' | 'curatio' | 'metachat';
+	type Hue = 'notes' | 'projects' | 'web' | 'comms';
 	type Insight =
 		| {
 				kind: 'bars';
@@ -39,7 +39,7 @@
 			time: '07:42',
 			prose: 'Garage session, bar felt light ',
 			tag: 'workout',
-			hue: 'journal',
+			hue: 'notes',
 			suggestions: [
 				{ name: 'workout', meta: '128 records' },
 				{ name: 'work-log', meta: '41 records' }
@@ -63,7 +63,7 @@
 			time: '07:48',
 			prose: 'Rough night — kept waking at 3am ',
 			tag: 'sleep',
-			hue: 'journal',
+			hue: 'notes',
 			suggestions: [
 				{ name: 'sleep', meta: '311 records' },
 				{ name: 'sleep-aid', meta: '12 records' }
@@ -86,7 +86,7 @@
 			time: '09:15',
 			prose: 'Finally read the Stripe billing docs ',
 			tag: 'task',
-			hue: 'workbench',
+			hue: 'projects',
 			suggestions: [
 				{ name: 'task', meta: '2,406 records' },
 				{ name: 'tax-return', meta: '3 records' }
@@ -111,21 +111,21 @@
 			time: '06:52',
 			prose: 'First coffee, black ',
 			tag: 'coffee',
-			hue: 'journal',
+			hue: 'notes',
 			values: ['1 cup']
 		},
 		{
 			time: '06:40',
 			prose: 'Up before the alarm. ',
 			tag: 'mood',
-			hue: 'journal',
+			hue: 'notes',
 			values: ['4 / 5']
 		},
 		{
 			time: 'Yesterday',
 			prose: 'Pricing call with Dana — annual plans? ',
 			tag: 'meeting',
-			hue: 'metachat',
+			hue: 'comms',
 			values: ['Dana', 'Launch v1']
 		}
 	];
@@ -278,10 +278,15 @@
 				<span class="size-2.5 rounded-full bg-fg-4/60"></span>
 				<span class="size-2.5 rounded-full bg-fg-4/60"></span>
 			</div>
-			<nav class="flex gap-1 font-mono text-[0.7rem] text-fg-3" aria-hidden="true">
-				<span class="rounded-md bg-surface-3 px-2 py-1 text-fg">Journal</span>
-				<span class="px-2 py-1">Log</span>
-				<span class="px-2 py-1">Dashboard</span>
+			<nav
+				class="flex min-w-0 gap-1 overflow-hidden font-mono text-[0.7rem] text-fg-3"
+				aria-hidden="true"
+			>
+				<span class="rounded-md bg-surface-3 px-2 py-1 text-fg">Notes</span>
+				<span class="px-2 py-1">Projects</span>
+				<span class="px-2 py-1">Web</span>
+				<span class="hidden px-2 py-1 sm:inline">Communications</span>
+				<span class="hidden px-2 py-1 sm:inline">Review</span>
 			</nav>
 			<span class="ml-auto font-mono text-[0.68rem] text-fg-4">Wed 24 Sep</span>
 		</div>
@@ -289,7 +294,7 @@
 		<div class="relative px-5 pt-5 pb-4 sm:px-6">
 			<div class="mb-2 font-mono text-[0.68rem] text-fg-4">{scene.time}</div>
 			<p class="min-h-[7rem] text-[1.15rem] leading-[1.9] text-fg sm:text-[1.4rem]">
-				{prose}{#if query !== null}<span class="relative font-mono text-[0.95em] text-journal"
+				{prose}{#if query !== null}<span class="relative font-mono text-[0.95em] text-notes"
 						>#{query}{#if popup}<span
 								class="absolute top-full left-0 z-10 mt-2 w-64 overflow-hidden rounded-xl border border-line-2 bg-surface-2/95 p-1.5 font-sans text-[0.82rem] shadow-2xl backdrop-blur"
 							>
@@ -300,9 +305,7 @@
 											i === 0 && 'bg-surface-3'
 										]}
 									>
-										<span class="font-mono text-fg"
-											><span class="text-journal">#</span>{m.name}</span
-										>
+										<span class="font-mono text-fg"><span class="text-notes">#</span>{m.name}</span>
 										<span class="text-[0.72rem] text-fg-3">{m.meta}</span>
 									</span>
 								{/each}
@@ -320,7 +323,7 @@
 									class="-ml-[0.3em] inline-block h-[1.05em] w-px translate-y-[0.15em] animate-caret bg-fg"
 								></span>{/if}{/each}</span
 					>{/if}{#if activeField < 0 && !logged}<span
-						class="ml-px inline-block h-[1.15em] w-[2px] translate-y-[0.2em] animate-caret bg-journal"
+						class="ml-px inline-block h-[1.15em] w-[2px] translate-y-[0.2em] animate-caret bg-notes"
 					></span>{/if}
 			</p>
 			<div
@@ -411,19 +414,19 @@
 				{@const done = logged ? ins.done + 1 : ins.done}
 				<div class="mb-3 flex items-baseline justify-between">
 					<span class="text-[0.85rem] text-fg-2">
-						<span class="text-workbench">Workbench</span> · {ins.project}
+						<span class="text-projects">Projects</span> · {ins.project}
 					</span>
 					<span class="font-mono text-[0.78rem] text-fg">{done} / {ins.total}</span>
 				</div>
 				<div class="h-2 overflow-hidden rounded-full bg-surface-3">
 					<div
-						class="h-full rounded-full bg-workbench transition-all duration-700"
+						class="h-full rounded-full bg-projects transition-all duration-700"
 						style="width:{(done / ins.total) * 100}%"
 					></div>
 				</div>
 				<div class="mt-4 flex items-center gap-2 text-[0.78rem] text-fg-3">
-					<span class="text-curatio">Curatio</span> linked page
-					<span class="pill truncate" style={hueVar('curatio')}>{ins.page}</span>
+					<span class="text-web">Web</span> linked page
+					<span class="pill truncate" style={hueVar('web')}>{ins.page}</span>
 				</div>
 				<p class="mt-3 text-[0.75rem] text-fg-3">One task, visible from every view that cares.</p>
 			{/if}
@@ -437,7 +440,7 @@
 				<span
 					class={[
 						'kbd transition-all duration-150',
-						key === k.k && 'bg-journal text-ink shadow-[0_0_24px_-4px_var(--color-journal)]'
+						key === k.k && 'bg-notes text-ink shadow-[0_0_24px_-4px_var(--color-notes)]'
 					]}>{k.k}</span
 				>
 				{k.label}

@@ -34,8 +34,9 @@ src/
     SignupForm.svelte        Mailchimp signup (inline JSONP, POST fallback)
     ComposerDemo.svelte      animated #metatag composer demo
     ScatterToFabric.svelte   "scattered apps → one fabric" problem visual
-    ViewsBento.svelte        Journal & Log / Curatio / Workbench / Metachat mockups
-    FabricGraph.svelte       cross-view object graph
+    ViewsBento.svelte        Notes / Projects / Web / Communications / Review mockups
+    TagWeave.svelte          animated "one tag, every view" walkthrough
+    TagPill.svelte           metatag pill; shared tags light up together on hover
     Logo.svelte              the mark
   routes/+page.svelte        page content and copy
 static/                      favicon, icons, og.png social card
@@ -43,9 +44,13 @@ static/                      favicon, icons, og.png social card
 
 ### Colour carries meaning
 
-Each view owns one hue, used consistently for its chips, mockups, graph nodes and the strands of
-the hero lattice: **Journal** amber, **Curatio** teal, **Workbench** violet, **Metachat** rose. The
-logo's four strokes are the four views.
+Each domain view owns one hue, used consistently for its chips, mockups, tags and the strands of
+the hero lattice: **Notes** amber, **Projects** violet, **Web** teal, **Communications** rose.
+**Review** reads across all four, so it wears the spectrum gradient of all four. The logo's four
+strokes are the four domain views.
+
+Every heading sets its key phrase in italic with the `.accent` class (the spectrum). Italic is
+reserved for that accent.
 
 ### The lattice
 

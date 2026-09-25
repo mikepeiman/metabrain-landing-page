@@ -5,13 +5,13 @@
 	import ScatterToFabric from '$lib/components/ScatterToFabric.svelte';
 	import ComposerDemo from '$lib/components/ComposerDemo.svelte';
 	import ViewsBento from '$lib/components/ViewsBento.svelte';
-	import FabricGraph from '$lib/components/FabricGraph.svelte';
+	import TagWeave from '$lib/components/TagWeave.svelte';
 	import { reveal } from '$lib/reveal';
 
 	const site = __SITE_URL__;
 	const title = 'Metabrain — An operating system for life';
 	const description =
-		'Metabrain unites your journal, tasks, browser tabs, projects and conversations in one local-first knowledge graph. Write naturally, structure it later, never lose the thread. Join the early-access list.';
+		'Metabrain unites your notes, projects, browser tabs and conversations in one local-first knowledge graph, connected by metatags. Tag anything, track everything, never lose the thread. Join the early-access list.';
 
 	let scrolled = $state(false);
 
@@ -50,53 +50,65 @@
 
 	const audience = [
 		{
-			who: 'The tab hoarder',
-			what: '200 tabs open, because closing one might mean losing it forever.',
-			hue: 'curatio'
+			who: 'Low battery, high ambition',
+			tags: ['ADHD', 'Chronic fatigue', 'Brain fog'],
+			what: 'Some days every decision costs a spoon. Metabrain is built for those days: log with one tap, capture without deciding where anything goes, and come back to a full record of where you left off, so getting started again never means rebuilding your context from scratch.',
+			uses: ['Quick Log', 'Alt + Space dock', 'Resume where you left off'],
+			hue: 'notes'
 		},
 		{
-			who: 'The founder & developer',
-			what: 'Docs, issues, research and deploys spread across a dozen live projects.',
-			hue: 'workbench'
+			who: 'The tab archaeologist',
+			tags: ['186 tabs', '9 windows'],
+			what: 'You keep tabs open because closing them feels like forgetting. Put a whole research session to sleep tonight, wake it next week exactly as it was, and search your entire history for the page you half-remember from March.',
+			uses: ['Sleep & wake sessions', 'Full-history search', 'Tag pages into projects'],
+			hue: 'web'
 		},
 		{
-			who: 'The lifelong learner',
-			what: 'Papers, videos and courses you want to find again, order and actually finish.',
-			hue: 'curatio'
+			who: 'The multi-project founder',
+			tags: ['Day job', 'Side business', '4 live projects'],
+			what: 'Every project lives in a different mix of docs, repos, chats and tabs. Give each one a command centre with its tasks, notes, pages and messages together, and relaunch its whole workspace in one move.',
+			uses: ['Project command centre', 'Workspace relaunch', 'Estimate vs actual'],
+			hue: 'projects'
 		},
 		{
-			who: 'The self-tracker',
-			what: 'Sleep, training, habits and mood — finally in one place you can query.',
-			hue: 'journal'
+			who: 'The quantified self',
+			tags: ['Sleep', 'Lifts', 'Caffeine', 'Mood'],
+			what: 'You’ve tracked everything in five apps and never once seen it together. Log any metric in a keystroke with #metatags, then finally answer the real question: does that late coffee actually wreck your sleep?',
+			uses: ['#metatag fields', 'Charts from any tag', 'Review dashboards'],
+			hue: 'notes'
 		},
 		{
-			who: 'The relationship-keeper',
-			what: 'Years of conversations across apps, and the people behind them.',
-			hue: 'metachat'
+			who: 'The autodidact',
+			tags: ['Papers', 'Courses', 'Playlists'],
+			what: 'Your curriculum is scattered across YouTube, arXiv, Kindle and a dozen bookmark folders. Collect it in one place, put it in order, mark what you’ve read or watched, and keep your notes attached to every source — even if the original disappears.',
+			uses: ['Web collections', 'Read & watched states', 'Notes on any page'],
+			hue: 'web'
 		},
 		{
-			who: 'The ADHD brain',
-			what: 'Clear the clutter without fear, and always have a way back in.',
-			hue: 'journal'
+			who: 'The relationship keeper',
+			tags: ['Family', 'Friends', 'Clients'],
+			what: 'Years of conversations with the people who matter, split across SMS, Skype and Google Messages. See each relationship as one timeline, link people to projects and notes, and remember what you talked about last time.',
+			uses: ['One timeline per person', 'People as objects', 'Import your archives'],
+			hue: 'comms'
 		}
 	];
 
 	const faqs = [
 		{
 			q: 'When can I use it?',
-			a: 'Metabrain is a real desktop app in active development. Alpha invites go out to this list in waves as each view stabilises — sign up and you’ll be first in line.'
+			a: 'Metabrain is a working desktop app in active development. Alpha invites go out to this list in waves — sign up and you’ll be first in line to test it.'
+		},
+		{
+			q: 'What platforms will it run on?',
+			a: 'Windows 10 and 11 first: the alpha is a native Windows desktop app. macOS and Linux follow — Metabrain is built on Tauri, which runs natively on all three. The Web view connects to Google Chrome through an extension, and a mobile companion for quick capture and Review is on the roadmap.'
 		},
 		{
 			q: 'Where does my data live?',
-			a: 'On your machine. All four views share one local database, your journal is mirrored to plain Markdown files, and everything is exportable. You own it outright.'
+			a: 'On your computer. Every view shares one local database, your notes are mirrored to plain Markdown files you can open in any editor, and everything is exportable. You own it outright.'
 		},
 		{
 			q: 'Do I have to set up a system first?',
-			a: 'No. Start by just writing. Add a #tag when it helps, give it fields when you want to track something, and let structure grow with you.'
-		},
-		{
-			q: 'What will it run on?',
-			a: 'Metabrain is a desktop app, with a Chrome extension that connects Curatio to your browser. Faster capture on the go is on the roadmap.'
+			a: 'No. Start by just writing, add a #tag when it helps, and give it fields when you want to track something. If you’d rather not start from a blank page, Metabrain will ship with templates for common setups — habits, training, reading, projects and weekly reviews. Later you’ll be able to share and import Themes, which change how Metabrain looks, and Protocols: ready-to-run routines like a training block or a morning routine that you follow and track yourself against.'
 		}
 	];
 </script>
@@ -176,15 +188,14 @@
 				LifeOS · Early access list open
 			</p>
 			<h1 {@attach reveal(200)} class="display text-[3.1rem] sm:text-[4.6rem] lg:text-[5.9rem]">
-				An operating system <em class="text-gradient font-[350] italic">for your life.</em>
+				An operating system <em class="accent">for your life.</em>
 			</h1>
 			<p
 				{@attach reveal(320)}
 				class="mt-7 max-w-2xl text-[1.08rem] leading-relaxed text-fg-2 sm:text-[1.22rem]"
 			>
-				Metabrain brings your journal, tasks, browser tabs, projects and conversations into one
-				living knowledge graph. Write naturally, add structure when it helps, and never lose the
-				thread again.
+				Metabrain brings your notes, projects, browser tabs and conversations into one living
+				knowledge graph. Tag anything, connect everything, and never lose the thread again.
 			</p>
 			<div {@attach reveal(440)} class="mt-10 flex w-full justify-center">
 				<SignupForm id="email-hero" location="hero" align="center" />
@@ -192,19 +203,22 @@
 			<ul
 				{@attach reveal(560)}
 				class="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-[0.72rem] text-fg-3"
-				aria-label="Views"
+				aria-label="Metabrain views"
 			>
 				<li class="flex items-center gap-2">
-					<span class="size-1.5 rounded-full bg-journal"></span>Journal & Log
+					<span class="size-1.5 rounded-full bg-notes"></span>Notes
 				</li>
 				<li class="flex items-center gap-2">
-					<span class="size-1.5 rounded-full bg-curatio"></span>Curatio
+					<span class="size-1.5 rounded-full bg-projects"></span>Projects
 				</li>
 				<li class="flex items-center gap-2">
-					<span class="size-1.5 rounded-full bg-workbench"></span>Workbench
+					<span class="size-1.5 rounded-full bg-web"></span>Web
 				</li>
 				<li class="flex items-center gap-2">
-					<span class="size-1.5 rounded-full bg-metachat"></span>Metachat
+					<span class="size-1.5 rounded-full bg-comms"></span>Communications
+				</li>
+				<li class="flex items-center gap-2">
+					<span class="size-1.5 rounded-full bg-[image:var(--spectrum)]"></span>Review
 				</li>
 			</ul>
 		</div>
@@ -224,7 +238,7 @@
 			<div {@attach reveal()}>
 				<p class="eyebrow">The problem</p>
 				<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
-					You’re not disorganised. <em class="text-fg-2 italic">Your tools are.</em>
+					You’re not disorganised. <em class="accent">Your tools are.</em>
 				</h2>
 				<div class="mt-6 space-y-4 text-[1.05rem] leading-relaxed text-fg-2">
 					<p>
@@ -253,7 +267,7 @@
 			<div {@attach reveal()} class="max-w-3xl">
 				<p class="eyebrow">The metatag</p>
 				<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
-					Write like a person. <em class="text-journal italic">Query like a database.</em>
+					Write like a person. <em class="accent">Query like a database.</em>
 				</h2>
 				<p class="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-fg-2">
 					Type <span class="kbd">#</span> anywhere and a word becomes a living object, with fields, relationships
@@ -265,7 +279,7 @@
 				<ComposerDemo />
 			</div>
 			<figure {@attach reveal()} class="mx-auto mt-16 max-w-3xl text-center sm:mt-20">
-				<blockquote class="display text-[1.9rem] text-fg-2 italic sm:text-[2.4rem]">
+				<blockquote class="display text-[1.9rem] text-fg-2 sm:text-[2.4rem]">
 					“A metatag can be as quiet as a word, or as dense as a table.”
 				</blockquote>
 			</figure>
@@ -280,36 +294,45 @@
 				class="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
 			>
 				<div class="max-w-2xl">
-					<p class="eyebrow">One app · four views</p>
+					<p class="eyebrow">One app · five views</p>
 					<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
-						Every part of your life, <em class="italic">on one fabric.</em>
+						Every part of your life, <em class="accent">on one fabric.</em>
 					</h2>
 				</div>
-				<p class="max-w-md text-[1.02rem] leading-relaxed text-fg-2">
-					Four focused views that load instantly and share one database, so your work never gets
-					stranded in the wrong app.
-				</p>
+				<div class="max-w-md">
+					<p class="text-[1.02rem] leading-relaxed text-fg-2">
+						Four views for the domains of your life, and a fifth that reviews across them. They
+						share one database and one set of metatags, so a single #tag connects a note, a page, a
+						message and a task — and makes every one of them actionable and trackable.
+					</p>
+					<p class="mt-3 flex items-center gap-2 font-mono text-[0.72rem] text-fg-3">
+						<span class="pill" style="--tag: var(--color-projects)">#launch-v1</span> hover it to light
+						it up in every view
+					</p>
+				</div>
 			</div>
 			<ViewsBento />
 		</div>
 	</section>
 
-	<!-- ─────────────────────────── Graph ─────────────────────────── -->
-	<section class="relative overflow-hidden px-5 py-20 sm:px-8 sm:py-28">
+	<!-- ─────────────────────────── One tag, everywhere ─────────────────────────── -->
+	<section id="connect" class="relative overflow-hidden px-5 py-20 sm:px-8 sm:py-28">
 		<div class="mx-auto max-w-7xl">
 			<div {@attach reveal()} class="mx-auto max-w-3xl text-center">
 				<p class="eyebrow">Everything stays live</p>
 				<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
-					Link anything <em class="text-gradient italic">to anything.</em>
+					Tag it once. <em class="accent">See it everywhere.</em>
 				</h2>
-				<p class="mx-auto mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-fg-2">
-					A browser tab, a message, a workout, a meeting note: each one is a first-class object with
-					a permanent identity. Connect them once and they find each other everywhere — in your
-					journal, your timeline, your project board and your search.
+				<p class="mx-auto mt-6 max-w-2xl text-[1.08rem] leading-relaxed text-fg-2">
+					A metatag isn’t a label — it’s a real object. Attach <span class="text-fg"
+						>#launch-v1</span
+					>
+					to a note, a web page and a text from Dana, and the project gathers all three. Turn the message
+					into a task, track the time, and review the whole thing in one place.
 				</p>
 			</div>
-			<div {@attach reveal(150)} class="mt-14 sm:mt-16">
-				<FabricGraph />
+			<div {@attach reveal(150)} class="mt-12 sm:mt-14">
+				<TagWeave />
 			</div>
 		</div>
 	</section>
@@ -320,7 +343,7 @@
 			<div {@attach reveal()} class="max-w-2xl">
 				<p class="eyebrow">Principles</p>
 				<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
-					Built for a lifetime, <em class="italic">not a quarter.</em>
+					Built for a lifetime, <em class="accent">not a quarter.</em>
 				</h2>
 			</div>
 			<ul
@@ -330,7 +353,7 @@
 					<li {@attach reveal((i % 3) * 80)} class="bg-ink p-7 sm:p-8">
 						<svg
 							viewBox="0 0 24 24"
-							class="size-6 text-journal"
+							class="size-6 text-fg-2"
 							fill="none"
 							stroke="currentColor"
 							stroke-width="1.5"
@@ -347,29 +370,50 @@
 	</section>
 
 	<!-- ─────────────────────────── Audience ─────────────────────────── -->
-	<section class="relative px-5 py-20 sm:px-8 sm:py-28">
-		<div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-			<div {@attach reveal()}>
-				<p class="eyebrow">Who it’s for</p>
-				<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
-					Made for minds that run <em class="italic">many threads.</em>
-				</h2>
-				<p class="mt-6 max-w-md text-[1.05rem] leading-relaxed text-fg-2">
+	<section id="who" class="relative px-5 py-20 sm:px-8 sm:py-28">
+		<div class="mx-auto max-w-7xl">
+			<div
+				{@attach reveal()}
+				class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
+			>
+				<div class="max-w-2xl">
+					<p class="eyebrow">Who it’s for</p>
+					<h2 class="display mt-5 text-[2.5rem] sm:text-[3.4rem]">
+						Made for minds that run <em class="accent">many threads.</em>
+					</h2>
+				</div>
+				<p class="max-w-md text-[1.02rem] leading-relaxed text-fg-2">
 					If you’ve ever built a system out of five apps and a spreadsheet, only to watch it fall
 					apart by March, Metabrain was built for you.
 				</p>
 			</div>
-			<ul class="grid gap-3 sm:grid-cols-2">
+			<ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{#each audience as a, i (a.who)}
 					<li
-						{@attach reveal((i % 2) * 80)}
-						class="rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-line-2"
+						{@attach reveal((i % 3) * 80)}
+						class="flex flex-col rounded-2xl border border-line bg-surface/40 p-6 transition hover:border-line-2"
+						style="--tag: var(--color-{a.hue})"
 					>
-						<p class="flex items-center gap-2.5 font-medium text-fg">
-							<span class="size-2 rounded-full" style="background: var(--color-{a.hue})"></span>
-							{a.who}
-						</p>
-						<p class="mt-2 text-[0.92rem] leading-relaxed text-fg-3">{a.what}</p>
+						<div class="flex flex-wrap gap-1.5">
+							{#each a.tags as t (t)}
+								<span
+									class="rounded-full border px-2.5 py-0.5 font-mono text-[0.66rem] tracking-wide"
+									style="color: var(--tag); border-color: color-mix(in oklab, var(--tag) 35%, transparent)"
+									>{t}</span
+								>
+							{/each}
+						</div>
+						<h3 class="display mt-4 text-[1.6rem]">{a.who}</h3>
+						<p class="mt-3 mb-5 text-[0.94rem] leading-relaxed text-fg-2">{a.what}</p>
+						<ul
+							class="mt-auto flex flex-wrap gap-x-4 gap-y-1.5 border-t border-line pt-4 text-[0.78rem] text-fg-3"
+						>
+							{#each a.uses as u (u)}
+								<li class="flex items-center gap-1.5">
+									<span class="size-1 rounded-full" style="background: var(--tag)"></span>{u}
+								</li>
+							{/each}
+						</ul>
 					</li>
 				{/each}
 			</ul>
@@ -411,16 +455,21 @@
 		<div class="pointer-events-none absolute inset-0 -z-10 bg-ink/55"></div>
 		<div class="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
 			<figure {@attach reveal()} class="panel p-7 sm:p-9">
-				<p class="eyebrow">A decade in the making</p>
+				<p class="eyebrow">Twenty years in the making</p>
 				<blockquote class="mt-5 space-y-4 text-[1.02rem] leading-relaxed text-fg-2">
 					<p>
-						Metabrain began as a sketch in 2015: one system to hold everything a person learns, does
-						and intends — and to hand it back the moment it’s needed.
+						Metabrain began as a concept between 2003 and 2007: one system to hold everything a
+						person learns, does and intends, and hand it back the moment it’s needed.
 					</p>
 					<p>
-						Today it’s a real desktop app in active development: Journal, Curatio, Workbench and
-						Metachat on one local database. The first people through the door will shape what ships
-						next.
+						That idea is why I started building for the web in 2013, and it’s what I brought to my
+						first hackathon, Google Startup Weekend in Guelph, in 2015. I’ve built several
+						prototypes since. Now, with truly capable agentic development, I can finally build the
+						whole ambitious vision as a solo developer.
+					</p>
+					<p class="text-fg">
+						Become a valued alpha tester and help shape the features and priorities for Metabrain’s
+						development. Help us make the world’s best Operating System For Life.
 					</p>
 				</blockquote>
 				<figcaption class="mt-6 flex items-center gap-3">
@@ -434,7 +483,7 @@
 
 			<div {@attach reveal(120)}>
 				<h2 class="display text-[2.8rem] sm:text-[3.8rem]">
-					Be among the first <em class="text-gradient italic">to think with it.</em>
+					Be among the first <em class="accent">to think with it.</em>
 				</h2>
 				<p class="mt-6 max-w-md text-[1.05rem] leading-relaxed text-fg-2">
 					Join the early-access list for alpha invites and occasional notes from the build.

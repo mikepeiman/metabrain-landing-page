@@ -3,13 +3,14 @@
 /*
  * Metabrain design tokens.
  *
- * Colour carries meaning: each of the four views owns one hue, and that hue is
- * used for everything belonging to the view — its chips, mockups, graph nodes
- * and the strands of the hero lattice.
- *   journal  (Metabrain · Journal & Log)  amber
- *   curatio  (browser & web curation)     teal
- *   workbench (project command centre)    violet
- *   metachat (communications record)      rose
+ * Colour carries meaning: each of the four domain views owns one hue, used for
+ * everything belonging to it — its chips, mockups, tags and the strands of the
+ * hero lattice.
+ *   notes     (journal & logging)           amber
+ *   projects  (project command centre)      violet
+ *   web       (browser, tabs & web curation) teal
+ *   comms     (communications record)       rose
+ * Review reads across all four, so it wears all four: the spectrum gradient.
  */
 @theme {
 	--font-sans: 'Albert Sans Variable', ui-sans-serif, system-ui, sans-serif;
@@ -30,10 +31,10 @@
 	--color-fg-3: #7d7970;
 	--color-fg-4: #57544e;
 
-	--color-journal: oklch(0.82 0.13 78);
-	--color-curatio: oklch(0.8 0.11 190);
-	--color-workbench: oklch(0.74 0.15 292);
-	--color-metachat: oklch(0.76 0.14 12);
+	--color-notes: oklch(0.82 0.13 78);
+	--color-web: oklch(0.8 0.11 190);
+	--color-projects: oklch(0.74 0.15 292);
+	--color-comms: oklch(0.76 0.14 12);
 
 	--color-ok: oklch(0.82 0.13 152);
 	--color-warn: oklch(0.86 0.12 78);
@@ -83,12 +84,12 @@
 	}
 
 	::selection {
-		background: color-mix(in oklab, var(--color-journal) 35%, transparent);
+		background: color-mix(in oklab, var(--color-notes) 35%, transparent);
 		color: var(--color-fg);
 	}
 
 	:focus-visible {
-		outline: 2px solid var(--color-journal);
+		outline: 2px solid var(--color-notes);
 		outline-offset: 3px;
 		border-radius: 6px;
 	}
@@ -150,7 +151,7 @@
 
 	/* A metatag pill, tinted by its --tag colour. */
 	.pill {
-		--tag: var(--color-journal);
+		--tag: var(--color-notes);
 		display: inline-flex;
 		align-items: center;
 		gap: 0.35em;
@@ -201,19 +202,32 @@
 	transform: none;
 }
 
-/* Headline accent: the four view hues as one gradient. */
-.text-gradient {
-	background: linear-gradient(
+/* The spectrum: the four domain hues as one gradient. Review's colour. */
+:root {
+	--spectrum: linear-gradient(
 		100deg,
-		var(--color-journal) 0%,
-		var(--color-metachat) 38%,
-		var(--color-workbench) 68%,
-		var(--color-curatio) 100%
+		var(--color-notes) 0%,
+		var(--color-comms) 38%,
+		var(--color-projects) 68%,
+		var(--color-web) 100%
 	);
+}
+
+/*
+ * Headline accent. Every heading sets its key phrase in italic, and every such
+ * phrase gets this one treatment, so the spectrum reads as the brand's voice.
+ */
+.accent,
+.text-gradient {
+	background: var(--spectrum);
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
 	/* Italic overhang would otherwise be clipped. */
 	padding-right: 0.08em;
 	margin-right: -0.08em;
+}
+.accent {
+	font-style: italic;
+	font-weight: 360;
 }

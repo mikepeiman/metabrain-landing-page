@@ -7,8 +7,8 @@
 	let canvas: HTMLCanvasElement;
 	let glow: HTMLCanvasElement;
 
-	// The four view hues, in the order the eye meets them left to right:
-	// Journal amber → Metachat rose → Workbench violet → Curatio teal.
+	// The four domain hues, in the order the eye meets them left to right:
+	// Notes amber → Communications rose → Projects violet → Web teal.
 	const palette = [
 		[0.84, 0.14, 78],
 		[0.74, 0.16, 18],

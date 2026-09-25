@@ -2,30 +2,30 @@
 	import { onMount } from 'svelte';
 	import { whenVisible } from '$lib/reveal';
 
-	type Hue = 'journal' | 'curatio' | 'workbench' | 'metachat';
+	type Hue = 'notes' | 'web' | 'projects' | 'comms';
 
 	const views: { hue: Hue; name: string }[] = [
-		{ hue: 'journal', name: 'Journal & Log' },
-		{ hue: 'curatio', name: 'Curatio' },
-		{ hue: 'workbench', name: 'Workbench' },
-		{ hue: 'metachat', name: 'Metachat' }
+		{ hue: 'notes', name: 'Notes' },
+		{ hue: 'projects', name: 'Projects' },
+		{ hue: 'web', name: 'Web' },
+		{ hue: 'comms', name: 'Communications' }
 	];
 
 	// Each fragment of a scattered digital life, its scattered position (x, y in
 	// %, rotation) and the view it lands in.
 	const chips: { label: string; hue: Hue; s: [number, number, number] }[] = [
-		{ label: 'Notes app', hue: 'journal', s: [14, 18, -8] },
-		{ label: 'Fitness tracker', hue: 'journal', s: [70, 80, 6] },
-		{ label: 'Habit app', hue: 'journal', s: [44, 58, -4] },
-		{ label: '147 open tabs', hue: 'curatio', s: [52, 16, 5] },
-		{ label: 'Bookmarks', hue: 'curatio', s: [18, 76, 9] },
-		{ label: 'Read-later', hue: 'curatio', s: [84, 44, -10] },
-		{ label: 'To-do list', hue: 'workbench', s: [80, 14, 12] },
-		{ label: 'Kanban board', hue: 'workbench', s: [30, 38, 7] },
-		{ label: 'Project folders', hue: 'workbench', s: [58, 88, -6] },
-		{ label: 'SMS', hue: 'metachat', s: [8, 50, 4] },
-		{ label: 'Skype', hue: 'metachat', s: [66, 34, -12] },
-		{ label: 'Google Messages', hue: 'metachat', s: [36, 88, 3] }
+		{ label: 'Notes app', hue: 'notes', s: [14, 18, -8] },
+		{ label: 'Fitness tracker', hue: 'notes', s: [70, 80, 6] },
+		{ label: 'Habit app', hue: 'notes', s: [44, 58, -4] },
+		{ label: '147 open tabs', hue: 'web', s: [52, 16, 5] },
+		{ label: 'Bookmarks', hue: 'web', s: [18, 76, 9] },
+		{ label: 'Read-later', hue: 'web', s: [84, 44, -10] },
+		{ label: 'To-do list', hue: 'projects', s: [80, 14, 12] },
+		{ label: 'Kanban board', hue: 'projects', s: [30, 38, 7] },
+		{ label: 'Project folders', hue: 'projects', s: [58, 88, -6] },
+		{ label: 'SMS', hue: 'comms', s: [8, 50, 4] },
+		{ label: 'Skype', hue: 'comms', s: [66, 34, -12] },
+		{ label: 'Google Messages', hue: 'comms', s: [36, 88, 3] }
 	];
 
 	let root: HTMLElement;

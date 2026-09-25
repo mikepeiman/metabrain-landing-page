@@ -133,7 +133,7 @@
 			class={[
 				'relative flex items-center gap-2 rounded-2xl border bg-ink-2/80 p-1.5 shadow-[0_20px_60px_-20px_rgb(0_0_0/0.9)] backdrop-blur-md transition-colors',
 				status === 'error'
-					? 'border-metachat/60'
+					? 'border-comms/60'
 					: 'border-line-2 focus-within:border-line-3 hover:border-line-3'
 			]}
 		>
@@ -185,7 +185,7 @@
 		class={[
 			'mt-3 min-h-5 text-[0.8rem] leading-5',
 			align === 'center' ? 'text-center' : 'text-left',
-			status === 'error' ? 'text-metachat' : 'text-fg-3'
+			status === 'error' ? 'text-comms' : 'text-fg-3'
 		]}
 		aria-live="polite"
 	>
