@@ -100,7 +100,7 @@
 		},
 		{
 			q: 'What platforms will it run on?',
-			a: 'Windows 10 and 11 first: the alpha is a native Windows desktop app. macOS and Linux follow — Metabrain is built on Tauri, which runs natively on all three. The Web view connects to Google Chrome through an extension, and a mobile companion for quick capture and Review is on the roadmap.'
+			a: 'All of them. Metabrain is built on Tauri, which compiles to native apps for Windows, macOS and Linux, plus iOS and Android. The Web view connects to Google Chrome through an extension on desktop.'
 		},
 		{
 			q: 'Where does my data live?',
@@ -108,7 +108,7 @@
 		},
 		{
 			q: 'Do I have to set up a system first?',
-			a: 'No. Start by just writing, add a #tag when it helps, and give it fields when you want to track something. If you’d rather not start from a blank page, Metabrain will ship with templates for common setups — habits, training, reading, projects and weekly reviews. Later you’ll be able to share and import Themes, which change how Metabrain looks, and Protocols: ready-to-run routines like a training block or a morning routine that you follow and track yourself against.'
+			a: 'No. Start by just writing, add a #tag when it helps, and give it fields when you want to track something. If you’d rather not start from a blank page, Metabrain will ship with templates for common setups — habits, training, reading, projects and weekly reviews. Later, Packs will let you share and import whole setups: metatags and dashboards, Themes that change how Metabrain looks, and Protocols — ready-to-run routines like a training block or a morning routine that you follow and track yourself against.'
 		}
 	];
 </script>
